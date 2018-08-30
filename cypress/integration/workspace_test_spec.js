@@ -61,19 +61,19 @@ describe('Desktop functionalities', function(){
 
     it('will verify that clicking on the workspace will close any open tabs', function(){
         cy.get('.learning-log > .tabs').click(); //learning log expand area should be visible
-        cy.get('.workspace').click(); //clicking on workspace should close any open tabs
+        cy.get('.workspace').click('left'); //clicking on workspace should close any open tabs
         cy.get('.left-nav.expanded > .expanded-area').should('not.be.visible');
         cy.get('.my-work.expanded > .expanded-area').should('not.be.visible');
         cy.get('.learning-log.expanded > .expanded-area').should('not.be.visible');
 
         cy.get('.left-nav > .tabs').click(); //left nav expand area should be visible
-        cy.get('.workspace').click(); //clicking on workspace should close any open tabs
+        cy.get('.workspace').click('right',{force:true}); //clicking on workspace should close any open tabs
         cy.get('.left-nav.expanded > .expanded-area').should('not.be.visible');
         cy.get('.my-work.expanded > .expanded-area').should('not.be.visible');
         cy.get('.learning-log.expanded > .expanded-area').should('not.be.visible');
 
         cy.get('.my-work > .tabs').click(); //my work expand area should be visible
-        cy.get('.workspace').click(); //clicking on workspace should close any open tabs
+        cy.get('.workspace').click('top',{force:true}); //clicking on workspace should close any open tabs
         cy.get('.left-nav.expanded > .expanded-area').should('not.be.visible');
         cy.get('.my-work.expanded > .expanded-area').should('not.be.visible');
         cy.get('.learning-log.expanded > .expanded-area').should('not.be.visible');
