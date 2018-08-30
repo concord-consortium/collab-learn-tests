@@ -40,3 +40,20 @@ describe('Test Problems', function(){
         });
     });
 });
+
+describe('Desktop functionalities', function(){
+    it('will verify that only one tab is open at a time', function(){
+        cy.get('.left-nav > .tabs').click(); //left nav expand area should be visible
+        cy.get('.left-nav > .expanded-area').should('be.visible');
+        cy.get('.my-work > .expanded-area').should('not.be.visible');
+        cy.get('.learning-log.expanded > .expanded-area').should('not.be.visible');
+        cy.get('.my-work > .tabs').click(); //my work expand area should be visible
+        cy.get('.left-nav.expanded > .expanded-area').should('not.be.visible');
+        cy.get('.my-work.expanded > .expanded-area').should('be.visible');
+        cy.get('.learning-log.expanded > .expanded-area').should('not.be.visible');
+        cy.get('.learning-log > .tabs').click(); //learning log expand area should be visible
+        cy.get('.left-nav.expanded > .expanded-area').should('not.be.visible');
+        cy.get('.my-work.expanded > .expanded-area').should('not.be.visible');
+        cy.get('.learning-log.expanded > .expanded-area').should('be.visible');
+    });
+});
