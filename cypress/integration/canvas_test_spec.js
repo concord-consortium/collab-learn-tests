@@ -1,20 +1,28 @@
+before(function(){
+    cy.visit('https://collaborative-learning.concord.org/branch/master/?devMode=true');
+});
+
 context('Test Canvas', function(){
     // This should test the 1-up and the 4-up views)
     context('test the overall canvas', function(){
-       describe('test header element', function(){
-           describe('verify header title appears correctly', function(){
+       describe('test header elements', function(){
+           it('verifies header title appears correctly', function(){
                 cy.get('.workspace > .titlebar > .title').should('contain','Workspace Name');
            });
-           describe('verify views button changes the current workspace view to the corresponding one', function(){
-               cy.get('.workspace > .titlebar > .actions > span').as(viewButton);
+           it('verifies views button changes the current workspace view to the corresponding one', function(){
+               cy.get('.workspace > .titlebar > .actions > span').then($viewButton)=>{
+               this.viewButton.should('contain','4-up');
+               cy.get('.canvas-area > .canvas');
+               this.viewButton.click;
                this.viewButton.should('contain','1-up');
+               cy.get('.canvas-area > .four-up');
                this.viewButton.click;
                this.viewButton.should('contain','4-up');
-               this.viewButton.click;
-               this.viewButton.should('contain','1-up');
+               cy.get('.canvas-area > .canvas');
+               };
            });
 
-           describe('verify supports comes up correctly', function(){
+           it('verify supports comes up correctly', function(){
 
            })
        }) ;
