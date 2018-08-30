@@ -11,13 +11,13 @@ context('Test Canvas', function(){
            });
            it('verifies views button changes the current workspace view to the corresponding one', function(){
                cy.get('.workspace > .titlebar > .actions > span').should('contain','4-up');
-               cy.get('.canvas-area > .canvas');
+               cy.get('.canvas-area > .canvas').should('be.visible');
                cy.get('.workspace > .titlebar > .actions > span').click();
                cy.get('.workspace > .titlebar > .actions > span').should('contain','1-up');
-               cy.get('.canvas-area > .four-up');
+               cy.get('.canvas-area > .four-up').should('be.visible');
                cy.get('.workspace > .titlebar > .actions > span').click();
                cy.get('.workspace > .titlebar > .actions > span').should('contain','4-up');
-               cy.get('.canvas-area > .canvas');
+               cy.get('.canvas-area > .canvas').should('be.visible');
            });
 
            it('verify supports comes up correctly', function(){
