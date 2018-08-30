@@ -18,18 +18,18 @@ describe('Test Problems', function(){
             },
             {
                 number:'2.1',
-                title:'',
-                subtitle:''
+                title:'Drawing Wumps',
+                subtitle:'Making Similar Figures'
             },
             {
                 number:'2.2',
-                title:'',
-                subtitle:''
+                title:'Hats Off to the Wumps',
+                subtitle:'Changing a Figure\'s Size and Location'
             },
             {
                 number:'2.3',
-                title:'',
-                subtitle:''
+                title:'Mouthing Off and Nosing Around',
+                subtitle:'Scale Factors'
             }
             ];
         problems.forEach(function(problem){
