@@ -23,6 +23,6 @@ import './commands'
 //     cy.visit("");
 // });
 //
-before (function(){
-    cy.visit('https://collaborative-learning.concord.org/branch/master/?devMode=true');
-});
+// before (function(){
+//     cy.visit('https://collaborative-learning.concord.org/branch/master/?devMode=true');
+// });
