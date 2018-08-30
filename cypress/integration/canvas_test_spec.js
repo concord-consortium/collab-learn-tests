@@ -10,16 +10,14 @@ context('Test Canvas', function(){
                 cy.get('.workspace > .titlebar > .title').should('contain','Workspace Name');
            });
            it('verifies views button changes the current workspace view to the corresponding one', function(){
-               cy.get('.workspace > .titlebar > .actions > span').then($viewButton)=>{
-               this.viewButton.should('contain','4-up');
+               cy.get('.workspace > .titlebar > .actions > span').should('contain','4-up');
                cy.get('.canvas-area > .canvas');
-               this.viewButton.click;
-               this.viewButton.should('contain','1-up');
+               cy.get('.workspace > .titlebar > .actions > span').click();
+               cy.get('.workspace > .titlebar > .actions > span').should('contain','1-up');
                cy.get('.canvas-area > .four-up');
-               this.viewButton.click;
-               this.viewButton.should('contain','4-up');
+               cy.get('.workspace > .titlebar > .actions > span').click();
+               cy.get('.workspace > .titlebar > .actions > span').should('contain','4-up');
                cy.get('.canvas-area > .canvas');
-               };
            });
 
            it('verify supports comes up correctly', function(){
