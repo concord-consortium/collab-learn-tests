@@ -1,3 +1,7 @@
+before(function(){
+    cy.visit('https://collaborative-learning.concord.org/branch/master/?devMode=true');
+});
+
 describe('Test footer', function(){
     it('will verify correct tab opens to correct content', function(){
         cy.get('.left-nav > .tabs').find('.tab').as('tabs');
