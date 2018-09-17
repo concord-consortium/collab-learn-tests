@@ -1,5 +1,5 @@
 before(function(){
-   cy.visit('https://collaborative-learning.concord.org/branch/master/?devMode=true');
+   cy.visit('https://collaborative-learning.concord.org/branch/master/?appMode=dev');
 });
 // Students do not have to be part of the group, but can join a group at any point. Once a student joins a group, they cannot leave the group
 
