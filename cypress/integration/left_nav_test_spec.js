@@ -14,7 +14,7 @@ describe('Test Left tabs',function(){
      });
 
  });
- it('will verify the transfer of the problem to the canvas', function(){
+ it('will verify the transfer of the tab info to the canvas', function(){
 
  });
 

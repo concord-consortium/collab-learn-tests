@@ -13,5 +13,10 @@ describe('Test right tabs', function(){
             //repeat for every tab.
         });
     });
+    describe('Test saving a canvas',function(){
+       it('will click on save canvas and verify canvas is saved', function(){
+
+       });
+    });
 
 });
