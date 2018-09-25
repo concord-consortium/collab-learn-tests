@@ -61,10 +61,25 @@ context('Test Canvas', function(){
         });
 
         describe('test the graph tool', function(){
+            it('clicks the graph tool and enters four points', function(){
 
-        });
-        describe('text delete tool', function(){
+                cy.get('.single-workspace > .workspace > .toolbar > .tool.geometry').click({force: true});
+                cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .geometry-tool').last().click();
+                cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .geometry-tool').last().click(40,35, {force:true});
+                cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .geometry-tool > .JXGtext').last().should('contain', 'A' );
+                // cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .geometry-tool > svg > g > ellipse').last().trigger('mouseover',{force:true});
+                // cy.wait(2000);
+                // cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .geometry-tool > JXGinforbox').first().should('be.visible')
+                cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .geometry-tool').last().click(140,70, {force:true});
+                cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .geometry-tool > .JXGtext').last().should('contain', 'B' );
+                cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .geometry-tool').last().click(260,50, {force:true});
+                cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .geometry-tool > .JXGtext').last().should('contain', 'C' );
+                cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .geometry-tool').last().click();
+                cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .geometry-tool > .JXGtext').last().should('contain', 'D' );
+                cy.get('.canvas-area > .canvas > .document-content > .tool-tile.selected').should('have.class','selected');
+                cy.get('.single-workspace >.workspace > .toolbar > .tool.delete').click({force:true});
 
+            });
         });
     });
 
