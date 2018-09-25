@@ -1,19 +1,19 @@
 before(function(){
-   // cy.visit('https://collaborative-learning.concord.org/branch/master/?appMode=dev');
-    cy.visit('http://localhost:8080/?appMode=demo&demoClass=1&demoUser=student:5&demoOffering=1&problem=1.1');
+   cy.visit('https://collaborative-learning.concord.org/branch/master/?appMode=demo&demoClass=5&demoUser=student:9&demoOffering=4&problem=1.1');
+   //  cy.visit('http://localhost:8080/?appMode=demo&demoClass=6&demoUser=student:1&demoOffering=1&problem=1.1');
 
 });
 // Students do not have to be part of the group, but can join a group at any point. Once a student joins a group, they cannot leave the group
 
 // Students are logged in through portal, need to verify that auth is transferred from portal to CLUE
 describe('Test student header', function() { //should we test for SSO?
-    it('will login', function() {
-        console.log('Student logs in as x')
-        //verify login lightbox comes up
-    });
-    it('will verify user name is in header', function(){
-        cy.get('.header > .user > .name').should('contain','Student');
-    });
+    // it('will login', function() {
+    //     console.log('Student logs in as x')
+    //     //verify login lightbox comes up
+    // });
+    // it('will verify user name is in header', function(){
+    //     cy.get('.header > .user > .name').should('contain','Student');
+    // });
 });
 
 describe('Check header area for correctness', function(){
@@ -21,13 +21,16 @@ describe('Check header area for correctness', function(){
     //
     // });
     it('will verify if class name is correct', function(){
-        cy.get('[data-test="header-class-name"]').should('contain',''+'Class');
+        cy.get('.header > .info > div> .class').should('contain',''+'Class 5');
     });
     it('will verify if group name is present', function(){
-        cy.get('.header > .group > div > .name').should('contain','Group'+'');
+        cy.get('.header > .group > .name').should('contain','Group'+'');
     });
     it('will verify group members is correct', function(){
-        cy.get('.header > .group > div > .members').should('contain','S1');
+        cy.get('.header > .group > .members > .member').should('contain','S9');
+    });
+    it('will verify student name is correct', function(){
+        cy.get('.header > .user > .name').should('contain','Student 9');
     });
 });
 
