@@ -101,7 +101,7 @@ context('Test Canvas', function(){
                 //Verify the graph has 4 points in it
                 cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .geometry-tool > .JXGtext').each(($point, index, $list)=>{}).then(($list)=>{
                     expect($list).to.have.length(4);
-                })
+                });
                 //Delete elements in the canvas
                 cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .text-tool').last().focus().click();
                 cy.get('.canvas-area > .canvas > .document-content > .tool-tile.selected').should('have.class','selected');
