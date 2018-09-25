@@ -1,8 +1,8 @@
-before(function(){
-    // cy.visit('https://collaborative-learning.concord.org/branch/master/?appMode=dev');
-    cy.visit('http://localhost:8080/?appMode=demo&demoClass=5&demoUser=student:5&demoOffering=1&problem=1.1');
-
-});
+// before(function(){
+//     // cy.visit('https://collaborative-learning.concord.org/branch/master/?appMode=dev');
+//     cy.visit('http://localhost:8080/?appMode=demo&demoClass=5&demoUser=student:5&demoOffering=1&problem=1.1');
+//
+// });
 
 describe('Test Problems', function(){
     it('will open the specified problem', function(){
@@ -39,8 +39,8 @@ describe('Test Problems', function(){
             }
             ];
         problems.forEach(function(problem){
-            // cy.visit('https://collaborative-learning.concord.org/branch/master/?appMode=dev&problem='+problem.number);
-            cy.visit('http://localhost:8080/?appMode=demo&demoClass=5&demoUser=student:1&demoOffering=1&problem='+problem.number);
+            cy.visit('https://collaborative-learning.concord.org/branch/master/?appMode=demo&demoClass=5&demoUser=student:9&demoOffering=4&problem='+problem.number);
+            // cy.visit('http://localhost:8080/?appMode=demo&demoClass=5&demoUser=student:1&demoOffering=1&problem='+problem.number);
             it('verify Problem title presence and correctness', function(problem){
                 cy.get('.problem').should('contain', problem.title+' '+problem.subtitle);
             });
@@ -49,18 +49,18 @@ describe('Test Problems', function(){
 });
 
 describe('Desktop functionalities', function(){
-    it('will verify that only one tab is open at a time', function(){
-        cy.get('#leftNavTab0').click(); //left nav expand area should be visible
+    it('will verify that only one nav area is open at a time', function(){
+        cy.get('.left-nav > .tabs > .tab:first').click(); //left nav expand area should be visible
         cy.get('.left-nav.expanded').should('be.visible');
-        cy.get('.my-work > .expanded-area').should('not.be.visible');
-        cy.get('[data-test="learning-log-tabs"] > .expanded-area').should('not.be.visible');
+        cy.get('.right-nav>.tabs.expanded').should('not.be.visible');
+        cy.get('.bottom-nav.expanded').should('not.be.visible');
         cy.get('#rightNavTabMy\\ Work').click(); //my work expand area should be visible
         cy.get('.left-nav.expanded').should('not.be.visible');
-        cy.get('.my-work.expanded > .expanded-area').should('be.visible');
-        cy.get('.learning-log.expanded > .expanded-area').should('not.be.visible');
-        cy.get('#learnLogTab').click(); //learning log expand area should be visible
+        cy.get('.right-nav>.tabs.expanded').should('be.visible');
+        cy.get('.bottom-nav.expanded').should('not.be.visible');
+        cy.get('#learningLogTab').click(); //learning log expand area should be visible
         cy.get('.left-nav.expanded').should('not.be.visible');
-        cy.get('.my-work.expanded > .expanded-area').should('not.be.visible');
-        cy.get('.learning-log.expanded > .expanded-area').should('be.visible');
+        cy.get('.right-nav>.tabs.expanded').should('not.be.visible');
+        cy.get('.bottom-nav.expanded').should('be.visible');
     });
 });
