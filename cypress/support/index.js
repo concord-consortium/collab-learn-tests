@@ -24,5 +24,5 @@ import './commands'
 // });
 //
 // before (function(){
-//     cy.visit('https://collaborative-learning.concord.org/branch/master/?devMode=true');
+//     cy.visit('https://collaborative-learning.concord.org/branch/master/?appMode=dev');
 // });

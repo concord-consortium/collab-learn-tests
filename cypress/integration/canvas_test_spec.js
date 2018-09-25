@@ -1,5 +1,6 @@
 before(function(){
-    cy.visit('https://collaborative-learning.concord.org/branch/master/?devMode=true');
+    cy.visit('https://collaborative-learning.concord.org/branch/master/?appMode=dev');
+    //need to have 4 students in a group
 });
 
 context('Test Canvas', function(){
@@ -23,17 +24,12 @@ context('Test Canvas', function(){
            it('verify supports comes up correctly', function(){
 
            })
+           it('verify share button', function(){
+               
+           });
        }) ;
     });
-    context('test the views', function(){
-        describe('test the 1-up view', function(){
 
-        });
-
-        describe('test the 4-up view', function(){
-
-        });
-    });
 
     //This should test the tools in the tool shelf
     context('test the canvas tool shelf', function(){
@@ -43,6 +39,9 @@ context('Test Canvas', function(){
         describe('test the text tool', function(){
 
         });
+        describe('test the graph tool', function(){
+
+        })
     });
 
 });

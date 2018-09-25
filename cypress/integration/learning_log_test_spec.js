@@ -1,5 +1,5 @@
 before(function(){
-    cy.visit('https://collaborative-learning.concord.org/branch/master/?devMode=true');
+    cy.visit('https://collaborative-learning.concord.org/branch/master/?appMode=dev');
 });
 
 describe('Test right tabs', function(){
@@ -12,6 +12,11 @@ describe('Test right tabs', function(){
             //verify that the expanded area title corresponds to the tab label
             //repeat for every tab.
         });
+    });
+    describe('Test saving a canvas',function(){
+       it('will click on save canvas and verify canvas is saved', function(){
+
+       });
     });
 
 });
