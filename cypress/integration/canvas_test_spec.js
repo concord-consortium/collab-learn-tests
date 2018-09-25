@@ -54,8 +54,8 @@ context('Test Canvas', function(){
                 cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .text-tool').last().type('Hello World!');
                 cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .text-tool').last().should('contain', 'Hello World');
                 cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .text-tool').last().focus().click();
-                cy.get('.canvas-area > .canvas > .document-content > .tool-tile.selected').should('have.class','selected');
-                cy.get('.single-workspace >.workspace > .toolbar > .tool.delete').click({force:true});
+                // cy.get('.canvas-area > .canvas > .document-content > .tool-tile.selected').should('have.class','selected');
+                // cy.get('.single-workspace >.workspace > .toolbar > .tool.delete').click({force:true});
 
             });
         });
@@ -76,10 +76,41 @@ context('Test Canvas', function(){
                 cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .geometry-tool > .JXGtext').last().should('contain', 'C' );
                 cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .geometry-tool').last().click();
                 cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .geometry-tool > .JXGtext').last().should('contain', 'D' );
-                cy.get('.canvas-area > .canvas > .document-content > .tool-tile.selected').should('have.class','selected');
-                cy.get('.single-workspace >.workspace > .toolbar > .tool.delete').click({force:true});
+                // cy.get('.canvas-area > .canvas > .document-content > .tool-tile.selected').should('have.class','selected');
+                // cy.get('.single-workspace >.workspace > .toolbar > .tool.delete').click({force:true});
 
             });
+
+        describe('verify that canvas is saved', function(){
+            it('will close and reopen the canvas and verify it looks the same', function() {
+                //open the my work tab
+                //click a different canvas
+                //verify canvas is shown
+                //open the my work tab
+                //click the introduction canvas
+                //verify intro canvas is showing
+                cy.get('#rightNavTabMy\\ Work').click({force:true});
+                cy.get('.list > .list-item[title*="Initial"]').click();
+                cy.get('.single-workspace > .workspace > .titlebar > .title').should('contain', 'Initial');
+                cy.get('#rightNavTabMy\\ Work').click({force:true});
+                cy.get('.list > .list-item[title*="Introduction"]').click();
+                cy.get('.single-workspace > .workspace > .titlebar > .title').should('contain', 'Introduction');
+
+                //verify text element with Hello World in showing
+                cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .text-tool').last().should('contain', 'Hello World');
+                //Verify the graph has 4 points in it
+                cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .geometry-tool > .JXGtext').each(($point, index, $list)=>{}).then(($list)=>{
+                    expect($list).to.have.length(4);
+                })
+                //Delete elements in the canvas
+                cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .text-tool').last().focus().click();
+                cy.get('.canvas-area > .canvas > .document-content > .tool-tile.selected').should('have.class','selected');
+                cy.get('.single-workspace >.workspace > .toolbar > .tool.delete').click({force:true});
+                cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .geometry-tool').last().click();
+                cy.get('.canvas-area > .canvas > .document-content > .tool-tile.selected').should('have.class','selected');
+                cy.get('.single-workspace >.workspace > .toolbar > .tool.delete').click({force:true});
+            });
+        });
         });
     });
 
