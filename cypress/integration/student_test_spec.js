@@ -32,24 +32,46 @@ describe('Check header area for correctness', function(){
 });
 
 describe('Test student join a group', function(){
-    console.log("student will join group")
-    //should be presented with a select a group popup
-    //verify that correct group name comes up in header
-});
+    console.log("student will join group");
+    it('will verify Join Group Dialog comes up', function(){
 
-describe('Test student leave a group', function(){
-    console.log("student will leave the group")
-    //should be presented with a select a group popup
-    //verify that group name reflects you are no longer in a group
-});
+    });
+    it('will create a group', function(){
 
-describe('Test student join a different group', function(){
-    console.log("student will join a different group")
-    //verify the different group name
-});
+    });
+    it('will verify student is an specified group', function(){
 
+    });
+    it('will verify created group is no longer available as a choice in Join Group dialog dropdown', function(){
+
+    });
+    it('will have another student joining an existing group', function(){
+
+    });
+    it('will verify second student is in existing group', function(){
+
+    });
+    it('will create a new group when a student selects a different group', function(){
+
+    });
+    it('will verify no additional students can join group',function(){
+        //need to have two more students join the first existing group
+    });
+    it('will verify a student can switch groups',function(){
+       //have student leave first group and join second group
+    });
+    it('will verify new student can join group when one leaves it', function(){
+      //have new student join the first group
+    });
+});
 
 //Verify that student is logged out of problem session when they log out of portal or session times out.
 describe('Test student logout', function(){
-    console.log("student will log out")
+    console.log("student will log out");
+    it('will verify that student is not logged on and not connected to group', function(){
+        //verify that student icon is grayed out and says disconnected when hovered
+    });
+    it('will verify that student is still part of the group even though not currently logged on', function(){
+        //have another student try to join the group and should be rejected
+    });
 });
