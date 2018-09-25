@@ -23,13 +23,9 @@ describe('Test My Work tabs', function(){
             cy.get('.expanded-area.expanded > .contents > .my-work > .list > .list-item').each(($item,index,$list)=>{
                 let title= $item.text().replace(/[^\x00-\x7F]/g, "");
                 cy.wrap($item).click();
-                cy.wait(1000);
-                cy.log("my-work title is " + title);
-                //
                 cy.get('.single-workspace > .workspace > .titlebar > .title')
                     .then(($canvasTitle)=>{
                         let canvasTitle=$canvasTitle.text();
-                        cy.log("canvas title is " + $canvasTitle.text());
                         expect($canvasTitle.text()).to.contain(title);
                 });
                 cy.get('.right-nav > .tabs > .tab').click();
