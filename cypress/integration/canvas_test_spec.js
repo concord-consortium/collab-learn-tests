@@ -78,10 +78,19 @@ context('Test Canvas', function(){
                 cy.get('.single-workspace > .workspace > .toolbar > .tool.text').click({force: true});
                 cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .text-tool').last().type('Hello World!');
                 cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .text-tool').last().should('contain', 'Hello World');
-                cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .text-tool').last().focus().click();
+
                 // cy.get('.canvas-area > .canvas > .document-content > .tool-tile.selected').should('have.class','selected');
                 // cy.get('.single-workspace >.workspace > .toolbar > .tool.delete').click({force:true});
 
+            });
+            it('clicks the same text field and allows user to edit text', function(){
+                cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .text-tool').last().focus().click();
+                cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .text-tool').last().type('Adding more text to see if it gets added.');
+                cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .text-tool').last().should('contain', 'added');
+                cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .text-tool').last().type('Adding more text to delete');
+                cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .text-tool').last().should('contain', 'delete');
+                cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .text-tool').last().type('{backspace}{backspace}{backspace}{backspace}{backspace}{backspace}{backspace}');
+                cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .text-tool').last().should('not.contain', 'delete');
             });
         });
 
