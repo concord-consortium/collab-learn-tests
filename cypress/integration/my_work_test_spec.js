@@ -10,7 +10,7 @@ before(function(){
 });
 
 describe('Test My Work tabs', function(){
-    it('will verify that opened content is listed in My Work tab space', function(){
+    it('will verify that opened content is listed in My Work tab space', function(){ //still need to verify the titles match the titles from opened canvases
         cy.get('.right-nav > .tabs > .tab').each(($tab, index, $list)=>{
             cy.log('Tab is' + $tab.text());
             cy.wrap($tab).click();
