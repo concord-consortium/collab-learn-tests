@@ -40,8 +40,19 @@ context('Test group functionalities', function(){
 
         });
 
-        describe('test the 2-up view', function(){
+        describe('test sharing and unsharing canvases', function(){
+            it('will share canvas and verify canvas is visible in groupmates 4-up view', function(){
 
+            });
+            it('will unshare canvas and verify canvas is not visible in groupmates 4-up view', function(){
+
+            });
+            it('restore a 4-up canvas where a groupmate has shared a canvas while it was not open', function(){
+
+            });
+            it('restore a 4-up canvas where a groupmate has unshared a canvas while it was not opne', function(){
+
+            });
         });
     });
 });
