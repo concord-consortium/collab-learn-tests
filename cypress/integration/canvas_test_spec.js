@@ -49,7 +49,12 @@ context('Test Canvas', function(){
 
        describe('test footer elements', function(){
            it('verify supports comes up correctly', function(){
-
+               cy.get('.statusbar > .supports > .supports-list > span').each(($support, index, $list)=>{
+                   let label=$support.text();
+                   cy.log('Support is' + $support.text());
+                   cy.wrap($support).click();
+                   cy.get('.visible-supports > .supports-list > div > span').should('contain', label);
+               });
            });
 
             it('verify 2 up button, and correct corresponding view comes up', function(){
