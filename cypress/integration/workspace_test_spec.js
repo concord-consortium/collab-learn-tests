@@ -1,9 +1,3 @@
-// before(function(){
-//     // cy.visit('https://collaborative-learning.concord.org/branch/master/?appMode=dev');
-//     cy.visit('http://localhost:8080/?appMode=demo&demoClass=5&demoUser=student:5&demoOffering=1&problem=1.1');
-//
-// });
-
 describe('Test Problems', function(){
     it('will open the specified problem', function(){
         const problems = [
@@ -36,6 +30,21 @@ describe('Test Problems', function(){
                 number:'2.3',
                 title:'Mouthing Off and Nosing Around',
                 subtitle:'Scale Factors'
+            },
+            {
+                number:'3.1',
+                title: "Rep-Tile Quadrilaterals",
+                subtitle: "Forming Rep-Tiles with Similar Quadrilaterals and Triangles"
+            },
+            {
+                number:'3.2',
+                title: "Designing Under Constraints",
+                subtitle: "Scale Factors and Similar Shapes"
+            },
+            {
+                number:'3.3',
+                title: "Out of Reach",
+                subtitle: "Finding Lengths with Similar Triangles"
             }
             ];
         problems.forEach(function(problem){
