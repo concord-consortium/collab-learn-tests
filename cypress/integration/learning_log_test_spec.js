@@ -1,5 +1,5 @@
 before(function(){
-    cy.visit('https://collaborative-learning.concord.org/branch/master/?appMode=dev');
+    cy.visit('https://collaborative-learning.concord.org/branch/master/?appMode=demo&demoClass=2&demoUser=student:1&demoOffering=4&problem=1.1');
 });
 
 describe('Test right tabs', function(){
@@ -14,7 +14,8 @@ describe('Test right tabs', function(){
         });
     });
     describe('Test saving a canvas',function(){
-       it('will click on save canvas and verify canvas is saved', function(){
+       it('will click on Create and verify canvas is saved', function(){
+           cy.log('need to write this test');
 
        });
     });

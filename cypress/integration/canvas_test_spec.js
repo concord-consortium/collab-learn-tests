@@ -94,6 +94,7 @@ context('Test Canvas', function(){
         describe('test multiple tools in a canvas', function(){
            it('adds additional text tools and graphs onto canvas', function(){
                //figure out how to delete all the tools first before uncommenting this
+               cy.log('need to write this test');
                // cy.get('.single-workspace > .workspace > .toolbar > .tool.text').click({force: true});
                // cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .text-tool').last().type('second text tool');
                // cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .text-tool').last().should('contain', 'second');
@@ -130,11 +131,11 @@ context('Test Canvas', function(){
         });
 
         describe('verify that if user opens same canvas from on left-nav tab, saved canvas opens', function() {
-
+            cy.log('need to write this test');
         });
 
         describe('verify that if user leaves a canvas in four-four up view, restore is also in four up view', function(){
-
+            cy.log('need to write this test');
         });
     });
 
