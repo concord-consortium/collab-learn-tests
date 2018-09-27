@@ -31,7 +31,6 @@ context('Test Canvas', function(){
                cy.get('.workspace > .titlebar > .actions > .icon-up').click();
                cy.get('.canvas-area > .canvas').should('be.visible');
                cy.get('.workspace > .titlebar > .actions > .icon-up1').should('be.visible');
-
                cy.get('.canvas-container.north-east').should('not.be.visible');
            });
 
@@ -46,22 +45,6 @@ context('Test Canvas', function(){
                cy.get('.workspace > .titlebar > .actions > .icon-unshare').should('not.be.visible');
            });
        }) ;
-
-       describe('test footer elements', function(){
-           it('verify supports comes up correctly', function(){
-               cy.get('.statusbar > .supports > .supports-list > span').each(($support, index, $list)=>{
-                   let label=$support.text();
-                   cy.log('Support is' + $support.text());
-                   cy.wrap($support).click();
-                   cy.get('.visible-supports > .supports-list > div > span').should('contain', label);
-               });
-           });
-
-            it('verify 2 up button, and correct corresponding view comes up', function(){
-
-            });
-       });
-    });
 
     context('test the tool palette', function(){
     //This should test the tools in the tool shelf
@@ -108,6 +91,18 @@ context('Test Canvas', function(){
                 cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .geometry-tool').last().click();
                 cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .geometry-tool > .JXGtext').last().should('contain', 'D' );
             });
+        describe('test multiple tools in a canvas', function(){
+           it('adds additional text tools and graphs onto canvas', function(){
+               //figure out how to delete all the tools first before uncommenting this
+               // cy.get('.single-workspace > .workspace > .toolbar > .tool.text').click({force: true});
+               // cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .text-tool').last().type('second text tool');
+               // cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .text-tool').last().should('contain', 'second');
+               // cy.get('.single-workspace > .workspace > .toolbar > .tool.geometry').click({force: true});
+               // cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .geometry-tool').last().click();
+               // cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .geometry-tool').last().click(40,35, {force:true});
+               // cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .geometry-tool > .JXGtext').last().should('contain', 'A' );
+           });
+        });
         });
     });
 
@@ -140,6 +135,40 @@ context('Test Canvas', function(){
 
         describe('verify that if user leaves a canvas in four-four up view, restore is also in four up view', function(){
 
+        });
+    });
+
+    describe('test footer elements', function(){ //moved this to after tool elements have been added to verify that elements still show when in 2-up view
+
+            it('verify supports comes up correctly', function(){
+                cy.get('.statusbar > .supports > .supports-list > span').each(($support, index, $list)=>{
+                    let label=$support.text();
+                    cy.log('Support is' + $support.text());
+                    cy.wrap($support).click();
+                    cy.get('.visible-supports > .supports-list > div > span').should('contain', label);
+                });
+            });
+
+            it('verify 2 up button, and correct corresponding view comes up', function(){
+                cy.get('.statusbar > .actions > .icon-up2').should('be.visible').click();
+                cy.get('.right-workspace > .comparison-placeholder').should('be.visible');
+                cy.get('.left-workspace > .workspace > .canvas-area > .canvas > .document-content').should('be.visible');
+                cy.get('.single-workspace > .workspace > .canvas-area > .canvas > .document-content').should('not.be.visible');
+                cy.get('.left-workspace > .workspace > .statusbar > .actions > .icon-up').should('be.visible').click();
+                cy.get('.right-workspace > .comparison-placeholder').should('not.be.visible');
+                cy.get('.left-workspace > .workspace > .canvas-area > .canvas > .document-content').should('not.be.visible');
+                cy.get('.single-workspace > .workspace > .canvas-area > .canvas > .document-content').should('be.visible');
+            });
+
+            it('verify 2-up button is not visible when canvas is in 4-up view', function(){
+                cy.get('.workspace > .titlebar > .actions > .icon-up1').should('be.visible');
+                cy.get('.canvas-container.north-east').should('not.be.visible');
+                cy.get('.statusbar > .actions > .icon-up2').should('be.visible');
+                cy.get('.workspace > .titlebar > .actions > .icon-up1').click();
+                cy.get('.statusbar > .actions > .icon-up2').should('not.be.visible');
+                cy.get('.workspace > .titlebar > .actions > .icon-up').click();
+                cy.get('.statusbar > .actions > .icon-up2').should('be.visible');
+            });
         });
     });
 
