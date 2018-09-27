@@ -16,7 +16,7 @@ describe('Test right tabs', function(){
     describe('Test saving a canvas',function(){
        it('will click on Create and verify canvas is saved', function(){
            cy.log('need to write this test');
-
+            expect(4).to.equal(3);
        });
     });
 

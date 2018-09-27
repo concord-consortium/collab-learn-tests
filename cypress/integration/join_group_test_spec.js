@@ -36,25 +36,25 @@ describe('Test student join a group', function(){
     });
     it('will verify second student is in existing group', function(){
         cy.log('need to write this test');
-
+        expect(4).to.equal(3);
     });
     it('will create a new group when a student selects a different group', function(){
         cy.log('need to write this test');
-
+        expect(4).to.equal(3);
     });
     it('will verify no additional students can join group',function(){
         //need to have two more students join the first existing group
         cy.log('need to write this test');
-
+        expect(4).to.equal(3);
     });
     it('will verify a student can switch groups',function(){
         //have student leave first group and join second group
         cy.log('need to write this test');
-
+        expect(4).to.equal(3);
     });
     it('will verify new student can join group when one leaves it', function(){
         //have new student join the first group
         cy.log('need to write this test');
-
+        expect(4).to.equal(3);
     });
 });
