@@ -1,8 +1,6 @@
 
 before(function(){
     cy.visit('https://collaborative-learning.concord.org/branch/master/?appMode=demo&demoClass=2&demoUser=student:1&demoOffering=4&problem=1.1');
-    cy.get('#leftNavTab0').click();
-    cy.get('.left-nav-panel > .section > .canvas > .document-content > .buttons > button').click();
 });
 
 context('Test Canvas', function(){
@@ -11,6 +9,8 @@ context('Test Canvas', function(){
 
        describe('test header elements', function(){
            it('verifies header title appears correctly', function(){
+               cy.get('#leftNavTab0').click();
+               cy.get('.left-nav-panel > .section > .canvas > .document-content > .buttons > button').click();
                 cy.get('.workspace > .titlebar > .title').should('contain','Introduction');
            });
 
@@ -115,6 +115,9 @@ context('Test Canvas', function(){
         describe('verify that canvas is saved', function(){
             it('will close and reopen the canvas and verify it looks the same', function() {
                 //open the my work tab, click a different canvas, verify canvas is shown, open the my work tab, click the introduction canvas, verify intro canvas is showing
+                cy.get('#leftNavTab1').click();
+                cy.get('.left-nav-panel > .section > .canvas > .document-content > .buttons > button').click();
+                cy.get('.workspace > .titlebar > .title').should('contain','Initial');
                 cy.get('#rightNavTabMy\\ Work').click({force:true});
                 cy.get('.list > .list-item[title*="Initial"]').click();
                 cy.get('.single-workspace > .workspace > .titlebar > .title').should('contain', 'Initial');
