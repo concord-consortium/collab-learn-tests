@@ -8,10 +8,10 @@ context('Test bottom tabs', function(){
         before(()=>{
             cy.visit('https://collaborative-learning.concord.org/branch/master/?appMode=qa&qaClear=all&fakeClass=1&fakeUser=student:1&fakeOffering=4&problem=1.1&qaGroup=1');
             cy.get('span').should('contain','QA Cleared: OK');
+            cy.visit('https://collaborative-learning.concord.org/branch/master/?appMode=qa&fakeClass=1&fakeUser=student:1&fakeOffering=4&problem=1.1&qaGroup=1');
         });
 
-        it.only('will verify correct tab opens to correct content', function(){
-            cy.visit('https://collaborative-learning.concord.org/branch/master/?appMode=qa&fakeClass=1&fakeUser=student:1&fakeOffering=4&problem=1.1&qaGroup=1');
+        it('will verify correct tab opens to correct content', function(){
             cy.get('.bottom-nav > .tabs > .tab').each(($tab,index,$list)=>{
                 let tabName = $tab.text();  //get the tab label
                 cy.wrap($tab).click({force:true}); //click on tab
@@ -24,6 +24,29 @@ context('Test bottom tabs', function(){
                 cy.get('.bottom-nav > .tabs > .tab').should('contain',tabName).click();//closes the bottom nav tab
             });
         });
+        it.only('will verify restore of already open canvas in workspace', function(){
+            //     //Open Introduction tab
+            //     //Open Introduction canvas
+                cy.get('#leftNavTab0').click({force:true});
+                cy.get('.left-nav-panel > .section > .canvas > .document-content > .buttons > button').click();
+                cy.get('.workspace > .titlebar > .title').should('contain','Introduction');
+            //     //Add a text tool and text
+                cy.get('.single-workspace > .workspace > .toolbar > .tool.text').click({force: true});
+                cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .text-tool').last().type('I will be in the LL_Introduction');
+                cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .text-tool').last().should('contain', 'LL_Introduction');
+            //     //Add a graph tool and a shape
+                cy.get('.single-workspace > .workspace > .toolbar > .tool.geometry').click({force: true});
+                cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .geometry-tool').last().click();
+                cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .geometry-tool').last().click();
+                cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .geometry-tool > .JXGtext').last().should('contain', 'A' );
+                //Open learning log
+                cy.get('#learningLogTab').click();
+                cy.get('.bottom-nav.expanded').should('be.visible');
+                cy.get('#learningLogTab').click(); //close learning log
+                cy.get('.workspace > .titlebar > .title').should('contain','Introduction').and('be.visible');
+
+
+        })
     });
 
     describe('Test create, save and restore a canvas',function(){
@@ -58,7 +81,7 @@ context('Test bottom tabs', function(){
        it('create a new learning log', function(){
            var title='new learning log';
             // cy.get('#learningLogTab').click({force:true});//open Learning log
-            cy.get('.bottom-nav.expanded').should('be.visible'); //verify learning log is expanded and create button will be acc
+            cy.get('.bottom-nav.expanded').should('be.visible'); //verify learning log is expanded and create button will be accessible
            cy.get('.learning-log > .logs > button').should('be.visible').and('contain', 'Create');
             cy.get('.learning-log > .logs > button').should('contain','Create').click();
             cy.get('.dialog > .dialog-container > .dialog-title').should('contain', 'Create Learning Log');
@@ -70,6 +93,8 @@ context('Test bottom tabs', function(){
        it('verify restore of a created learning log', function(){
 
        });
+
+
     });
 
     describe('Test learning log canvases with other canvases', function(){
