@@ -4,7 +4,7 @@ function setup(){
 
 context('Test bottom tabs', function(){
 
-    describe('verify bottom tabs open to correct content', function(){
+    describe('verify bottom tabs open to correct content and right-nav tabs is still clickable', function(){
         before(()=>{
             cy.visit('https://collaborative-learning.concord.org/branch/master/?appMode=qa&qaClear=all&fakeClass=1&fakeUser=student:1&fakeOffering=4&problem=1.1&qaGroup=1');
             cy.get('span').should('contain','QA Cleared: OK');
@@ -16,7 +16,12 @@ context('Test bottom tabs', function(){
                 let tabName = $tab.text();  //get the tab label
                 cy.wrap($tab).click({force:true}); //click on tab
                 cy.get('.bottom-nav.expanded').should('be.visible');
-                cy.get('.bottom-nav > .tabs > .tab').should('contain',tabName).click();
+                cy.get('.right-nav > .tabs > .tab').each(($rightTab,rightIndex,$rightList)=>{ //click on right nav tabs
+                    cy.wrap($rightTab).click({force:true});
+                    cy.get('.right-nav > .tabs.expanded').should('be.visible');
+                    cy.wrap($rightTab).click() //close right nav tab
+                });
+                cy.get('.bottom-nav > .tabs > .tab').should('contain',tabName).click();//closes the bottom nav tab
             });
         });
     });
