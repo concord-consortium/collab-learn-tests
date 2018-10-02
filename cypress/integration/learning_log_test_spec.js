@@ -10,17 +10,13 @@ context('Test bottom tabs', function(){
             cy.get('span').should('contain','QA Cleared: OK');
         });
 
-        it('will verify correct tab opens to correct content', function(){
+        it.only('will verify correct tab opens to correct content', function(){
             cy.visit('https://collaborative-learning.concord.org/branch/master/?appMode=qa&fakeClass=1&fakeUser=student:1&fakeOffering=4&problem=1.1&qaGroup=1');
             cy.get('.bottom-nav > .tabs > .tab').each(($tab,index,$list)=>{
                 let tabName = $tab.text();  //get the tab label
                 cy.wrap($tab).click({force:true}); //click on tab
                 cy.get('.bottom-nav.expanded').should('be.visible');
-                // verify that epanded area is showing
-                //verify that the expanded area title corresponds to the tab label
-                //repeat for every tab.
-                // cy.wait(2000);
-                // cy.wrap($tab).click(); //click on tab to close
+                cy.get('.bottom-nav > .tabs > .tab').should('contain',tabName).click();
             });
         });
     });
@@ -65,6 +61,9 @@ context('Test bottom tabs', function(){
             cy.get('.dialog > .dialog-container > .dialog-contents > .dialog-buttons > #okButton').click();
             cy.get('.bottom-nav > .expanded-area > .contents > .learning-log > .workspaces > .single-workspace > .workspace > .titlebar > .title').should('contain', title);
             cy.get('.learning-log > .logs > .list > .list-item > .info > .title').should('contain',title);
+       });
+       it('verify restore of a created learning log', function(){
+
        });
     });
 
