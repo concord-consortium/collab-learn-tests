@@ -47,30 +47,24 @@ context('Test Canvas', function(){
                cy.log('need to write this test');
                expect(4).to.equal(3);
            });
-
-
        }) ;
 
-    context('test the tool palette', function(){
+    describe('test the tool palette', function(){
     //This should test the tools in the tool shelf
-        describe('test the selection tool', function(){
             it('verify the selection tool becomes active when clicked', function() {
                 cy.get('.single-workspace > .workspace > .toolbar > .tool.select').click()
                     .should('have.class','active');
             });
-        });
 
-        describe('test the text tool', function(){
             it('clicks the text tool and types Hello World', function(){
 
                 cy.get('.single-workspace > .workspace > .toolbar > .tool.text').click({force: true});
                 cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .text-tool').last().type('Hello World!');
                 cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .text-tool').last().should('contain', 'Hello World');
-
+            });
                 // cy.get('.canvas-area > .canvas > .document-content > .tool-tile.selected').should('have.class','selected');
                 // cy.get('.single-workspace >.workspace > .toolbar > .tool.delete').click({force:true});
 
-            });
             it('clicks the same text field and allows user to edit text', function(){
                 cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .text-tool').last().focus().click();
                 cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .text-tool').last().type('Adding more text to see if it gets added.');
@@ -80,9 +74,7 @@ context('Test Canvas', function(){
                 cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .text-tool').last().type('{backspace}{backspace}{backspace}{backspace}{backspace}{backspace}{backspace}');
                 cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .text-tool').last().should('not.contain', 'delete');
             });
-        });
 
-        describe('test the graph tool', function(){
             it('clicks the graph tool and enters four points', function(){
 
                 cy.get('.single-workspace > .workspace > .toolbar > .tool.geometry').click({force: true});
@@ -92,14 +84,11 @@ context('Test Canvas', function(){
                 cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .geometry-tool').last().click(140,70, {force:true});
                 cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .geometry-tool > .JXGtext').last().should('contain', 'B' );
             });
-         describe('test the image tool', function(){ //Currently drag an image into canvas (problem 3.3 has the image)
              it('will test image tool', ()=>{
-                 cy.log('need to write this test');
-                 expect(4).to.equal(3);
+                 cy.get('.single-workspace > .workspace > .toolbar > .tool.image').click({force: true});
+                 cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .image-tool').should('be.visible');
              });
-         });
 
-        describe('test multiple tools in a canvas', function(){
            it('adds additional text, graph, and image onto canvas', function(){
                //figure out how to delete all the tools first before uncommenting this
                cy.log('need to write this test');
@@ -112,8 +101,6 @@ context('Test Canvas', function(){
                // cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .geometry-tool').last().click(40,35, {force:true});
                // cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .geometry-tool > .JXGtext').last().should('contain', 'A' );
            });
-        });
-        });
     });
 
     context('save and restore of canvas', function(){
