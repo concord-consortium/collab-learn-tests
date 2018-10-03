@@ -1,22 +1,21 @@
 before(function(){
-    cy.visit('https://collaborative-learning.concord.org/branch/master/?appMode=demo&demoClass=5&demoUser=student:1&demoOffering=4&problem=1.1');
+    cy.visit('https://collaborative-learning.concord.org/branch/master/?appMode=qa&fakeClass=5&fakeUser=student:1&fakeOffering=4&qaGroup=1&problem=1.1');
 
-        // cy.get('.left-nav > .tabs > .tab').each(($tab, index, $list)=>{
-        //     let title = $tab.text();
-        //     cy.wrap($tab).click();
-        //     cy.get('.left-nav-panel > .section > .canvas > .document-content > .buttons > button').should('contain', title).click();
-        // })
 
 });
 
-describe('Test My Work tabs', function(){
-    it('will verify that opened content is listed in My Work tab space', function(){ //still need to verify the titles match the titles from opened canvases
+describe('Test right nav tabs', function(){
+    function openLeftNavCanvases(){
         cy.get('.left-nav > .tabs > .tab').each(($tab, index, $list)=>{
             let title = $tab.text();
             cy.wrap($tab).click();
             cy.get('.left-nav-panel > .section > .canvas > .document-content > .buttons > button').should('contain', title).click();
         })
+    }
 
+    //This assumes there were canvases previously created from the left nav tabs
+    it('will verify that opened content is listed in My Work tab space', function(){ //still need to verify the titles match the titles from opened canvases
+        openLeftNavCanvases();
         cy.get('.right-nav > .tabs > .tab').each(($tab, index, $list)=>{
             cy.log('Tab is' + $tab.text());
             cy.wrap($tab).click();
@@ -37,4 +36,8 @@ describe('Test My Work tabs', function(){
                 cy.get('.right-nav > .tabs > .tab').click();
             });
     });
+    it('will open correct canvas from Class Work list', function(){ //this assumes there are published work
+        cy.log('need to write this test');
+        expect(4).to.equal(3);
+    })
 });
