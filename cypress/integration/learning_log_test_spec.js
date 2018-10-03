@@ -1,8 +1,25 @@
-function setup(){
-
-}
-
 context('Test bottom tabs', function(){
+    function addTextTile(){
+        cy.get('.learning-log > .workspaces > .single-workspace > .workspace > .toolbar > .tool.text').click({force: true});
+        cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .text-tool').last().type('Hello World!');
+        cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .text-tool').last().should('contain', 'Hello World');
+    }
+    function addGraphTile(){
+            cy.get('.learning-log > .workspaces > .single-workspace > .workspace > .toolbar > .tool.geometry').click({force: true});
+            cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .geometry-tool').last().click();
+            cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .geometry-tool').last().click();
+            cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .geometry-tool > .JXGtext').last().should('contain', 'A' );
+            cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .geometry-tool').last().click(40,35, {force:true});
+            cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .geometry-tool > .JXGtext').last().should('contain', 'B' );
+            cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .geometry-tool').last().click(240,70, {force:true});
+            cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .geometry-tool > .JXGtext').last().should('contain', 'C' );
+            cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .geometry-tool').last().click(40,170, {force:true});
+            cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .geometry-tool > .JXGtext').last().should('contain', 'D' );
+    }
+    function addImageTile(){
+        cy.get('.learning-log > .workspaces > .single-workspace > .workspace > .toolbar > .tool.image').click({force: true});
+
+    }
 
     describe('verify bottom tabs open to correct content and right-nav tabs is still clickable', function(){
         before(()=>{
@@ -24,7 +41,7 @@ context('Test bottom tabs', function(){
                 cy.get('.bottom-nav > .tabs > .tab').should('contain',tabName).click();//closes the bottom nav tab
             });
         });
-        it.only('will verify restore of already open canvas in workspace', function(){
+        it('will verify restore of already open canvas in workspace', function(){
             //     //Open Introduction tab
             //     //Open Introduction canvas
                 cy.get('#leftNavTab0').click({force:true});
@@ -44,8 +61,6 @@ context('Test bottom tabs', function(){
                 cy.get('.bottom-nav.expanded').should('be.visible');
                 cy.get('#learningLogTab').click(); //close learning log
                 cy.get('.workspace > .titlebar > .title').should('contain','Introduction').and('be.visible');
-
-
         })
     });
 
@@ -79,21 +94,70 @@ context('Test bottom tabs', function(){
        // });
 
        it('create a new learning log', function(){
-           var title='new learning log';
-            // cy.get('#learningLogTab').click({force:true});//open Learning log
+           var title='pool';
+            cy.get('#learningLogTab').click({force:true});//open Learning log
             cy.get('.bottom-nav.expanded').should('be.visible'); //verify learning log is expanded and create button will be accessible
-           cy.get('.learning-log > .logs > button').should('be.visible').and('contain', 'Create');
-            cy.get('.learning-log > .logs > button').should('contain','Create').click();
+           cy.get('.learning-log > .logs > button').should('be.visible').and('contain', 'Create').click();
+            // cy.get('.learning-log > .logs > button').should('contain','Create').click();
             cy.get('.dialog > .dialog-container > .dialog-title').should('contain', 'Create Learning Log');
             cy.get('.dialog > .dialog-container > .dialog-contents > .dialog-input > input').type(title);
             cy.get('.dialog > .dialog-container > .dialog-contents > .dialog-buttons > #okButton').click();
             cy.get('.bottom-nav > .expanded-area > .contents > .learning-log > .workspaces > .single-workspace > .workspace > .titlebar > .title').should('contain', title);
             cy.get('.learning-log > .logs > .list > .list-item > .info > .title').should('contain',title);
+            addTextTile();
        });
+
        it('verify restore of a created learning log', function(){
+            cy.get('.learning-log > .logs > .list > .list-item').first().click();
 
        });
 
+       it('will rename a created learning log and verify restore of name and canvas', function(){
+           var renameTitle = 'rename pool';
+           cy.get('.learning-log > .logs > .list > .list-item > .info > [title=pool]').click();
+           cy.get('.dialog > .dialog-container > .dialog-title').should('contain', 'Renaming Learning Log');
+           cy.get('.dialog > .dialog-container > .dialog-contents > .dialog-input > input').clear().type(renameTitle);
+           cy.get('.dialog > .dialog-container > .dialog-contents > .dialog-buttons > #okButton').click();
+           cy.get('.bottom-nav > .expanded-area > .contents > .learning-log > .workspaces > .single-workspace > .workspace > .titlebar > .title').should('contain', renameTitle);
+           cy.get('.learning-log > .logs > .list > .list-item > .info > .title').should('contain',renameTitle);
+       });
+
+       it('will create multiple learning logs, verify thumbnails, and restore them', function(){
+           var log1='deck',
+                log2='slide',
+                log3='lane';
+           //create learning log canvas
+           // deck should have graph tile
+           cy.get('.bottom-nav.expanded').should('be.visible'); //verify learning log is expanded and create button will be accessible
+           cy.get('.learning-log > .logs > button').should('be.visible').and('contain', 'Create').click();
+           cy.get('.dialog > .dialog-container > .dialog-title').should('contain', 'Create Learning Log');
+           cy.get('.dialog > .dialog-container > .dialog-contents > .dialog-input > input').type(log1);
+           cy.get('.dialog > .dialog-container > .dialog-contents > .dialog-buttons > #okButton').click();
+           cy.get('.bottom-nav > .expanded-area > .contents > .learning-log > .workspaces > .single-workspace > .workspace > .titlebar > .title').should('contain', log1);
+           addGraphTile();
+           // slide should have an image
+           cy.get('.bottom-nav.expanded').should('be.visible'); //verify learning log is expanded and create button will be accessible
+           cy.get('.learning-log > .logs > button').should('be.visible').and('contain', 'Create').click();
+           cy.get('.dialog > .dialog-container > .dialog-title').should('contain', 'Create Learning Log');
+           cy.get('.dialog > .dialog-container > .dialog-contents > .dialog-input > input').type(log2);
+           cy.get('.dialog > .dialog-container > .dialog-contents > .dialog-buttons > #okButton').click();
+           cy.get('.bottom-nav > .expanded-area > .contents > .learning-log > .workspaces > .single-workspace > .workspace > .titlebar > .title').should('contain', log2);
+            addImageTile();
+           // lane should be empty
+           cy.get('.bottom-nav.expanded').should('be.visible'); //verify learning log is expanded and create button will be accessible
+           cy.get('.learning-log > .logs > button').should('be.visible').and('contain', 'Create').click();
+           cy.get('.dialog > .dialog-container > .dialog-title').should('contain', 'Create Learning Log');
+           cy.get('.dialog > .dialog-container > .dialog-contents > .dialog-input > input').type(log3);
+           cy.get('.dialog > .dialog-container > .dialog-contents > .dialog-buttons > #okButton').click();
+           cy.get('.bottom-nav > .expanded-area > .contents > .learning-log > .workspaces > .single-workspace > .workspace > .titlebar > .title').should('contain', log3);
+           //verify thumbnails
+           cy.get('.learning-log > .logs > .list > .list-item').should(($itemList)=>{expect($itemList).to.have.length(4)});
+           cy.get('.learning-log > .logs > .list > .list-item').each(($log, index, $loglist)=>{
+               var title = $log.text();
+               cy.wrap($log).click();
+               cy.get('.bottom-nav > .expanded-area > .contents > .learning-log > .workspaces > .single-workspace > .workspace > .titlebar > .title').should('contain', title);
+           })
+       })
 
     });
 

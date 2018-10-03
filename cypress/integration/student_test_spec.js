@@ -3,11 +3,6 @@ var student = '9',
     offering = '4',
     problemSet = '1.1';
 
-before(function(){
-   cy.visit('https://collaborative-learning.concord.org/branch/master/?appMode=demo&demoClass='+classroom+'&demoUser=student:'+student+'&demoOffering='+offering+'&problem='+problemSet);
-   //  cy.visit('http://localhost:8080/?appMode=demo&demoClass=6&demoUser=student:1&demoOffering=1&problem=1.1');
-});
-
 describe('Check header area for correctness', function(){
     // it('will verify if teacher name is correct',function(){
     //

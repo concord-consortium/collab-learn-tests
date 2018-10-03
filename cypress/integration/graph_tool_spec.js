@@ -1,10 +1,6 @@
-before(function(){
-    cy.visit('https://collaborative-learning.concord.org/branch/master/?appMode=demo&demoClass=2&demoUser=student:1&demoOffering=4&problem=1.1');
-});
-
 context('Test Graph Tool', function(){
    describe('user can interact with points on a graph', function(){
-       it('verify user can add points to the graph', function(){
+       it('verify user can add polygons to the graph', function(){
        //set up canvas
        cy.get('#leftNavTab2').click();
        cy.get('.left-nav-panel > .section > .canvas > .document-content > .buttons > button').click();

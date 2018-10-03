@@ -1,15 +1,10 @@
-before(function(){
-    cy.visit('https://collaborative-learning.concord.org/branch/master/?appMode=qa&fakeClass=5&fakeUser=student:1&fakeOffering=4&qaGroup=1&problem=1.1');
-
-
-});
-
 describe('Test right nav tabs', function(){
     function openLeftNavCanvases(){
-        cy.get('.left-nav > .tabs > .tab').each(($tab, index, $list)=>{
+        cy.get('.left-nav > .tabs > .tab').each(($tab, index, $list)=> {
             let title = $tab.text();
-            cy.wrap($tab).click();
+            cy.wrap($tab).click({force:true});
             cy.get('.left-nav-panel > .section > .canvas > .document-content > .buttons > button').should('contain', title).click();
+            cy.get('.single-workspace > .workspace > .titlebar > .title').should('contain', title);
         })
     }
 

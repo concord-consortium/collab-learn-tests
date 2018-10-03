@@ -1,8 +1,4 @@
 context('Test the overall workspace', function(){
-    before(function(){
-        cy.visit('https://collaborative-learning.concord.org/branch/master/?appMode=qa&fakeClass=5&fakeUser=student:1&fakeOffering=1&qaGroup=1&problem=1.1');
-    });
-
     describe('Test loading problem pages', function(){
         it('should load specified problems and tabs successfully', function(){
             const problems = [

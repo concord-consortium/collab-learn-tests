@@ -1,7 +1,3 @@
-before(function(){
-    cy.visit('https://collaborative-learning.concord.org/branch/master/?appMode=qa&fakeClass=2&fakeUser=student:1&fakeOffering=4&qaGroup=1&problem=1.1');
-});
-
 context('Test Canvas', function(){
 
     context('test canvas tools', function(){
