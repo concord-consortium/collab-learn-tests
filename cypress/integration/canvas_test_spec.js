@@ -1,6 +1,5 @@
-
 before(function(){
-    cy.visit('https://collaborative-learning.concord.org/branch/master/?appMode=demo&demoClass=2&demoUser=student:1&demoOffering=4&problem=1.1');
+    cy.visit('https://collaborative-learning.concord.org/branch/master/?appMode=qa&fakeClass=2&fakeUser=student:1&fakeOffering=4&qaGroup=1&problem=1.1');
 });
 
 context('Test Canvas', function(){
@@ -9,7 +8,7 @@ context('Test Canvas', function(){
 
        describe('test header elements', function(){
            it('verifies header title appears correctly', function(){
-               cy.get('#leftNavTab0').click();
+               cy.get('#leftNavTab0').click({force:true});
                cy.get('.left-nav-panel > .section > .canvas > .document-content > .buttons > button').click();
                 cy.get('.workspace > .titlebar > .title').should('contain','Introduction');
            });
@@ -44,6 +43,12 @@ context('Test Canvas', function(){
                cy.get('.workspace > .titlebar > .actions > .icon-share').should('be.visible');
                cy.get('.workspace > .titlebar > .actions > .icon-unshare').should('not.be.visible');
            });
+           it('verify publish button', function(){
+               cy.log('need to write this test');
+               expect(4).to.equal(3);
+           });
+
+
        }) ;
 
     context('test the tool palette', function(){
@@ -86,13 +91,16 @@ context('Test Canvas', function(){
                 cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .geometry-tool > .JXGtext').last().should('contain', 'A' );
                 cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .geometry-tool').last().click(140,70, {force:true});
                 cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .geometry-tool > .JXGtext').last().should('contain', 'B' );
-                cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .geometry-tool').last().click(260,50, {force:true});
-                cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .geometry-tool > .JXGtext').last().should('contain', 'C' );
-                cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .geometry-tool').last().click();
-                cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .geometry-tool > .JXGtext').last().should('contain', 'D' );
             });
+         describe('test the image tool', function(){ //Currently drag an image into canvas (problem 3.3 has the image)
+             it('will test image tool', ()=>{
+                 cy.log('need to write this test');
+                 expect(4).to.equal(3);
+             });
+         });
+
         describe('test multiple tools in a canvas', function(){
-           it('adds additional text tools and graphs onto canvas', function(){
+           it('adds additional text, graph, and image onto canvas', function(){
                //figure out how to delete all the tools first before uncommenting this
                cy.log('need to write this test');
                expect(4).to.equal(3);
@@ -132,13 +140,17 @@ context('Test Canvas', function(){
         });
 
         describe('verify that if user opens same canvas from on left-nav tab, saved canvas opens', function() {
-            cy.log('need to write this test');
-            expect(4).to.equal(3);
+            it('will open section', ()=>{
+                cy.log('need to write this test');
+                expect(4).to.equal(3);
+            });
         });
 
         describe('verify that if user leaves a canvas in four-four up view, restore is also in four up view', function(){
-            cy.log('need to write this test');
-            expect(4).to.equal(3);
+            it('verify restore of 4 up view', ()=>{
+                cy.log('need to write this test');
+                expect(4).to.equal(3);
+            });
         });
     });
 
@@ -173,6 +185,9 @@ context('Test Canvas', function(){
                 cy.get('.workspace > .titlebar > .actions > .icon-up').click();
                 cy.get('.statusbar > .actions > .icon-up2').should('be.visible');
             });
+
+            //add a test for when both views are the same section (Open an intro, put it into workspace, change to 2 up view, drag intro to 2nd space, open intro again, switching back to 1 up view disappears
+
         });
     });
 
