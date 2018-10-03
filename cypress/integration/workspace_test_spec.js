@@ -104,7 +104,7 @@ context('Test the overall workspace', function(){
             cy.get('#rightNavTabMy\\ Work').click(); //my work expand area should be visible
         });
 
-        it.only('will verify that right nav tabs are still visible and clickable when Learning Log is expanded', function(){
+        it('will verify that right nav tabs are still visible and clickable when Learning Log is expanded', function(){
             cy.get('#learningLogTab').click(); //learning log expand area should be visible
             cy.get('.bottom-nav.expanded').should('be.visible');
             cy.get('.right-nav > .tabs > .tab').each(($tab,index, $list) => {
