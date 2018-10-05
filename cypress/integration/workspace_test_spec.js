@@ -123,9 +123,9 @@ context('Test the overall workspace', function(){
                 cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .text-tool').last().type('This is the '+text+ ' in Problem '+problem1);
                 cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .text-tool').last().should('contain', 'Problem '+problem1);
             });
-            cy.wait(1000);
+            cy.wait(3000);
             cy.visit('https://collaborative-learning.concord.org/branch/master/?appMode=qa&fakeClass=5&fakeUser=student:1&fakeOffering=1&qaGroup=1&problem='+problem2);
-            cy.wait(1000);
+            // cy.wait(1000);
             cy.get(tab1).invoke('text').then((text)=>{
                 cy.get(tab1).click({force:true});
                 cy.get('.left-nav-panel > .section > .canvas > .document-content > .buttons > button').click({force:true});
@@ -134,7 +134,7 @@ context('Test the overall workspace', function(){
             });
             cy.wait(1000);
             cy.visit('https://collaborative-learning.concord.org/branch/master/?appMode=qa&fakeClass=4&fakeUser=student:3&fakeOffering=1&qaGroup=1&problem='+problem1);
-            cy.wait(1000);
+            // cy.wait(1000);
             cy.get(tab1).invoke('text').then((text)=>{
                 cy.get(tab1).click({force:true});
                 cy.get('.left-nav-panel > .section > .canvas > .document-content > .buttons > button').click({force:true});
