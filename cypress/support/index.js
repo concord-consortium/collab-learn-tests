@@ -22,5 +22,14 @@ import './commands'
 before(function(){
     const branch = Cypress.env("default");
     const mode = "qa";
-    cy.visit(branch + '?appMode=qa&fakeClass=5&fakeUser=student:1&fakeOffering=1&qaGroup=1&problem=1.1');
+    const problem='2.1';
+    cy.visit('https://collaborative-learning.concord.org/branch/master/?appMode=qa&qaClear=all&fakeClass=1&fakeUser=student:1&fakeOffering=4&problem=1.1&qaGroup=1');
+    cy.get('span').should('contain','QA Cleared: OK');
+    cy.visit(branch + '?appMode='+mode+'&fakeClass=5&fakeUser=student:1&fakeOffering=1&qaGroup=1&problem='+problem);
 });
+
+Cypress.on('uncaught:exception', (err, runnable) => {
+    // returning false here prevents Cypress from
+    // failing the test
+    return false
+})
