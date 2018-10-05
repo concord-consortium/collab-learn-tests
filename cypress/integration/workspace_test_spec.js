@@ -107,8 +107,43 @@ context('Test the overall workspace', function(){
                 cy.wrap($tab).click();//click on tab (check to see if this is the first time the tab is clicked, because the second click to the tab will close the expanded area
                 cy.get('.right-nav>.tabs.expanded').should('be.visible');
             })
-
         });
+
+        it('will verify canvases do not persist between problems', function(){
+            let problem1='1.1',
+                problem2='2.1';
+
+            cy.visit('https://collaborative-learning.concord.org/branch/master/?appMode=qa&fakeClass=4&fakeUser=student:3&fakeOffering=1&qaGroup=1&problem='+problem1);
+            let tab1 ='#leftNavTab0';
+            cy.get(tab1).invoke('text').then((text)=>{
+                cy.get(tab1).click({force:true});
+                cy.get('.left-nav-panel > .section > .canvas > .document-content > .buttons > button').click({force:true});
+                cy.get('.document > .titlebar > .title').should('contain',text);
+                cy.get('.single-workspace > .document > .toolbar > .tool.text').click({force: true});
+                cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .text-tool').last().type('This is the '+text+ ' in Problem '+problem1);
+                cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .text-tool').last().should('contain', 'Problem '+problem1);
+            });
+            cy.wait(1000);
+            cy.visit('https://collaborative-learning.concord.org/branch/master/?appMode=qa&fakeClass=5&fakeUser=student:1&fakeOffering=1&qaGroup=1&problem='+problem2);
+            cy.wait(1000);
+            cy.get(tab1).invoke('text').then((text)=>{
+                cy.get(tab1).click({force:true});
+                cy.get('.left-nav-panel > .section > .canvas > .document-content > .buttons > button').click({force:true});
+                cy.get('.document > .titlebar > .title').should('contain',text);
+                cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .text-tool').should('not.exist');
+            });
+            cy.wait(1000);
+            cy.visit('https://collaborative-learning.concord.org/branch/master/?appMode=qa&fakeClass=4&fakeUser=student:3&fakeOffering=1&qaGroup=1&problem='+problem1);
+            cy.wait(1000);
+            cy.get(tab1).invoke('text').then((text)=>{
+                cy.get(tab1).click({force:true});
+                cy.get('.left-nav-panel > .section > .canvas > .document-content > .buttons > button').click({force:true});
+                cy.get('.document > .titlebar > .title').should('contain',text);
+                cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .text-tool').last().should('contain', 'Problem '+problem1);
+                cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .text-tool').last().click();
+                cy.get('.single-workspace > .document > .toolbar > .tool.delete').click();//clean up
+            });
+        })
 
     });
 });
