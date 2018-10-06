@@ -1,7 +1,18 @@
 context('Test Canvas', function(){
+    function createLearningLog(){
+        var title='pool';
+        cy.get('#learningLogTab').click({force:true});//open Learning log
+        cy.get('.bottom-nav.expanded').should('be.visible'); //verify learning log is expanded and create button will be accessible
+        cy.get('.learning-log > .logs > button').should('be.visible').and('contain', 'Create').click();
+        // cy.get('.learning-log > .logs > button').should('contain','Create').click();
+        cy.get('.dialog > .dialog-container > .dialog-title').should('contain', 'Create Learning Log');
+        cy.get('.dialog > .dialog-container > .dialog-contents > .dialog-input > input').type(title);
+        cy.get('.dialog > .dialog-container > .dialog-contents > .dialog-buttons > #okButton').click();
+        cy.get('.bottom-nav > .expanded-area > .contents > .learning-log > .workspaces > .single-workspace > .document > .titlebar > .title').should('contain', title);
+        cy.get('.learning-log > .logs > .list > .list-item > .info > .title').should('contain',title);
+    }
 
     context('test canvas tools', function(){
-
        describe('test header elements', function(){
            it('verifies header title appears correctly', function(){
                cy.get('#leftNavTab0').click({force:true});
@@ -231,8 +242,18 @@ context('Test Canvas', function(){
             });
 
             it('verify canvas side by side in right side 2 up view', function(){
+                //open the 2up view
+                cy.get('.statusbar > .actions > .icon-up2').should('be.visible').click();
+                cy.get('.right-workspace > .comparison-placeholder').should('be.visible');
+                //verify that canvas is in the left side workspace
+                //add a canvas to the rightside workspace from My Work
+                //verify tool palette is not present in the rightside workspace
+                //add a canvas from Class work to rightside workspace
+                //add a canvas from the Learning log to the rightside workspace
 
             });
+
+            //TODO add a test for dragging canvas to the left sde workspace
 
             //TODO: add a test for when both views are the same section (Open an intro, put it into workspace, change to 2 up view, drag intro to 2nd space, open intro again, switching back to 1 up view disappears
             //from https://www.pivotaltracker.com/story/show/160826065
