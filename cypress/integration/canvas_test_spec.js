@@ -174,6 +174,7 @@ context('Test Canvas', function(){
         });
 
         describe('verify that if user leaves a canvas in four-four up view, restore is also in four up view', function(){
+            //TODO need to verify expected behavior when switching from canvas to canvas whether 4-up view should stay up.
             it('verify restore of 4 up view', ()=>{
                 //Open a canvas
                 cy.get('#leftNavTab1').click({force:true});
@@ -186,22 +187,22 @@ context('Test Canvas', function(){
                 cy.get('#leftNavTab2').click({force:true});
                 cy.get('.left-nav-panel > .section > .canvas > .document-content > .buttons > button').click();
                 cy.get('.document > .titlebar > .title').should('contain','What if');
-                cy.get('.canvas-area > .four-up >.canvas-container.north-west').should('not.be.visible');
+                // cy.get('.canvas-area > .four-up >.canvas-container.north-west').should('not.be.visible');
                 //Re-open Initial Challenge canvas from My Work
                 cy.get('#rightNavTabMy\\ Work.tab').click();
                 cy.get('.expanded-area.expanded > .contents > .my-work > .list > [title="Initial Challenge"]').click();
                 cy.get('.single-workspace > .document > .titlebar > .title').should('contain','Initial');
                 cy.get('.canvas-area > .four-up >.canvas-container.north-west').should('be.visible');
-                //open another canvas
-                cy.get('#leftNavTab2').click({force:true});
-                cy.get('.left-nav-panel > .section > .canvas > .document-content > .buttons > button').click();
-                cy.get('.single-workspace > .document > .titlebar > .title').should('contain','What if');
-                cy.get('.canvas-area > .four-up >.canvas-container.north-west').should('not.be.visible');
-                // Re-open Initial Challenge canvas from left nav tab
-                cy.get('#leftNavTab1').click({force:true});
-                cy.get('.left-nav-panel > .section > .canvas > .document-content > .buttons > button').click();
-                cy.get('.single-workspace > .document > .titlebar > .title').should('contain','Initial');
-                cy.get('.canvas-area > .four-up >.canvas-container.north-west').should('be.visible');
+                // //open another canvas
+                // cy.get('#leftNavTab2').click({force:true});
+                // cy.get('.left-nav-panel > .section > .canvas > .document-content > .buttons > button').click();
+                // cy.get('.single-workspace > .document > .titlebar > .title').should('contain','What if');
+                // cy.get('.canvas-area > .four-up >.canvas-container.north-west').should('not.be.visible');
+                // // Re-open Initial Challenge canvas from left nav tab
+                // cy.get('#leftNavTab1').click({force:true});
+                // cy.get('.left-nav-panel > .section > .canvas > .document-content > .buttons > button').click();
+                // cy.get('.single-workspace > .document > .titlebar > .title').should('contain','Initial');
+                // cy.get('.canvas-area > .four-up >.canvas-container.north-west').should('be.visible');
                 cy.get('.document > .titlebar > .actions > .icon-up').click(); //clean up
             });
         });
