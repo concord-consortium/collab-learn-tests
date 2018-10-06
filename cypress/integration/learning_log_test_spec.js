@@ -60,34 +60,6 @@ context('Test bottom tabs', function(){
     });
 
     describe('Test create, save and restore a canvas',function(){
-       // it('will setup for later tests', function(){
-       //     //Open Introduction tab
-       //     //Open Introduction canvas
-       //     cy.get('#leftNavTab0').click({force:true});
-       //     cy.get('.left-nav-panel > .section > .canvas > .document-content > .buttons > button').click();
-       //     cy.get('.workspace > .titlebar > .title').should('contain','Introduction');
-       //     //Add a text tool and text
-       //     cy.get('.single-workspace > .document > .toolbar > .tool.text').click({force: true});
-       //     cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .text-tool').last().type('I will be in the LL_Introduction');
-       //     cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .text-tool').last().should('contain', 'LL_Introduction');
-       //     //Add a graph tool and a shape
-       //     cy.get('.single-workspace > .document > .toolbar > .tool.geometry').click({force: true});
-       //     cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .geometry-tool').last().click();
-       //     cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .geometry-tool').last().click();
-       //     cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .geometry-tool > .JXGtext').last().should('contain', 'A' );
-       //     cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .geometry-tool').last().click(40,35, {force:true});
-       //     cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .geometry-tool > .JXGtext').last().should('contain', 'B' );
-       //     cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .geometry-tool').last().click(240,70, {force:true});
-       //     cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .geometry-tool > .JXGtext').last().should('contain', 'C' );
-       //     cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .geometry-tool').last().click(40,170, {force:true});
-       //     cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .geometry-tool > .JXGtext').last().should('contain', 'D' );
-       //     //Open Introduction tab
-       //     cy.get('#leftNavTab0').click();
-       //     //Drag image from tab to canvas
-       //     cy.get('.left-nav.expanded > div.expanded-area.expanded > .left-nav-panel > .section > .canvas > .document-content > .tool-tile > .image-tool > img').trigger('mousedown',{which:1}).trigger('mousemove',{clientX: 1660, clientY: 475}).trigger('mouseup',{force:true});
-       //     cy.get('#leftNavTab0').click(); //close tab
-       // });
-
        it('create a new learning log', function(){
            var title='pool';
             cy.get('#learningLogTab').click({force:true});//open Learning log
