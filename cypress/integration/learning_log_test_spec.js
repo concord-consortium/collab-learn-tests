@@ -22,11 +22,6 @@ context('Test bottom tabs', function(){
     }
 
     describe('verify bottom tabs open to correct content and right-nav tabs is still clickable', function(){
-        before(()=>{
-            cy.visit('https://collaborative-learning.concord.org/branch/master/?appMode=qa&qaClear=all&fakeClass=1&fakeUser=student:1&fakeOffering=4&problem=1.1&qaGroup=1');
-            cy.get('span').should('contain','QA Cleared: OK');
-            cy.visit('https://collaborative-learning.concord.org/branch/master/?appMode=qa&fakeClass=1&fakeUser=student:1&fakeOffering=4&problem=1.1&qaGroup=1');
-        });
 
         it('will verify correct tab opens to correct content', function(){
             cy.get('.bottom-nav > .tabs > .tab').each(($tab,index,$list)=>{
@@ -46,7 +41,7 @@ context('Test bottom tabs', function(){
             //     //Open Introduction canvas
                 cy.get('#leftNavTab0').click({force:true});
                 cy.get('.left-nav-panel > .section > .canvas > .document-content > .buttons > button').click();
-                cy.get('.workspace > .titlebar > .title').should('contain','Introduction');
+                cy.get('.document > .titlebar > .title').should('contain','Introduction');
             //     //Add a text tool and text
                 cy.get('.single-workspace > .document > .toolbar > .tool.text').click({force: true});
                 cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .text-tool').last().type('I will be in the LL_Introduction');
@@ -60,7 +55,7 @@ context('Test bottom tabs', function(){
                 cy.get('#learningLogTab').click();
                 cy.get('.bottom-nav.expanded').should('be.visible');
                 cy.get('#learningLogTab').click(); //close learning log
-                cy.get('.workspace > .titlebar > .title').should('contain','Introduction').and('be.visible');
+                cy.get('.document > .titlebar > .title').should('contain','Introduction').and('be.visible');
         })
     });
 
@@ -152,11 +147,12 @@ context('Test bottom tabs', function(){
            cy.get('.bottom-nav > .expanded-area > .contents > .learning-log > .workspaces > .single-workspace > .document > .titlebar > .title').should('contain', log3);
            //verify thumbnails
            cy.get('.learning-log > .logs > .list > .list-item').should(($itemList)=>{expect($itemList).to.have.length(4)});
-           cy.get('.learning-log > .logs > .list > .list-item').each(($log, index, $loglist)=>{
-               var title = $log.text();
-               cy.wrap($log).click();
+           cy.get('.learning-log > .logs > .list > .list-item > .info > .title').each(($log, index, $loglist)=>{
+               let title = $log.text();
+               cy.wrap($log).parent().parent().click();
                cy.get('.bottom-nav > .expanded-area > .contents > .learning-log > .workspaces > .single-workspace > .document > .titlebar > .title').should('contain', title);
            })
+
        })
 
     });
