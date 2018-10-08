@@ -1,13 +1,30 @@
 context('Test group functionalities', function(){
     context('test the views', function(){
         describe('set-up for 4-up view tests', function(){
-            it('will enter text into the 1-up canvas', function(){
-                cy.visit('https://collaborative-learning.concord.org/branch/master/?appMode=demo&demoClass=5&demoUser=student:1&demoOffering=4&problem=1.1');
+            it.only('will enter text into the 1-up canvas', function(){
+                // Manually create students to go into Group
+                let qaClass = 10,
+                    qaOffering = 10,
+                    qaGroup = 10,
+                    problem = 2.3;
+                cy.visit('https://collaborative-learning.concord.org/branch/master/?appMode=qa&qaGroup='+qaGroup+'&fakeClass='+qaClass+'&fakeUser=student:15&fakeOffering='+qaOffering+'&problem=2.3');
+                cy.wait(5000);
+                cy.visit('https://collaborative-learning.concord.org/branch/master/?appMode=qa&qaGroup='+qaGroup+'&fakeClass='+qaClass+'&fakeUser=student:16&fakeOffering='+qaOffering+'&problem=2.3');
+                cy.wait(5000);
+                cy.visit('https://collaborative-learning.concord.org/branch/master/?appMode=qa&qaGroup='+qaGroup+'&fakeClass='+qaClass+'&fakeUser=student:17&fakeOffering='+qaOffering+'&problem=2.3');
+                cy.wait(5000);
+                cy.visit('https://collaborative-learning.concord.org/branch/master/?appMode=qa&qaGroup='+qaGroup+'&fakeClass='+qaClass+'&fakeUser=student:18&fakeOffering='+qaOffering+'&problem=2.3');
+                cy.wait(1000);
+                //verify Group num and there are 4 students in the group
+                cy.get('.app-container > .header > .group > .name').should('contain','Group 10');
+                cy.get('.app-container > .header > .group > .members > .member').each(($member,index, $list)=>{
+                    expect(['S15','S16','S17','S18']).to.include($member.text());
+                });
                 cy.get('#leftNavTab3').click();
                 cy.get('.left-nav-panel > .section > .canvas > .document-content > .buttons > button').click();
-                cy.get('.single-workspace > .workspace > .toolbar > .tool.text').click({force: true});
-                cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .text-tool').last().type('This is to test the 4-up view');
-                cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .text-tool').last().should('contain', '4-up');
+                cy.get('.single-workspace > .document > .toolbar > .tool.text').click({force: true});
+                cy.get('.canvas-area > .canvas > .document-content > .tile-row > .tool-tile > .text-tool').last().type('This is to test the 4-up view');
+                cy.get('.canvas-area > .canvas > .document-content > .tile-row > .tool-tile > .text-tool').last().should('contain', '4-up');
             });
             it('will change single canvas to 4-up view', function(){
                 cy.get('.workspace > .titlebar > .actions > .icon-up1').click();
