@@ -1,6 +1,6 @@
 context('Test Canvas', function(){
-    function createLearningLog(){
-        var title='pool';
+    function createLearningLog(title){
+        // var title='pool';
         cy.get('#learningLogTab').click({force:true});//open Learning log
         cy.get('.bottom-nav.expanded').should('be.visible'); //verify learning log is expanded and create button will be accessible
         cy.get('.learning-log > .logs > button').should('be.visible').and('contain', 'Create').click();
@@ -8,7 +8,6 @@ context('Test Canvas', function(){
         cy.get('.dialog > .dialog-container > .dialog-title').should('contain', 'Create Learning Log');
         cy.get('.dialog > .dialog-container > .dialog-contents > .dialog-input > input').type(title);
         cy.get('.dialog > .dialog-container > .dialog-contents > .dialog-buttons > #okButton').click();
-        cy.get('.bottom-nav > .expanded-area > .contents > .learning-log > .workspaces > .single-workspace > .document > .titlebar > .title').should('contain', title);
         cy.get('.learning-log > .logs > .list > .list-item > .info > .title').should('contain',title);
     }
 
@@ -249,6 +248,8 @@ context('Test Canvas', function(){
                 cy.get('.right-workspace > .comparison-placeholder').should('be.visible');
                 //verify that canvas is in the left side workspace
                 cy.get('.left-workspace > .document > .titlebar > .title').should('contain','What if');
+                //verify tool palette is present in left side workspace
+                cy.get('.left-workspace > .document > .toolbar').should('be.visible');
                 //add a canvas to the rightside workspace from My Work
                 cy.get('#rightNavTabMy\\ Work').click();
                 cy.get('.right-nav > .expanded-area.expanded > .contents > .my-work > .list > [title="Initial Challenge"]').click();
@@ -261,7 +262,41 @@ context('Test Canvas', function(){
                     let title = $el.text();
                     cy.get('.right-nav > .expanded-area.expanded > .contents > .class-work > .list > .list-item').click();
                     cy.get('.right-workspace > .document > .titlebar > .title').should('contain',title);
+                });
+            });
+
+            it('verify learning log canvas side by side in right side 2 up view', function() {
+                createLearningLog('pool'); //setup
+                //open 2up view
+                cy.get('.statusbar > .actions > .icon-up2').should('be.visible').click();
+                cy.get('.right-workspace > .comparison-placeholder').should('be.visible');
+                //verify that canvas is in the left side workspace
+                cy.get('.left-workspace > .document > .titlebar > .title').should('contain','pool');
+                //verify that tool palette is present in left side workspace
+                cy.get('.left-workspace > .document > .toolbar').should('be.visible');
+                //add a canvas to the right side workspace from My Work
+                cy.get('#rightNavTabMy\\ Work').click();
+                cy.get('.right-nav > .expanded-area.expanded > .contents > .my-work > .list > [title="Initial Challenge"]').click();
+                cy.get('.right-workspace > .document > .titlebar > .title').should('contain','Initial');
+                //verify tool palette is not present in the right side workspace
+                cy.get('.right-workspace > .document > .toolbar').should('not.exist');
+                //add a canvas to the right side workspace from Class Work
+                cy.get('#rightNavTabClass\\ Work').click();
+                cy.get('.right-nav > .expanded-area.expanded > .contents > .class-work > .list > .list-item > .info > div').first().then(($el)=>{
+                    let title = $el.text();
+                    cy.get('.right-nav > .expanded-area.expanded > .contents > .class-work > .list > .list-item').click();
+                    cy.get('.right-workspace > .document > .titlebar > .title').should('contain',title);
+                });
+                //create second learning log to put up in 2 up view
+                cy.get('#learningLogTab').click({force:true});//close learning log area because function opens it again
+                createLearningLog('slide');
+                //add a canvas to the right side workspace from Learning log
+                cy.get('.learning-log > .logs > .list > .list-item > .info > [title="slide"]').then(($log)=>{
+                    let logTitle = $log.text();
+                    cy.get('.learning-log > .logs > .list > .list-item > .info > [title="slide"]').parent().parent().click();
+                    cy.get('.right-workspace > .document > .titlebar > .title').should('contain',logTitle);
                 })
+
 
             });
 
