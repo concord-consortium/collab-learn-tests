@@ -70,59 +70,57 @@ context('Test Canvas', function(){
             it('clicks the text tool and types Hello World', function(){
 
                 cy.get('.single-workspace > .document > .toolbar > .tool.text').click({force: true});
-                cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .text-tool').last().type('Hello World!');
-                cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .text-tool').last().should('contain', 'Hello World');
+                cy.get('.single-workspace > .document > .canvas-area > .canvas > .document-content > .tile-row > .tool-tile > .text-tool').last().type('Hello World!');
+                cy.get('.canvas-area > .canvas > .document-content > .tile-row >.tool-tile > .text-tool').last().should('contain', 'Hello World');
             });
                 // cy.get('.canvas-area > .canvas > .document-content > .tool-tile.selected').should('have.class','selected');
                 // cy.get('.single-workspace >.document > .toolbar > .tool.delete').click({force:true});
 
             it('clicks the same text field and allows user to edit text', function(){
-                cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .text-tool').last().focus().click();
-                cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .text-tool').last().type('Adding more text to see if it gets added.');
-                cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .text-tool').last().should('contain', 'added');
-                cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .text-tool').last().type('Adding more text to delete');
-                cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .text-tool').last().should('contain', 'delete');
-                cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .text-tool').last().type('{backspace}{backspace}{backspace}{backspace}{backspace}{backspace}{backspace}');
-                cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .text-tool').last().should('not.contain', 'delete');
+                cy.get('.canvas-area > .canvas > .document-content > .tile-row > .tool-tile > .text-tool').last().focus().click();
+                cy.get('.canvas-area > .canvas > .document-content > .tile-row > .tool-tile > .text-tool').last().type('Adding more text to see if it gets added.');
+                cy.get('.canvas-area > .canvas > .document-content > .tile-row> .tool-tile > .text-tool').last().should('contain', 'added');
+                cy.get('.canvas-area > .canvas > .document-content > .tile-row> .tool-tile > .text-tool').last().type('Adding more text to delete');
+                cy.get('.canvas-area > .canvas > .document-content > .tile-row> .tool-tile > .text-tool').last().should('contain', 'delete');
+                cy.get('.canvas-area > .canvas > .document-content > .tile-row> .tool-tile > .text-tool').last().type('{backspace}{backspace}{backspace}{backspace}{backspace}{backspace}{backspace}');
+                cy.get('.canvas-area > .canvas > .document-content > .tile-row > .tool-tile > .text-tool').last().should('not.contain', 'delete');
             });
 
             it('clicks the graph tool and enters four points', function(){
 
                 cy.get('.single-workspace > .document > .toolbar > .tool.geometry').click({force: true});
-                cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .geometry-tool').last().click();
-                cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .geometry-tool').last().click(40,35, {force:true});
-                cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .geometry-tool > .JXGtext').last().should('contain', 'A' );
-                cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .geometry-tool').last().click(140,70, {force:true});
-                cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .geometry-tool > .JXGtext').last().should('contain', 'B' );
+                cy.get('.canvas-area > .canvas > .document-content > .tile-row> .tool-tile > .geometry-tool').last().click();
+                cy.get('.canvas-area > .canvas > .document-content > .tile-row> .tool-tile > .geometry-tool').last().click();
+                cy.get('.canvas-area > .canvas > .document-content > .tile-row> .tool-tile > .geometry-tool > .JXGtext').last().should('contain', 'A' );
+                cy.get('.canvas-area > .canvas > .document-content > .tile-row> .tool-tile > .geometry-tool').last().click(140,70, {force:true});
+                cy.get('.canvas-area > .canvas > .document-content > .tile-row> .tool-tile > .geometry-tool > .JXGtext').last().should('contain', 'B' );
             });
              it('will test image tool', ()=>{
                  cy.get('.single-workspace > .document > .toolbar > .tool.image').click({force: true});
-                 cy.get('.canvas-area > .canvas').scrollTo('bottom');
-                 cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .image-tool').should('be.visible');
+                 // cy.get('.canvas-area > .canvas').scrollTo('bottom');
+                 cy.get('.canvas-area > .canvas > .document-content > .tile-row> .tool-tile > .image-tool').should('be.visible');
              });
 
            it('adds additional text, graph, and image onto canvas and verify scrolling', function(){
                //figure out how to delete all the tools first before uncommenting this
                cy.get('.single-workspace > .document > .toolbar > .tool.text').click({force: true});
-               cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .text-tool').last().type('second text tool');
-               cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .text-tool').last().should('contain', 'second');
+               cy.get('.canvas-area > .canvas > .document-content > .tile-row> .tool-tile > .text-tool').last().type('second text tool');
+               cy.get('.canvas-area > .canvas > .document-content > .tile-row> .tool-tile > .text-tool').last().should('contain', 'second');
                cy.get('.single-workspace > .document > .toolbar > .tool.geometry').click({force: true});
-               cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .geometry-tool').last().click();
-               cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .geometry-tool').last().click(40,35, {force:true});
-               cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .geometry-tool > .JXGtext').last().should('contain', 'A' );
+               cy.get('.canvas-area > .canvas > .document-content > .tile-row> .tool-tile > .geometry-tool').last().click();
+               cy.get('.canvas-area > .canvas > .document-content > .tile-row> .tool-tile > .geometry-tool').last().click(40,35, {force:true});
+               cy.get('.canvas-area > .canvas > .document-content > .tile-row> .tool-tile > .geometry-tool > .JXGtext').last().should('contain', 'A' );
                cy.get('.single-workspace > .document > .toolbar > .tool.image').click({force: true});
                cy.get('.single-workspace > .document > .toolbar > .tool.text').click({force: true});
-               cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .text-tool').last().type('second text tool');
-               cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .text-tool').last().should('contain', 'second');
+               cy.get('.canvas-area > .canvas > .document-content > .tile-row> .tool-tile > .text-tool').last().type('second text tool');
+               cy.get('.canvas-area > .canvas > .document-content > .tile-row> .tool-tile > .text-tool').last().should('contain', 'second');
                cy.get('.single-workspace > .document > .toolbar > .tool.geometry').click({force: true});
-               cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .geometry-tool').last().click();
-               cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .geometry-tool').last().click(40,35, {force:true});
-               cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .geometry-tool > .JXGtext').last().should('contain', 'A' );
+               cy.get('.canvas-area > .canvas > .document-content > .tile-row> .tool-tile > .geometry-tool').last().click();
+               cy.get('.canvas-area > .canvas > .document-content > .tile-row> .tool-tile > .geometry-tool').last().click(40,35, {force:true});
+               cy.get('.canvas-area > .canvas > .document-content > .tile-row> .tool-tile > .geometry-tool > .JXGtext').last().should('contain', 'A' );
                cy.get('.single-workspace > .document > .toolbar > .tool.image').click({force: true});
-               cy.get('.canvas-area > .canvas').scrollTo('bottom');   // Scroll 'sidebar' to its bottom
-               cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .image-tool').last().should('be.visible');
-               cy.get('.canvas-area > .canvas').scrollTo('top') ;  // Scroll 'sidebar' to its bottom
-               cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .text-tool').first().should('be.visible');
+               // cy.get('.canvas-area > .canvas').scrollTo('bottom');   // Scroll 'sidebar' to its bottom
+               // cy.get('.canvas-area > .canvas').scrollTo('top') ;  // Scroll 'sidebar' to its bottom
            });
            // TODO:4-up view canvas selector does not work in cypress even though it works in Chrome. it currently selects the entire canvas and not the scaled one
            // it('verifies scrolling in 4up view', function(){
@@ -151,9 +149,9 @@ context('Test Canvas', function(){
                 cy.get('.single-workspace > .document > .titlebar > .title').should('contain', 'Introduction');
 
                 //verify text element with Hello World in showing
-                cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .text-tool').first().should('contain', 'Hello World');
+                cy.get('.canvas-area > .canvas > .document-content > .tile-row> .tool-tile > .text-tool').first().should('contain', 'Hello World');
                 //Verify the graph has 4 points in it
-                cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .geometry-tool > .JXGtext').each(($point, index, $list)=>{}).then(($list)=>{
+                cy.get('.canvas-area > .canvas > .document-content > .tile-row> .tool-tile > .geometry-tool > .JXGtext').each(($point, index, $list)=>{}).then(($list)=>{
                     expect($list).to.have.length(4);
                 });
             });
@@ -165,9 +163,9 @@ context('Test Canvas', function(){
                 cy.get('.left-nav-panel > .section > .canvas > .document-content > .buttons > button').click();
                 cy.get('.single-workspace > .document > .titlebar > .title').should('contain','Introduction');
                 //verify text element with Hello World in showing
-                cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .text-tool').first().should('contain', 'Hello World');
+                cy.get('.canvas-area > .canvas > .document-content > .tile-row> .tool-tile > .text-tool').first().should('contain', 'Hello World');
                 //Verify the graph has 4 points in it
-                cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .geometry-tool > .JXGtext').each(($point, index, $list)=>{}).then(($list)=> {
+                cy.get('.canvas-area > .canvas > .document-content > .tile-row> .tool-tile > .geometry-tool > .JXGtext').each(($point, index, $list)=>{}).then(($list)=> {
                     expect($list).to.have.length(4);
                 });
             });
@@ -244,13 +242,26 @@ context('Test Canvas', function(){
 
             it('verify canvas side by side in right side 2 up view', function(){
                 //open the 2up view
+                cy.get('#leftNavTab2').click();
+                cy.get('.left-nav-panel > .section > .canvas > .document-content > .buttons > button').click();
+                cy.get('.single-workspace > .document > .titlebar > .title').should('contain','What if');
                 cy.get('.statusbar > .actions > .icon-up2').should('be.visible').click();
                 cy.get('.right-workspace > .comparison-placeholder').should('be.visible');
                 //verify that canvas is in the left side workspace
+                cy.get('.left-workspace > .document > .titlebar > .title').should('contain','What if');
                 //add a canvas to the rightside workspace from My Work
+                cy.get('#rightNavTabMy\\ Work').click();
+                cy.get('.right-nav > .expanded-area.expanded > .contents > .my-work > .list > [title="Initial Challenge"]').click();
+                cy.get('.right-workspace > .document > .titlebar > .title').should('contain','Initial');
                 //verify tool palette is not present in the rightside workspace
+                cy.get('.right-workspace > .document > .toolbar').should('not.exist');
                 //add a canvas from Class work to rightside workspace
-                //add a canvas from the Learning log to the rightside workspace
+                cy.get('#rightNavTabClass\\ Work').click();
+                cy.get('.right-nav > .expanded-area.expanded > .contents > .class-work > .list > .list-item > .info > div').first().then(($el)=>{
+                    let title = $el.text();
+                    cy.get('.right-nav > .expanded-area.expanded > .contents > .class-work > .list > .list-item').click();
+                    cy.get('.right-workspace > .document > .titlebar > .title').should('contain',title);
+                })
 
             });
 
@@ -294,32 +305,32 @@ context('Test Canvas', function(){
         it('will delete elements from canvas', function(){
             // //Delete elements in the canvas
 
-            cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .text-tool').last().focus().click();
-            cy.get('.canvas-area > .canvas > .document-content > .tool-tile.selected').should('have.class','selected');
+            cy.get('.canvas-area > .canvas > .document-content > .tile-row> .tool-tile > .text-tool').last().focus().click();
+            cy.get('.canvas-area > .canvas > .document-content > .tile-row> .tool-tile.selected').should('have.class','selected');
             cy.get('.single-workspace >.document > .toolbar > .tool.delete').click({force:true});
-            cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .geometry-tool').last().click();
-            cy.get('.canvas-area > .canvas > .document-content > .tool-tile.selected').should('have.class','selected');
+            cy.get('.canvas-area > .canvas > .document-content > .tile-row> .tool-tile > .geometry-tool').last().click();
+            cy.get('.canvas-area > .canvas > .document-content > .tile-row> .tool-tile.selected').should('have.class','selected');
             cy.get('.single-workspace >.document > .toolbar > .tool.delete').click({force:true});
-            cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .image-tool').last().click();
-            cy.get('.canvas-area > .canvas > .document-content > .tool-tile.selected').should('have.class','selected');
+            cy.get('.canvas-area > .canvas > .document-content > .tile-row> .tool-tile > .image-tool').last().click();
+            cy.get('.canvas-area > .canvas > .document-content > .tile-row> .tool-tile.selected').should('have.class','selected');
             cy.get('.single-workspace >.document > .toolbar > .tool.delete').click({force:true});
-            cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .text-tool').last().focus().click();
-            cy.get('.canvas-area > .canvas > .document-content > .tool-tile.selected').should('have.class','selected');
+            cy.get('.canvas-area > .canvas > .document-content > .tile-row> .tool-tile > .text-tool').last().focus().click();
+            cy.get('.canvas-area > .canvas > .document-content > .tile-row> .tool-tile.selected').should('have.class','selected');
             cy.get('.single-workspace >.document > .toolbar > .tool.delete').click({force:true});
-            cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .geometry-tool').last().click();
-            cy.get('.canvas-area > .canvas > .document-content > .tool-tile.selected').should('have.class','selected');
+            cy.get('.canvas-area > .canvas > .document-content > .tile-row> .tool-tile > .geometry-tool').last().click();
+            cy.get('.canvas-area > .canvas > .document-content > .tile-row> .tool-tile.selected').should('have.class','selected');
             cy.get('.single-workspace >.document > .toolbar > .tool.delete').click({force:true});
-            cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .image-tool').last().click();
-            cy.get('.canvas-area > .canvas > .document-content > .tool-tile.selected').should('have.class','selected');
+            cy.get('.canvas-area > .canvas > .document-content > .tile-row> .tool-tile > .image-tool').last().click();
+            cy.get('.canvas-area > .canvas > .document-content > .tile-row> .tool-tile.selected').should('have.class','selected');
             cy.get('.single-workspace >.document > .toolbar > .tool.delete').click({force:true});
-            cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .text-tool').last().focus().click();
-            cy.get('.canvas-area > .canvas > .document-content > .tool-tile.selected').should('have.class','selected');
+            cy.get('.canvas-area > .canvas > .document-content > .tile-row> .tool-tile > .text-tool').last().focus().click();
+            cy.get('.canvas-area > .canvas > .document-content > .tile-row> .tool-tile.selected').should('have.class','selected');
             cy.get('.single-workspace >.document > .toolbar > .tool.delete').click({force:true});
-            cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .geometry-tool').last().click();
-            cy.get('.canvas-area > .canvas > .document-content > .tool-tile.selected').should('have.class','selected');
+            cy.get('.canvas-area > .canvas > .document-content > .tile-row> .tool-tile > .geometry-tool').last().click();
+            cy.get('.canvas-area > .canvas > .document-content > .tile-row> .tool-tile.selected').should('have.class','selected');
             cy.get('.single-workspace >.document > .toolbar > .tool.delete').click({force:true});
-            cy.get('.canvas-area > .canvas > .document-content > .tool-tile > .image-tool').last().click();
-            cy.get('.canvas-area > .canvas > .document-content > .tool-tile.selected').should('have.class','selected');
+            cy.get('.canvas-area > .canvas > .document-content > .tile-row> .tool-tile > .image-tool').last().click();
+            cy.get('.canvas-area > .canvas > .document-content > .tile-row> .tool-tile.selected').should('have.class','selected');
             cy.get('.single-workspace >.document > .toolbar > .tool.delete').click({force:true});
         });
     });
