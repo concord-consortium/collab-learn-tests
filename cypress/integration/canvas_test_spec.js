@@ -229,14 +229,32 @@ context('Test Canvas', function(){
                 cy.get('.single-workspace > .document > .canvas-area > .canvas > .document-content').should('be.visible');
             });
 
-            it('verify 2-up button is  visible when canvas is in 4-up view', function(){
+            it('verify 2-up view is visible when canvas is in 4-up view', function(){
+                //single canvas 4up button and 2 up button is visible
                 cy.get('.document > .titlebar > .actions > .icon-up1').should('be.visible');
                 cy.get('.canvas-container.north-east').should('not.be.visible');
                 cy.get('.statusbar > .actions > .icon-up2').should('be.visible');
+                //change to 4up view and verify 2 up button is still visible
                 cy.get('.document > .titlebar > .actions > .icon-up1').click();
                 cy.get('.statusbar > .actions > .icon-up2').should('be.visible');
-                cy.get('.document > .titlebar > .actions > .icon-up').click();
+                //Click on 2up button, and verify right hand canvas and 2up toggle is visible
+                cy.get('.statusbar > .actions > .icon-up2').click();
+                cy.get('.canvas-area > .four-up >.canvas-container.north-east').should('be.visible');
+                cy.get('.canvas-area > .four-up >.canvas-container.north-west').should('be.visible');
+                cy.get('.canvas-area > .four-up >.canvas-container.south-east').should('be.visible');
+                cy.get('.canvas-area > .four-up >.canvas-container.south-west').should('be.visible');
+                cy.get('.canvas-area > .canvas').should('not.be.visible');
+                cy.get('.right-workspace > .comparison-placeholder').should('be.visible');
+                //Verify that user can get back to 4 up view
+                cy.get('.statusbar > .actions > .icon-up').should('be.visible').click();
+                cy.get('.right-workspace > .comparison-placeholder').should('not.be.visible');
+                cy.get('.canvas-area > .four-up >.canvas-container.north-west').should('be.visible');
+                cy.get('.canvas-area > .four-up >.canvas-container.south-east').should('be.visible');
+                //Verify user can get back to single canvas
+                cy.get('.document > .titlebar > .actions > .icon-up').should('be.visible').click();
                 cy.get('.statusbar > .actions > .icon-up2').should('be.visible');
+                cy.get('.document > .titlebar > .actions > .icon-up1').should('be.visible');
+
             });
 
             it('verify canvas side by side in right side 2 up view', function(){
