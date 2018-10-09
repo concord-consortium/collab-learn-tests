@@ -1,63 +1,84 @@
 context('Test group functionalities', function(){
     context('test the views', function(){
         describe('set-up for 4-up view tests', function(){
-            it.only('will enter text into the 1-up canvas', function(){
+            it('will enter text into the 1-up canvas', function(){
                 // Manually create students to go into Group
                 let qaClass = 10,
                     qaOffering = 10,
                     qaGroup = 10,
-                    problem = 2.3;
-                cy.visit('https://collaborative-learning.concord.org/branch/master/?appMode=qa&qaGroup='+qaGroup+'&fakeClass='+qaClass+'&fakeUser=student:15&fakeOffering='+qaOffering+'&problem=2.3');
-                cy.wait(5000);
-                cy.visit('https://collaborative-learning.concord.org/branch/master/?appMode=qa&qaGroup='+qaGroup+'&fakeClass='+qaClass+'&fakeUser=student:16&fakeOffering='+qaOffering+'&problem=2.3');
-                cy.wait(5000);
-                cy.visit('https://collaborative-learning.concord.org/branch/master/?appMode=qa&qaGroup='+qaGroup+'&fakeClass='+qaClass+'&fakeUser=student:17&fakeOffering='+qaOffering+'&problem=2.3');
-                cy.wait(5000);
-                cy.visit('https://collaborative-learning.concord.org/branch/master/?appMode=qa&qaGroup='+qaGroup+'&fakeClass='+qaClass+'&fakeUser=student:18&fakeOffering='+qaOffering+'&problem=2.3');
-                cy.wait(1000);
+                    problem = 2.3,
+                    studentArr=[15,16,17,18],
+                    i=0;
+
+                for (i=0;i<studentArr.length;i++) {
+                    cy.wait(5000);
+                    cy.visit('https://collaborative-learning.concord.org/branch/master/?appMode=qa&qaGroup='+qaGroup+'&fakeClass='+qaClass+'&fakeUser=student:'+studentArr[i]+'&fakeOffering='+qaOffering+'&problem=2.3');
+                    cy.get('#leftNavTab3').click();
+                    cy.get('.left-nav-panel > .section > .canvas > .document-content > .buttons > button').click();
+                    cy.get('.single-workspace > .document > .toolbar > .tool.text').click({force: true});
+                    cy.get('.canvas-area > .canvas > .document-content > .tile-row > .tool-tile > .text-tool').last().type('This is to test the 4-up view of S'+studentArr[i]);
+                    cy.get('.canvas-area > .canvas > .document-content > .tile-row > .tool-tile > .text-tool').last().should('contain', '4-up').and('contain','S'+studentArr[i]);
+                    cy.get('.single-workspace > .document > .titlebar > .actions > .icon-share').click();//all students will share their canvas
+                    cy.wait(1000);
+                }
                 //verify Group num and there are 4 students in the group
                 cy.get('.app-container > .header > .group > .name').should('contain','Group 10');
                 cy.get('.app-container > .header > .group > .members > .member').each(($member,index, $list)=>{
                     expect(['S15','S16','S17','S18']).to.include($member.text());
                 });
-                cy.get('#leftNavTab3').click();
-                cy.get('.left-nav-panel > .section > .canvas > .document-content > .buttons > button').click();
-                cy.get('.single-workspace > .document > .toolbar > .tool.text').click({force: true});
-                cy.get('.canvas-area > .canvas > .document-content > .tile-row > .tool-tile > .text-tool').last().type('This is to test the 4-up view');
-                cy.get('.canvas-area > .canvas > .document-content > .tile-row > .tool-tile > .text-tool').last().should('contain', '4-up');
             });
-            it('will change single canvas to 4-up view', function(){
-                cy.get('.workspace > .titlebar > .actions > .icon-up1').click();
+            it('verify 4-up view comes up correctly with students', function(){
+                cy.get('.document > .titlebar > .actions > .icon-up1').click();
+                cy.get('.document > .titlebar > .actions > .icon-up').should('be.visible');
+                cy.get('.canvas-area > .four-up >.canvas-container.north-east > .member').should('be.visible').and('contain','S15');
+                cy.get('.canvas-area > .four-up >.canvas-container.north-west > .member').should('be.visible').and('contain','S18');
+                cy.get('.canvas-area > .four-up >.canvas-container.south-east > .member').should('be.visible').and('contain','S16');
+                cy.get('.canvas-area > .four-up >.canvas-container.south-west > .member').should('be.visible').and('contain','S17');
             });
 
         });
         describe('test the 4-up view', function(){
-            it("will move horizontal splitter vertically and verify canvas size change", function () {
-                cy.get('.canvas-area > .four-up > .horizontal.splitter').trigger('mousedown',{which:1}, {force:true}).trigger('mousemove',{pageX:243, pageY: 175}, {force:true}).trigger('mouseup',{force:true});
-                cy.get('.canvas-area > .canvas-container.north-west').should('have.css','height').and('less.than', 243);
-                cy.get('.canvas-area > .canvas-container.south-east').should('have.css','height').and('greater.than', 243);
+            // it("will move horizontal splitter vertically and verify canvas size change", function () {
+            //     cy.get('.canvas-area > .four-up > .horizontal.splitter').trigger('mousedown',{which:1}, {force:true}).trigger('mousemove',{pageX:243, pageY: 175}, {force:true}).trigger('mouseup',{force:true});
+            //     cy.get('.canvas-area > .canvas-container.north-west').should('have.css','height').and('less.than', 243);
+            //     cy.get('.canvas-area > .canvas-container.south-east').should('have.css','height').and('greater.than', 243);
+            //
+            // });
+            // it('will move vertical splitter horizantally and verify canvas size change', function(){
+            //     cy.log('need to write this test');
+            //     expect(4).to.equal(3);
+            // });
+            //TODO: drag and drop of center point to change 4up view canvas sizes
+            it('will move the center handle horizontally and vertically and verify canvas size change', function (){
+                cy.get('.canvas-area > .four-up > .center').trigger('mousedown',{which:1}, {force:true}).trigger('mousemove',{pageX:243, pageY: 175}, {force:true}).trigger('mouseup',{force:true});
+                cy.get('.canvas-area > .four-up >.canvas-container.north-west').should('have.css','height').and('less.than', 243);
+                cy.get('.canvas-area > .four-up >.canvas-container.south-east').should('have.css','height').and('greater.than', 243);
 
             });
-            it('will move vertical splitter horizantally and verify canvas size change', function(){
-                cy.log('need to write this test');
-                expect(4).to.equal(3);
-            });
-            it('will move the center handle horizontally and vertically and verify canvas size change', function (){
-                cy.log('need to write this test');
-                expect(4).to.equal(3);
-            });
             it('will verify editing own canvas is still possible in 4-up view', function(){
-                cy.log('need to write this test');
-                expect(4).to.equal(3);
+                cy.get('.single-workspace > .document > .toolbar > .tool.text').click({force: true});
+                cy.get('.canvas-area > .four-up > .canvas-container.north-west > .canvas-scaler > .canvas > .document-content > .tile-row > .tool-tile > .text-tool').last().type('Hello World!');
+                cy.get('.canvas-area > .four-up > .canvas-container.north-west > .canvas-scaler > .canvas > .document-content > .tile-row >.tool-tile > .text-tool').last().should('contain', 'Hello World');
+                cy.get('.single-workspace > .document > .toolbar > .tool.geometry').click({force: true});
+                cy.get('.canvas-area > .four-up > .canvas-container.north-west > .canvas-scaler > .canvas > .document-content > .tile-row> .tool-tile > .geometry-tool').last().click();
+                cy.get('.canvas-area > .four-up > .canvas-container.north-west > .canvas-scaler > .canvas > .document-content > .tile-row> .tool-tile > .geometry-tool').last().click();
+                cy.get('.canvas-area > .four-up > .canvas-container.north-west > .canvas-scaler > .canvas > .document-content > .tile-row> .tool-tile > .geometry-tool > .JXGtext').last().should('contain', 'A' );
+                cy.get('.canvas-area > .four-up > .canvas-container.north-west > .canvas-scaler > .canvas > .document-content > .tile-row> .tool-tile > .geometry-tool').last().click(140,70, {force:true});
+                cy.get('.canvas-area > .four-up > .canvas-container.north-west > .canvas-scaler > .canvas > .document-content > .tile-row> .tool-tile > .geometry-tool > .JXGtext').last().should('contain', 'B' );
             });
+
             it('will verify editing is not allowed in other group members\' canvas', function(){
-                cy.log('need to write this test');
-                expect(4).to.equal(3);
+                cy.get('.canvas-area > .four-up > .canvas-container.north-east > .canvas-scaler > .canvas > .document-content > .tile-row >.tool-tile > .text-tool').last().should('not.contain', 'Hello World');
+                cy.get('.canvas-area > .four-up > .canvas-container.south-west > .canvas-scaler > .canvas > .document-content > .tile-row >.tool-tile > .text-tool').last().should('not.contain', 'Hello World');
+                cy.get('.canvas-area > .four-up > .canvas-container.south-east > .canvas-scaler > .canvas > .document-content > .tile-row >.tool-tile > .text-tool').last().should('not.contain', 'Hello World');
             });
+
+            //TODO: have to figure out drag and drop
             it('will copy text from one canvas to own canvas', function(){
                 cy.log('need to write this test');
                 expect(4).to.equal(3);
             });
+
             it('will verify that view changes back to 1-up view',function(){
                 cy.log('need to write this test');
                 expect(4).to.equal(3);
