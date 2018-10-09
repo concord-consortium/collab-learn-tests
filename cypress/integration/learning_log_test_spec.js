@@ -20,6 +20,14 @@ context('Test bottom tabs', function(){
         cy.get('.learning-log > .workspaces > .single-workspace > .document > .toolbar > .tool.image').click({force: true});
 
     }
+    function publishCanvas(){
+        cy.get('#leftNavTab2').click({force:true});
+        cy.get('.left-nav-panel > .section > .canvas > .document-content > .buttons > button').click();
+        cy.get('.document > .titlebar > .title').should('contain','What if');
+        cy.get('.single-workspace > .document > .titlebar > .actions > .icon-publish').click();
+        cy.get('.dialog > .dialog-container > .dialog-title').should('contain', 'Published');
+        cy.get('.dialog > .dialog-container > .dialog-contents > .dialog-buttons > #okButton').click();
+    }
 
     describe('verify bottom tabs open to correct content and right-nav tabs is still clickable', function(){
 
@@ -123,18 +131,20 @@ context('Test bottom tabs', function(){
                cy.wrap($log).parent().parent().click();
                cy.get('.bottom-nav > .expanded-area > .contents > .learning-log > .workspaces > .single-workspace > .document > .titlebar > .title').should('contain', title);
            })
-
+           cy.get('#learningLogTab').click(); //close learning log
        })
 
     });
 
     describe('Test learning log canvases with other canvases', function(){
         let title = 'LL_Intro',
-            myWorkTitle = 'Introduction';
+            myWorkTitle = 'Introduction',
+            classWorkTitle = 'What if';
         it('create a canvas and switch to 2up view', function(){
             //click on create button
             //send a LL_Intro
             //verify canvas is created with title LL_Introduction
+            cy.get('#learningLogTab').click({force:true});//open learning log
             cy.get('.bottom-nav.expanded').should('be.visible'); //verify learning log is expanded and create button will be accessible
             cy.get('.learning-log > .logs > button').should('be.visible').and('contain', 'Create').click();
             cy.get('.dialog > .dialog-container > .dialog-title').should('contain', 'Create Learning Log');
@@ -147,7 +157,7 @@ context('Test bottom tabs', function(){
             cy.get('.learning-log > .workspaces > .right-workspace').should('be.visible');
             cy.get('.learning-log > .workspaces > .left-workspace > .document').should('be.visible');
         });
-        it('open My Work canvas while in learning log canvas', function(){
+        it('open My Work canvas in learning log 2up view', function(){
             //open My Work tab
             cy.get('#rightNavTabMy\\ Work').should('be.visible').click({force:true});
             //Select first canvas
@@ -158,6 +168,20 @@ context('Test bottom tabs', function(){
             //Verify LL_Introduction is on the left and Introduction is on the right
             cy.get('.bottom-nav > .expanded-area > .contents > .learning-log > .workspaces > .left-workspace > .document > .titlebar > .title').should('contain', title);
             cy.get('.bottom-nav > .expanded-area > .contents > .learning-log > .workspaces > .right-workspace > .document > .titlebar > .title').should('contain', myWorkTitle);
+            cy.get('#learningLogTab').click(); //close learning log
+        });
+        it('open Class Work canvas in learning log 2up view', function(){
+            publishCanvas();
+            cy.get('#learningLogTab').click({force:true});//open learning log
+            cy.get('#rightNavTabClass\\ Work').should('be.visible').click({force:true});
+            //Select first canvas
+            cy.get('.right-nav > .expanded-area.expanded > .contents > .class-work > .list > .list-item > .info').contains(classWorkTitle);
+            cy.get('.right-nav > .expanded-area.expanded > .contents > .class-work > .list > .list-item').first().click();
+            //verify 2 up view is showing
+            cy.get('.workspaces > .right-workspace > .document').should('be.visible');
+            //Verify LL_Introduction is on the left and Introduction is on the right
+            cy.get('.bottom-nav > .expanded-area > .contents > .learning-log > .workspaces > .left-workspace > .document > .titlebar > .title').should('contain', title);
+            cy.get('.bottom-nav > .expanded-area > .contents > .learning-log > .workspaces > .right-workspace > .document > .titlebar > .title').should('contain', classWorkTitle);
         });
 
         //TODO: add test when drag and drop
