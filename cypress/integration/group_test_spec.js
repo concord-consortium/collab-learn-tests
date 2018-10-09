@@ -79,11 +79,6 @@ context('Test group functionalities', function(){
                 expect(4).to.equal(3);
             });
 
-            it('will verify that view changes back to 1-up view',function(){
-                cy.log('need to write this test');
-                expect(4).to.equal(3);
-            });
-
         });
         describe('test the 2-up view', function(){
             it('will verify 2-up view still comes up even in 4-up view', function(){
