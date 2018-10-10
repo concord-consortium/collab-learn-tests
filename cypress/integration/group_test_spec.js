@@ -1,14 +1,15 @@
 context('Test group functionalities', function(){
+    let qaClass = 10,
+        qaOffering = 10,
+        qaGroup = 10,
+        problem = 2.3,
+        studentArr=[15,16,17,18];
     context('test the views', function(){
         describe('set-up for 4-up view tests', function(){
             it('will enter text into the 1-up canvas', function(){
                 // Manually create students to go into Group
-                let qaClass = 10,
-                    qaOffering = 10,
-                    qaGroup = 10,
-                    problem = 2.3,
-                    studentArr=[15,16,17,18],
-                    i=0;
+
+                    let i=0;
 
                 for (i=0;i<studentArr.length;i++) {
                     cy.wait(5000);
@@ -22,18 +23,18 @@ context('Test group functionalities', function(){
                     cy.wait(1000);
                 }
                 //verify Group num and there are 4 students in the group
-                cy.get('.app-container > .header > .group > .name').should('contain','Group 10');
-                cy.get('.app-container > .header > .group > .members > .member').each(($member,index, $list)=>{
+                cy.get('.app > .group-view > .header > .group > .name').should('contain','Group '+qaGroup);
+                cy.get('.app > .group-view > .header > .group > .members > .member').each(($member,index, $list)=>{
                     expect(['S15','S16','S17','S18']).to.include($member.text());
                 });
             });
             it('verify 4-up view comes up correctly with students', function(){
                 cy.get('.document > .titlebar > .actions > .icon-up1').click();
                 cy.get('.document > .titlebar > .actions > .icon-up').should('be.visible');
-                cy.get('.canvas-area > .four-up >.canvas-container.north-east > .member').should('be.visible').and('contain','S15');
-                cy.get('.canvas-area > .four-up >.canvas-container.north-west > .member').should('be.visible').and('contain','S18');
-                cy.get('.canvas-area > .four-up >.canvas-container.south-east > .member').should('be.visible').and('contain','S16');
-                cy.get('.canvas-area > .four-up >.canvas-container.south-west > .member').should('be.visible').and('contain','S17');
+                cy.get('.canvas-area > .four-up >.canvas-container.north-east > .member').should('be.visible').and('contain','S'+studentArr[0]);
+                cy.get('.canvas-area > .four-up >.canvas-container.south-east > .member').should('be.visible').and('contain','S'+studentArr[1]);
+                cy.get('.canvas-area > .four-up >.canvas-container.south-west > .member').should('be.visible').and('contain','S'+studentArr[2]);
+                cy.get('.canvas-area > .four-up >.canvas-container.north-west > .member').should('be.visible').and('contain','S'+studentArr[3]);
             });
 
         });
@@ -60,11 +61,11 @@ context('Test group functionalities', function(){
                 cy.get('.canvas-area > .four-up > .canvas-container.north-west > .canvas-scaler > .canvas > .document-content > .tile-row > .tool-tile > .text-tool').last().type('Hello World!');
                 cy.get('.canvas-area > .four-up > .canvas-container.north-west > .canvas-scaler > .canvas > .document-content > .tile-row >.tool-tile > .text-tool').last().should('contain', 'Hello World');
                 cy.get('.single-workspace > .document > .toolbar > .tool.geometry').click({force: true});
-                cy.get('.canvas-area > .four-up > .canvas-container.north-west > .canvas-scaler > .canvas > .document-content > .tile-row> .tool-tile > .geometry-tool').last().click();
-                cy.get('.canvas-area > .four-up > .canvas-container.north-west > .canvas-scaler > .canvas > .document-content > .tile-row> .tool-tile > .geometry-tool').last().click();
-                cy.get('.canvas-area > .four-up > .canvas-container.north-west > .canvas-scaler > .canvas > .document-content > .tile-row> .tool-tile > .geometry-tool > .JXGtext').last().should('contain', 'A' );
-                cy.get('.canvas-area > .four-up > .canvas-container.north-west > .canvas-scaler > .canvas > .document-content > .tile-row> .tool-tile > .geometry-tool').last().click(140,70, {force:true});
-                cy.get('.canvas-area > .four-up > .canvas-container.north-west > .canvas-scaler > .canvas > .document-content > .tile-row> .tool-tile > .geometry-tool > .JXGtext').last().should('contain', 'B' );
+                cy.get('.canvas-area > .four-up > .canvas-container.north-west > .canvas-scaler > .canvas > .document-content > .tile-row> .tool-tile > .geometry-size-me > .geometry-tool').last().click();
+                cy.get('.canvas-area > .four-up > .canvas-container.north-west > .canvas-scaler > .canvas > .document-content > .tile-row> .tool-tile > .geometry-size-me > .geometry-tool').last().click();
+                cy.get('.canvas-area > .four-up > .canvas-container.north-west > .canvas-scaler > .canvas > .document-content > .tile-row> .tool-tile > .geometry-size-me  > .geometry-tool > .JXGtext').last().should('contain', 'A' );
+                cy.get('.canvas-area > .four-up > .canvas-container.north-west > .canvas-scaler > .canvas > .document-content > .tile-row> .tool-tile > .geometry-size-me > .geometry-tool').last().click(140,70, {force:true});
+                cy.get('.canvas-area > .four-up > .canvas-container.north-west > .canvas-scaler > .canvas > .document-content > .tile-row> .tool-tile > .geometry-size-me > .geometry-tool > .JXGtext').last().should('contain', 'B' );
             });
 
             it('will verify editing is not allowed in other group members\' canvas', function(){
