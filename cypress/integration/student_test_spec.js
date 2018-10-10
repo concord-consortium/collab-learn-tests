@@ -1,6 +1,6 @@
-var student = '9',
+var student = '1',
     classroom = '5',
-    offering = '4',
+    offering = '1',
     problemSet = '1.1';
 
 describe('Check header area for correctness', function(){
