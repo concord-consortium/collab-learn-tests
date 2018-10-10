@@ -1,20 +1,20 @@
 context('Test bottom tabs', function(){
     function addTextTile(){
         cy.get('.learning-log > .workspaces > .single-workspace > .document > .toolbar > .tool.text').click({force: true});
-        cy.get('.canvas-area > .canvas > .document-content > .tile-row > .tool-tile > .text-tool').last().type('Hello World!');
-        cy.get('.canvas-area > .canvas > .document-content > .tile-row > .tool-tile > .text-tool').last().should('contain', 'Hello World');
+        cy.get('.learning-log-canvas-area > .canvas > .document-content > .tile-row > .tool-tile > .text-tool').last().type('Hello World!');
+        cy.get('.learning-log-canvas-area > .canvas > .document-content > .tile-row > .tool-tile > .text-tool').last().should('contain', 'Hello World');
     }
     function addGraphTile(){
             cy.get('.learning-log > .workspaces > .single-workspace > .document > .toolbar > .tool.geometry').click({force: true});
-            cy.get('.canvas-area > .canvas > .document-content > .tile-row > .tool-tile > .geometry-tool').last().click();
-            cy.get('.canvas-area > .canvas > .document-content > .tile-row > .tool-tile > .geometry-tool').last().click();
-            cy.get('.canvas-area > .canvas > .document-content > .tile-row > .tool-tile > .geometry-tool > .JXGtext').last().should('contain', 'A' );
-            cy.get('.canvas-area > .canvas > .document-content > .tile-row > .tool-tile > .geometry-tool').last().click(40,35, {force:true});
-            cy.get('.canvas-area > .canvas > .document-content > .tile-row > .tool-tile > .geometry-tool > .JXGtext').last().should('contain', 'B' );
-            cy.get('.canvas-area > .canvas > .document-content > .tile-row > .tool-tile > .geometry-tool').last().click(240,70, {force:true});
-            cy.get('.canvas-area > .canvas > .document-content > .tile-row > .tool-tile > .geometry-tool > .JXGtext').last().should('contain', 'C' );
-            cy.get('.canvas-area > .canvas > .document-content > .tile-row > .tool-tile > .geometry-tool').last().click(40,170, {force:true});
-            cy.get('.canvas-area > .canvas > .document-content > .tile-row > .tool-tile > .geometry-tool > .JXGtext').last().should('contain', 'D' );
+            cy.get('.learning-log-canvas-area > .canvas > .document-content > .tile-row > .tool-tile > .geometry-size-me> .geometry-tool').last().click();
+            cy.get('.learning-log-canvas-area > .canvas > .document-content > .tile-row > .tool-tile > .geometry-size-me> .geometry-tool').last().click();
+            cy.get('.learning-log-canvas-area > .canvas > .document-content > .tile-row > .tool-tile > .geometry-size-me > .geometry-tool> .JXGtext').last().should('contain', 'A' );
+            cy.get('.learning-log-canvas-area > .canvas > .document-content > .tile-row > .tool-tile > .geometry-size-me> .geometry-tool').last().click(40,35, {force:true});
+            cy.get('.learning-log-canvas-area > .canvas > .document-content > .tile-row > .tool-tile > .geometry-size-me > .geometry-tool> .JXGtext').last().should('contain', 'B' );
+            cy.get('.learning-log-canvas-area > .canvas > .document-content > .tile-row > .tool-tile > .geometry-size-me> .geometry-tool').last().click(240,70, {force:true});
+            cy.get('.learning-log-canvas-area > .canvas > .document-content > .tile-row > .tool-tile > .geometry-size-me> .geometry-tool > .JXGtext').last().should('contain', 'C' );
+            cy.get('.learning-log-canvas-area > .canvas > .document-content > .tile-row > .tool-tile > .geometry-size-me> .geometry-tool').last().click(40,170, {force:true});
+            cy.get('.learning-log-canvas-area > .canvas > .document-content > .tile-row > .tool-tile > .geometry-size-me> .geometry-tool > .JXGtext').last().should('contain', 'D' );
     }
     function addImageTile(){
         cy.get('.learning-log > .workspaces > .single-workspace > .document > .toolbar > .tool.image').click({force: true});
@@ -56,9 +56,9 @@ context('Test bottom tabs', function(){
                 cy.get('.canvas-area > .canvas > .document-content > .tile-row > .tool-tile > .text-tool').last().should('contain', 'LL_Introduction');
             //     //Add a graph tool and a shape
                 cy.get('.single-workspace > .document > .toolbar > .tool.geometry').click({force: true});
-                cy.get('.canvas-area > .canvas > .document-content > .tile-row > .tool-tile > .geometry-tool').last().click();
-                cy.get('.canvas-area > .canvas > .document-content > .tile-row > .tool-tile > .geometry-tool').last().click();
-                cy.get('.canvas-area > .canvas > .document-content > .tile-row > .tool-tile > .geometry-tool > .JXGtext').last().should('contain', 'A' );
+                cy.get('.canvas-area > .canvas > .document-content > .tile-row > .tool-tile > .geometry-size-me > .geometry-tool').last().click();
+                cy.get('.canvas-area > .canvas > .document-content > .tile-row > .tool-tile > .geometry-size-me > .geometry-tool').last().click();
+                cy.get('.canvas-area > .canvas > .document-content > .tile-row > .tool-tile > .geometry-size-me > .geometry-tool > .JXGtext').last().should('contain', 'A' );
                 //Open learning log
                 cy.get('#learningLogTab').click();
                 cy.get('.bottom-nav.expanded').should('be.visible');
