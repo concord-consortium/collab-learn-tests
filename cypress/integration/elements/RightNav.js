@@ -2,13 +2,20 @@ class RightNav{
     getMyWorkTab(){
         return cy.get('#rightNavTabMy\\ Work.tab');
     }
-    getMyWorkAreaCanvasItem(){
+
+    getAllMyWorkAreaCanvasItems(){
         return cy.get('.right-nav > .expanded-area.expanded > .contents > .my-work > .list > .list-item');
     }
+
+    openMyWorkAreaCanvasItem(title){
+        return cy.get('.my-work > .list > .list-item[title*="'+title+'"]').click();
+    }
+
     openMyWorkTab(){
         this.getMyWorkTab().click({force:true});
         this.getMyWorkAreaCanvasItem().should('be.visible');
     }
+
     closeMyWorkTab(){
         this.getMyWorkTab().click({force:true});
         this.getMyWorkAreaCanvasItem().should('not.be.visible');
@@ -17,13 +24,16 @@ class RightNav{
     getClassWorkTab(){
         return cy.get('#rightNavTabClass\\ Work.tab');
     }
+
     getClassWorkAreaCanvasItem(){
         return cy.get('.right-nav > .expanded-area.expanded > .contents > .class-work > .list > .list-item');
     }
+
     openClassWorkTab(){
         this.getClassWorkTab().click({force:true});
         this.getClassWorkAreaCanvasItem().should('be.visible');
     }
+
     closeClassWorkTab(){
         this.getClassWorkTab().click({force:true});
         this.getClassWorkAreaCanvasItem().should('not.be.visible');
