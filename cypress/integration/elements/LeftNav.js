@@ -6,13 +6,7 @@ class LeftNav{
         return cy.get('.left-nav-panel > .section > .canvas > .document-content > .buttons > button');
     }
     openToWorkspace() {
-        this.getOpenToWorkspaceButton().click();
-    }
-    getGroupMembers(){
-        return cy.get('.header > .group > .members > .member')
-    }
-    getUserName(){
-        return cy.get('.header > .user > .name')
+        this.getOpenToWorkspaceButton().click({force:true});
     }
 }
 export default LeftNav;
