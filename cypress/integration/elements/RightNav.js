@@ -11,9 +11,23 @@ class RightNav{
     }
     closeMyWorkTab(){
         this.getMyWorkTab().click({force:true});
-        this.myWorkAreaCanvasItem().should('not.be.visible');
+        this.getMyWorkAreaCanvasItem().should('not.be.visible');
     }
 
+    getClassWorkTab(){
+        return cy.get('#rightNavTabClass\\ Work.tab');
+    }
+    getClassWorkAreaCanvasItem(){
+        return cy.get('.right-nav > .expanded-area.expanded > .contents > .class-work > .list > .list-item');
+    }
+    openClassWorkTab(){
+        this.getClassWorkTab().click({force:true});
+        this.getClassWorkAreaCanvasItem().should('be.visible');
+    }
+    closeClassWorkTab(){
+        this.getClassWorkTab().click({force:true});
+        this.getClassWorkAreaCanvasItem().should('not.be.visible');
+    }
 
 }
 export default RightNav;
