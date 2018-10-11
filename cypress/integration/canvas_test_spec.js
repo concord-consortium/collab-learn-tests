@@ -1,4 +1,12 @@
+import LeftNav from './elements/LeftNav'
+import Canvas from './elements/Canvas'
+import RightNav from './elements/RightNav'
+
 context('Test Canvas', function(){
+    let leftNav = new LeftNav();
+    let canvas = new Canvas();
+    let rightNav = new RightNav();
+
     function createLearningLog(title){
         // var title='pool';
         cy.get('#learningLogTab').click({force:true});//open Learning log
@@ -14,47 +22,44 @@ context('Test Canvas', function(){
     context('test canvas tools', function(){
        describe('test header elements', function(){
            it('verifies header title appears correctly', function(){
-               cy.get('#leftNavTab0').click({force:true});
-               cy.get('.left-nav-panel > .section > .canvas > .document-content > .buttons > button').click({force:true});
-                cy.get('.document > .titlebar > .title').should('contain','Introduction');
+                leftNav.openLeftNavTab('Introduction');
+                leftNav.openToWorkspace();
+                canvas.getCanvasTitle().should('contain','Introduction');
            });
 
            it('verifies views button changes when clicked and shows the correct corresponding workspace view', function(){
                //1-up view has 4-up button visible and 1-up canvas
-               cy.get('.document > .titlebar > .actions > .icon-up1').should('be.visible');
-               cy.get('.canvas-area > .canvas').should('be.visible');
-               cy.get('.canvas-container.north-east').should('not.be.visible');
-               cy.get('.document > .titlebar > .actions > .icon-up1').click();
+               canvas.getFourUpViewToggle().should('be.visible');
+               canvas.getSingleCanvas().should('be.visible');
+               canvas.getFourUpView().should('not.be.visible');
+               canvas.openFourUpView();
                //4-up view is visible and 1-up button is visible
-               cy.get('.document > .titlebar > .actions > .icon-up').should('be.visible');
-               cy.get('.canvas-area > .four-up >.canvas-container.north-east').should('be.visible');
-               cy.get('.canvas-area > .four-up >.canvas-container.north-west').should('be.visible');
-               cy.get('.canvas-area > .four-up >.canvas-container.south-east').should('be.visible');
-               cy.get('.canvas-area > .four-up >.canvas-container.south-west').should('be.visible');
-               cy.get('.canvas-area > .canvas').should('not.be.visible');
+               canvas.getOneUpViewToggle().should('be.visible');
+               canvas.getNorthEastCanvas().should('be.visible');
+               canvas.getNorthWestCanvas().should('be.visible');
+               canvas.getSouthEastCanvas().should('be.visible');
+               canvas.getSouthEastCanvas().should('be.visible');
+               canvas.getSingleCanvas().should('not.be.visible');
                //can get back to 1 up view from 4 up
-               cy.get('.document > .titlebar > .actions > .icon-up').click();
-               cy.get('.canvas-area > .canvas').should('be.visible');
-               cy.get('.document > .titlebar > .actions > .icon-up1').should('be.visible');
-               cy.get('.canvas-container.north-east').should('not.be.visible');
+               canvas.openOneUpView();
+               canvas.getSingleCanvas().should('be.visible');
+               canvas.getFourUpViewToggle().should('be.visible');
+               canvas.getFourUpView().should('not.be.visible');
            });
 
            it('verify share button', function(){
-               cy.get('.document > .titlebar > .actions > .icon-share').should('be.visible');
-               cy.get('.document > .titlebar > .actions > .icon-unshare').should('not.be.visible');
-               cy.get('.document > .titlebar > .actions > .icon-share').click();
-               cy.get('.document > .titlebar > .actions > .icon-share').should('not.be.visible');
-               cy.get('.document > .titlebar > .actions > .icon-unshare').should('be.visible');
-               cy.get('.document > .titlebar > .actions > .icon-unshare').click();
-               cy.get('.document > .titlebar > .actions > .icon-share').should('be.visible');
-               cy.get('.document > .titlebar > .actions > .icon-unshare').should('not.be.visible');
+               canvas.getShareButton().should('be.visible');
+               canvas.getUnshareButton().should('not.be.visible');
+               canvas.shareCanvas();
+               canvas.getShareButton().should('not.be.visible');
+               canvas.getUnshareButton().should('be.visible');
+               canvas.unshareCanvas();
+               canvas.getShareButton().should('be.visible');
+               canvas.getUnshareButton().should('not.be.visible');
            });
            it('verify publish button', function(){
-               cy.get('.document > .titlebar > .actions > .icon-publish').click();
-               cy.get('.dialog > .dialog-container > .dialog-title').should('contain', 'Published');
-               cy.get('.dialog > .dialog-container > .dialog-contents > .dialog-buttons > #okButton').click();
-               cy.get('.dialog > .dialog-container > .dialog-title').should('not.exist');
-               cy.get('.document > .titlebar > .actions > .icon-publish').should('exist');
+               canvas.publishCanvas();
+               canvas.getPublishIcon().should('exist');
            });
        }) ;
 
@@ -68,58 +73,51 @@ context('Test Canvas', function(){
 
             it('clicks the text tool and types Hello World', function(){
 
-                cy.get('.single-workspace > .document > .toolbar > .tool.text').click({force: true});
-                cy.get('.single-workspace > .document > .canvas-area > .canvas > .document-content > .tile-row > .tool-tile > .text-tool').last().type('Hello World!');
-                cy.get('.canvas-area > .canvas > .document-content > .tile-row >.tool-tile > .text-tool').last().should('contain', 'Hello World');
+                canvas.addTextTile();
+                canvas.enterText('Hello World');
+                canvas.getTextTile().last().should('contain', 'Hello World');
             });
-                // cy.get('.canvas-area > .canvas > .document-content > .tool-tile.selected').should('have.class','selected');
-                // cy.get('.single-workspace >.document > .toolbar > .tool.delete').click({force:true});
 
             it('clicks the same text field and allows user to edit text', function(){
-                cy.get('.canvas-area > .canvas > .document-content > .tile-row > .tool-tile > .text-tool').last().focus().click();
-                cy.get('.canvas-area > .canvas > .document-content > .tile-row > .tool-tile > .text-tool').last().type('Adding more text to see if it gets added.');
-                cy.get('.canvas-area > .canvas > .document-content > .tile-row> .tool-tile > .text-tool').last().should('contain', 'added');
-                cy.get('.canvas-area > .canvas > .document-content > .tile-row> .tool-tile > .text-tool').last().type('Adding more text to delete');
-                cy.get('.canvas-area > .canvas > .document-content > .tile-row> .tool-tile > .text-tool').last().should('contain', 'delete');
-                cy.get('.canvas-area > .canvas > .document-content > .tile-row> .tool-tile > .text-tool').last().type('{backspace}{backspace}{backspace}{backspace}{backspace}{backspace}{backspace}');
-                cy.get('.canvas-area > .canvas > .document-content > .tile-row > .tool-tile > .text-tool').last().should('not.contain', 'delete');
+                canvas.getTextTile().last().focus().click();
+                canvas.addText('Adding more text to see if it gets added.');
+                canvas.addText('Adding more text to delete');
+                canvas.deleteText('{backspace}{backspace}{backspace}{backspace}{backspace}{backspace}{backspace}');
             });
 
-            it('clicks the graph tool and enters four points', function(){
+            it('clicks the graph tool and enters three points', function(){
 
-                cy.get('.single-workspace > .document > .toolbar > .tool.geometry').click({force: true});
-                cy.get('.canvas-area > .canvas > .document-content > .tile-row> .tool-tile > .geometry-tool').last().click();
-                cy.get('.canvas-area > .canvas > .document-content > .tile-row> .tool-tile > .geometry-tool').last().click();
-                cy.get('.canvas-area > .canvas > .document-content > .tile-row> .tool-tile > .geometry-tool > .JXGtext').last().should('contain', 'A' );
-                cy.get('.canvas-area > .canvas > .document-content > .tile-row> .tool-tile > .geometry-tool').last().click(140,70, {force:true});
-                cy.get('.canvas-area > .canvas > .document-content > .tile-row> .tool-tile > .geometry-tool > .JXGtext').last().should('contain', 'B' );
+                canvas.addGraphTile();
+                canvas.getGraphTile().last().click();
+                canvas.addPointToGraph(200,100);
+                canvas.getGraphPointText().last().should('contain', 'A' );
+                canvas.addPointToGraph(140,70);
+                canvas.getGraphPointText().last().should('contain', 'B' );
+                canvas.addPointToGraph(240,170);
+                canvas.getGraphPointText().last().should('contain', 'C' );
             });
              it('will test image tool', ()=>{
-                 cy.get('.single-workspace > .document > .toolbar > .tool.image').click({force: true});
-                 // cy.get('.canvas-area > .canvas').scrollTo('bottom');
-                 cy.get('.canvas-area > .canvas > .document-content > .tile-row> .tool-tile > .image-tool').should('be.visible');
+                 canvas.addImageTile();
+                 canvas.getImageTile().should('be.visible');
              });
 
            it('adds additional text, graph, and image onto canvas and verify scrolling', function(){
-               //figure out how to delete all the tools first before uncommenting this
-               cy.get('.single-workspace > .document > .toolbar > .tool.text').click({force: true});
-               cy.get('.canvas-area > .canvas > .document-content > .tile-row> .tool-tile > .text-tool').last().type('second text tool');
-               cy.get('.canvas-area > .canvas > .document-content > .tile-row> .tool-tile > .text-tool').last().should('contain', 'second');
-               cy.get('.single-workspace > .document > .toolbar > .tool.geometry').click({force: true});
-               cy.get('.canvas-area > .canvas > .document-content > .tile-row> .tool-tile > .geometry-tool').last().click();
-               cy.get('.canvas-area > .canvas > .document-content > .tile-row> .tool-tile > .geometry-tool').last().click(40,35, {force:true});
-               cy.get('.canvas-area > .canvas > .document-content > .tile-row> .tool-tile > .geometry-tool > .JXGtext').last().should('contain', 'A' );
-               cy.get('.single-workspace > .document > .toolbar > .tool.image').click({force: true});
-               cy.get('.single-workspace > .document > .toolbar > .tool.text').click({force: true});
-               cy.get('.canvas-area > .canvas > .document-content > .tile-row> .tool-tile > .text-tool').last().type('second text tool');
-               cy.get('.canvas-area > .canvas > .document-content > .tile-row> .tool-tile > .text-tool').last().should('contain', 'second');
-               cy.get('.single-workspace > .document > .toolbar > .tool.geometry').click({force: true});
-               cy.get('.canvas-area > .canvas > .document-content > .tile-row> .tool-tile > .geometry-tool').last().click();
-               cy.get('.canvas-area > .canvas > .document-content > .tile-row> .tool-tile > .geometry-tool').last().click(40,35, {force:true});
-               cy.get('.canvas-area > .canvas > .document-content > .tile-row> .tool-tile > .geometry-tool > .JXGtext').last().should('contain', 'A' );
-               cy.get('.single-workspace > .document > .toolbar > .tool.image').click({force: true});
-               // cy.get('.canvas-area > .canvas').scrollTo('bottom');   // Scroll 'sidebar' to its bottom
-               // cy.get('.canvas-area > .canvas').scrollTo('top') ;  // Scroll 'sidebar' to its bottom
+               canvas.addTextTile();
+               canvas.enterText('second text tool');
+               canvas.addGraphTile();
+               canvas.getGraphTile();
+               canvas.addPointToGraph(40,35);
+               canvas.getGraphPointText().last().should('contain', 'A' );
+               canvas.addImageTile();
+               canvas.addTextTile();
+               canvas.enterText('third text tool');
+               canvas.addGraphTile();
+               canvas.getGraphTile();
+               canvas.addPointToGraph(175,55);
+               canvas.getGraphPointText().last().should('contain', 'A' );
+               canvas.addImageTile();
+               canvas.scrollToBottom();
+               canvas.scrollToTop();
            });
            // TODO:4-up view canvas selector does not work in cypress even though it works in Chrome. it currently selects the entire canvas and not the scaled one
            // it('verifies scrolling in 4up view', function(){
@@ -135,36 +133,41 @@ context('Test Canvas', function(){
 
     context('save and restore of canvas', function(){
         describe('verify that canvas is saved from various locations', function(){
-            it('will close and reopen the canvas and verify it looks the same', function() {
+            it('will restore from My Work tab', function() {
+                let canvas1='Initial';
+                let canvas2='Introduction';
                 //open the my work tab, click a different canvas, verify canvas is shown, open the my work tab, click the introduction canvas, verify intro canvas is showing
-                cy.get('#leftNavTab1').click();
-                cy.get('.left-nav-panel > .section > .canvas > .document-content > .buttons > button').click();
-                cy.get('.single-workspace > .document > .titlebar > .title').should('contain','Initial');
-                cy.get('#rightNavTabMy\\ Work').click({force:true});
-                cy.get('.list > .list-item[title*="Initial"]').click();
-                cy.get('.single-workspace > .document > .titlebar > .title').should('contain', 'Initial');
-                cy.get('#rightNavTabMy\\ Work').click({force:true});
-                cy.get('.list > .list-item[title*="Introduction"]').click();
-                cy.get('.single-workspace > .document > .titlebar > .title').should('contain', 'Introduction');
+                leftNav.openLeftNavTab('Initial Challenge');
+                leftNav.openToWorkspace();
+                canvas.getCanvasTitle().should('contain',canvas1);
+                rightNav.openMyWorkTab();
+                rightNav.openMyWorkAreaCanvasItem('Initial');
+                canvas.getCanvasTitle().should('contain', canvas1);
+                rightNav.openMyWorkTab()
+                rightNav.openMyWorkAreaCanvasItem('Introduction');
+                canvas.getCanvasTitle().should('contain', 'Introduction');
 
-                //verify text element with Hello World in showing
-                cy.get('.canvas-area > .canvas > .document-content > .tile-row> .tool-tile > .text-tool').first().should('contain', 'Hello World');
+                //verify text element with Hello World in showing left from earlier test
+                canvas.getTextTile().first().should('contain', 'Hello World');
                 //Verify the graph has 4 points in it
-                cy.get('.canvas-area > .canvas > .document-content > .tile-row> .tool-tile > .geometry-tool > .JXGtext').each(($point, index, $list)=>{}).then(($list)=>{
+                canvas.getGraphPointText().first().each(($point, index, $list)=>{}).then(($list)=>{
                     expect($list).to.have.length(4);
                 });
             });
         });
 
         describe('verify that if user opens same canvas from on left-nav tab, saved canvas opens', function() {
-            it('will open section', ()=>{
-                cy.get('#leftNavTab0').click({force:true});
-                cy.get('.left-nav-panel > .section > .canvas > .document-content > .buttons > button').click();
-                cy.get('.single-workspace > .document > .titlebar > .title').should('contain','Introduction');
+            it('will restore from left nav', ()=>{
+                leftNav.openLeftNavTab('What if');
+                leftNav.openToWorkspace();
+                canvas.getCanvasTitle().should('contain', 'What if');
+                leftNav.openLeftNavTab('Introduction');
+                leftNav.openToWorkspace();
+                canvas.getCanvasTitle().should('contain','Introduction');
                 //verify text element with Hello World in showing
-                cy.get('.canvas-area > .canvas > .document-content > .tile-row> .tool-tile > .text-tool').first().should('contain', 'Hello World');
+                canvas.getTextTile().first().should('contain', 'Hello World');
                 //Verify the graph has 4 points in it
-                cy.get('.canvas-area > .canvas > .document-content > .tile-row> .tool-tile > .geometry-tool > .JXGtext').each(($point, index, $list)=>{}).then(($list)=> {
+                canvas.getGraphPointText().first().each(($point, index, $list)=>{}).then(($list)=> {
                     expect($list).to.have.length(4);
                 });
             });
@@ -172,35 +175,25 @@ context('Test Canvas', function(){
 
         describe('verify that if user leaves a canvas in four-four up view, restore is also in four up view', function(){
             //TODO need to verify expected behavior when switching from canvas to canvas whether 4-up view should stay up.
-            it('verify restore of 4 up view', ()=>{
+            it('verify canvas stays in 4up view when changing canvases', ()=>{
                 //Open a canvas
-                cy.get('#leftNavTab1').click({force:true});
-                cy.get('.left-nav-panel > .section > .canvas > .document-content > .buttons > button').click({force:true});
-                cy.get('.single-workspace > .document > .titlebar > .title').should('contain','Initial');
+                leftNav.openLeftNavTab('Initial Challenge');
+                leftNav.openToWorkspace();
+                canvas.getCanvasTitle().should('contain','Initial');
                 //switch to 4-up view
-                cy.get('.document > .titlebar > .actions > .icon-up1').click();
-                cy.get('.canvas-area > .four-up >.canvas-container.north-west').should('be.visible');
+                canvas.openFourUpView();
                 //open another canvas
-                cy.get('#leftNavTab2').click({force:true});
-                cy.get('.left-nav-panel > .section > .canvas > .document-content > .buttons > button').click();
-                cy.get('.document > .titlebar > .title').should('contain','What if');
-                // cy.get('.canvas-area > .four-up >.canvas-container.north-west').should('not.be.visible');
+                leftNav.openLeftNavTab('What if');
+                leftNav.openToWorkspace();
+                canvas.getCanvasTitle().should('contain','What if');
+                canvas.getFourUpView().should('be.visible');
                 //Re-open Initial Challenge canvas from My Work
-                cy.get('#rightNavTabMy\\ Work.tab').click();
-                cy.get('.expanded-area.expanded > .contents > .my-work > .list > [title="Initial Challenge"]').click();
-                cy.get('.single-workspace > .document > .titlebar > .title').should('contain','Initial');
-                cy.get('.canvas-area > .four-up >.canvas-container.north-west').should('be.visible');
-                // //open another canvas
-                // cy.get('#leftNavTab2').click({force:true});
-                // cy.get('.left-nav-panel > .section > .canvas > .document-content > .buttons > button').click();
-                // cy.get('.single-workspace > .document > .titlebar > .title').should('contain','What if');
-                // cy.get('.canvas-area > .four-up >.canvas-container.north-west').should('not.be.visible');
-                // // Re-open Initial Challenge canvas from left nav tab
-                // cy.get('#leftNavTab1').click({force:true});
-                // cy.get('.left-nav-panel > .section > .canvas > .document-content > .buttons > button').click();
-                // cy.get('.single-workspace > .document > .titlebar > .title').should('contain','Initial');
-                // cy.get('.canvas-area > .four-up >.canvas-container.north-west').should('be.visible');
-                cy.get('.document > .titlebar > .actions > .icon-up').click(); //clean up
+                rightNav.openMyWorkTab();
+                rightNav.openMyWorkAreaCanvasItem("Initial Challenge").click();
+                canvas.getCanvasTitle().should('contain','Initial');
+                canvas.getFourUpView().should('be.visible');
+
+                canvas.openOneUpView(); //clean up
             });
         });
     });
@@ -208,25 +201,23 @@ context('Test Canvas', function(){
     context('test footer elements', function(){ //moved this to after tool elements have been added to verify that elements still show when in 2-up view
         describe('Test supports area', function(){
             it('verify supports comes up correctly', function(){
-                cy.get('.statusbar > .supports > .supports-list > span').each(($support, index, $list)=>{
+                canvas.getSupportList().each(($support, index, $list)=>{
                     let label=$support.text();
                     cy.log('Support is' + $support.text());
                     cy.wrap($support).click();
-                    cy.get('.visible-supports > .supports-list > div > span').should('contain', label);
+                    canvas.getSupportTitle().should('contain', label);
                 });
             });
         });
 
         describe('Test the 2-up view', function(){
             it('verify 2 up button, and correct corresponding view comes up', function(){
-                cy.get('.statusbar > .actions > .icon-up2').should('be.visible').click();
-                cy.get('.right-workspace > .comparison-placeholder').should('be.visible');
-                cy.get('.left-workspace > .document > .canvas-area > .canvas > .document-content').should('be.visible');
-                cy.get('.single-workspace > .document > .canvas-area > .canvas > .document-content').should('not.be.visible');
-                cy.get('.left-workspace > .document > .statusbar > .actions > .icon-up').should('be.visible').click();
-                cy.get('.right-workspace > .comparison-placeholder').should('not.be.visible');
-                cy.get('.left-workspace > .document > .canvas-area > .canvas > .document-content').should('not.be.visible');
-                cy.get('.single-workspace > .document > .canvas-area > .canvas > .document-content').should('be.visible');
+                canvas.getTwoUpViewToggle().should('be.visible');
+                canvas.openTwoUpView();
+                canvas.getSingleCanvas().should('not.be.visible');
+                canvas.openOneUpView();
+                canvas.getRightSideWorkspace().should('not.be.visible');
+                canvas.getLeftSideWorkspace().should('not.be.visible');
             });
 
             it('verify 2-up view is visible when canvas is in 4-up view', function(){
