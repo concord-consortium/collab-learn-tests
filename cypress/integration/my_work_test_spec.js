@@ -16,14 +16,14 @@ describe('Test right nav tabs', function(){
         it('verify that opened content is listed in My Work tab space', function(){ //still need to verify the titles match the titles from opened canvases
             cy.wait(1000);
             rightNav.openMyWorkTab();
-            rightNav.getMyWorkAreaCanvasItem().each(($item,index,$list)=>{
+            rightNav.getAllMyWorkAreaCanvasItems().each(($item,index,$list)=>{
                 cy.log('Title is ' + $item.text());
             });
             rightNav.closeMyWorkTab();
         });
         it('will open the correct canvas selected from the My Work list', function(){
             rightNav.openMyWorkTab();
-            rightNav.getMyWorkAreaCanvasItem().each(($item,index,$list)=>{
+            rightNav.getAllMyWorkAreaCanvasItems().each(($item,index,$list)=>{
                 let title= $item.text().replace(/[^\x00-\x7F]/g, "");
                 cy.wrap($item).click();
                 canvas.getCanvasTitle()
