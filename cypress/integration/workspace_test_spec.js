@@ -1,3 +1,5 @@
+import Workspace from './elements/Workspace.js';
+
 context('Test the overall workspace', function(){
     // describe('Test loading problem pages', function(){
     //     it('should load specified problems and tabs successfully', function(){
