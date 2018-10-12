@@ -34,14 +34,14 @@ context('Test Canvas', function(){
                canvas.getFourUpView().should('not.be.visible');
                canvas.openFourUpView();
                //4-up view is visible and 1-up button is visible
-               canvas.getOneUpViewToggle().should('be.visible');
+               canvas.getFourToOneUpViewToggle().should('be.visible');
                canvas.getNorthEastCanvas().should('be.visible');
                canvas.getNorthWestCanvas().should('be.visible');
                canvas.getSouthEastCanvas().should('be.visible');
                canvas.getSouthEastCanvas().should('be.visible');
                canvas.getSingleCanvas().should('not.be.visible');
                //can get back to 1 up view from 4 up
-               canvas.openOneUpView();
+               canvas.openOneUpViewFromFourUp();
                canvas.getSingleCanvas().should('be.visible');
                canvas.getFourUpViewToggle().should('be.visible');
                canvas.getFourUpView().should('not.be.visible');
@@ -143,7 +143,7 @@ context('Test Canvas', function(){
                 rightNav.openMyWorkTab();
                 rightNav.openMyWorkAreaCanvasItem('Initial');
                 canvas.getCanvasTitle().should('contain', canvas1);
-                rightNav.openMyWorkTab()
+                rightNav.openMyWorkTab();
                 rightNav.openMyWorkAreaCanvasItem('Introduction');
                 canvas.getCanvasTitle().should('contain', 'Introduction');
 
@@ -193,7 +193,7 @@ context('Test Canvas', function(){
                 canvas.getCanvasTitle().should('contain','Initial');
                 canvas.getFourUpView().should('be.visible');
 
-                canvas.openOneUpView(); //clean up
+                canvas.openOneUpViewFromFourUp(); //clean up
             });
         });
     });
@@ -215,7 +215,7 @@ context('Test Canvas', function(){
                 canvas.getTwoUpViewToggle().should('be.visible');
                 canvas.openTwoUpView();
                 canvas.getSingleCanvas().should('not.be.visible');
-                canvas.openOneUpView();
+                canvas.openOneUpViewFromTwoUp();
                 canvas.getRightSideWorkspace().should('not.be.visible');
                 canvas.getLeftSideWorkspace().should('not.be.visible');
             });

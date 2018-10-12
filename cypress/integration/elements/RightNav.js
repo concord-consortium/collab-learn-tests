@@ -13,12 +13,12 @@ class RightNav{
 
     openMyWorkTab(){
         this.getMyWorkTab().click({force:true});
-        this.getMyWorkAreaCanvasItem().should('be.visible');
+        this.getAllMyWorkAreaCanvasItems().should('be.visible');
     }
 
     closeMyWorkTab(){
         this.getMyWorkTab().click({force:true});
-        this.getMyWorkAreaCanvasItem().should('not.be.visible');
+        this.getAllMyWorkAreaCanvasItems().should('not.be.visible');
     }
 
     getClassWorkTab(){
