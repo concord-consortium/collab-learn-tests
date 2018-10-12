@@ -89,7 +89,7 @@ context('Test Canvas', function(){
 
                 canvas.addGraphTile();
                 canvas.getGraphTile().last().click();
-                canvas.addPointToGraph(200,100);
+                canvas.addPointToGraph(100,40);
                 canvas.getGraphPointText().last().should('contain', 'A' );
                 canvas.addPointToGraph(140,70);
                 canvas.getGraphPointText().last().should('contain', 'B' );
@@ -141,16 +141,18 @@ context('Test Canvas', function(){
                 leftNav.openToWorkspace();
                 canvas.getCanvasTitle().should('contain',canvas1);
                 rightNav.openMyWorkTab();
-                rightNav.openMyWorkAreaCanvasItem('Initial');
+                rightNav.openMyWorkAreaCanvasItem(canvas1);
                 canvas.getCanvasTitle().should('contain', canvas1);
+                rightNav.closeMyWorkTab();
                 rightNav.openMyWorkTab();
-                rightNav.openMyWorkAreaCanvasItem('Introduction');
-                canvas.getCanvasTitle().should('contain', 'Introduction');
+                rightNav.openMyWorkAreaCanvasItem(canvas2);
+                canvas.getCanvasTitle().should('contain', canvas2);
 
                 //verify text element with Hello World in showing left from earlier test
                 canvas.getTextTile().first().should('contain', 'Hello World');
                 //Verify the graph has 4 points in it
-                canvas.getGraphPointText().first().each(($point, index, $list)=>{}).then(($list)=>{
+                canvas.getGraphTile().first();
+                canvas.getGraphPoints().each(($point, index, $list)=>{}).then(($list)=>{
                     expect($list).to.have.length(4);
                 });
             });
@@ -167,7 +169,8 @@ context('Test Canvas', function(){
                 //verify text element with Hello World in showing
                 canvas.getTextTile().first().should('contain', 'Hello World');
                 //Verify the graph has 4 points in it
-                canvas.getGraphPointText().first().each(($point, index, $list)=>{}).then(($list)=> {
+                canvas.getGraphTile().first();
+                canvas.getGraphPoints().each(($point, index, $list)=>{}).then(($list)=> {
                     expect($list).to.have.length(4);
                 });
             });
@@ -189,7 +192,7 @@ context('Test Canvas', function(){
                 canvas.getFourUpView().should('be.visible');
                 //Re-open Initial Challenge canvas from My Work
                 rightNav.openMyWorkTab();
-                rightNav.openMyWorkAreaCanvasItem("Initial Challenge").click();
+                rightNav.openMyWorkAreaCanvasItem("Initial Challenge");
                 canvas.getCanvasTitle().should('contain','Initial');
                 canvas.getFourUpView().should('be.visible');
 
