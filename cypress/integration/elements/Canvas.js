@@ -85,6 +85,10 @@ class Canvas{
         this.getUnshareButton().click();
     }
 
+    getToolPalette(){
+        return cy.get('.single-workspace > .document > .toolbar');
+    }
+
     addTextTile(){
         return cy.get('.single-workspace > .document > .toolbar > .tool.text').click({force:true});
     }

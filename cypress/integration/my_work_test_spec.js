@@ -36,7 +36,12 @@ describe('Test right nav tabs', function(){
             });
             rightNav.closeMyWorkTab(); // clean up
         });
-    });
+
+        it('will verify that My Work canvas has a tool palette', function(){
+            rightNav.openMyWorkTab();
+            rightNav.openMyWorkAreaCanvasItem('Introduction');
+            canvas.getToolPalette().should('be.visible');
+        })    });
 
     describe('Class Work tab tests', function(){
 
