@@ -14,12 +14,18 @@
 // ***********************************************************
 
 // Import commands.js using ES2015 syntax:
-import './commands'
+// import './commands'
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
 
 before(function(){
+    // const customCommands = require('./commands.js');
+    //
+    // module.exports = {
+    //     commands: customCommands
+    // };
+
     const branch = Cypress.env("default");
     const mode = "qa";
     const problem='2.1';
@@ -32,4 +38,11 @@ Cypress.on('uncaught:exception', (err, runnable) => {
     // returning false here prevents Cypress from
     // failing the test
     return false
-})
+});
+//
+// const customCommands = require('./commands.js');
+//
+// module.exports = {
+//     commands: customCommands
+// }
+
