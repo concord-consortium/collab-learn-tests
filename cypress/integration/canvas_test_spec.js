@@ -134,25 +134,43 @@ context('Test Canvas', function(){
     context('save and restore of canvas', function(){
         describe('verify that canvas is saved from various locations', function(){
             it('will restore from My Work tab', function() {
-                let canvas1='Initial';
-                let canvas2='Introduction';
+                //TODO need to figure out why the page object commands do not work for opening Introduction canvas
+                // let canvas1='Initial';
+                // let canvas2='Introduction';
+                // //open the my work tab, click a different canvas, verify canvas is shown, open the my work tab, click the introduction canvas, verify intro canvas is showing
+                // leftNav.openLeftNavTab('Initial Challenge');
+                // leftNav.openToWorkspace();
+                // canvas.getCanvasTitle().should('contain',canvas1);
+                // rightNav.openMyWorkTab();
+                // rightNav.openMyWorkAreaCanvasItem(canvas1);
+                // canvas.getCanvasTitle().should('contain', canvas1);
+                // rightNav.closeMyWorkTab();
+                // rightNav.openMyWorkTab();
+                // rightNav.openMyWorkAreaCanvasItem(canvas2);
+                // canvas.getCanvasTitle().should('contain', canvas2);
+                //
+                // //verify text element with Hello World in showing left from earlier test
+                // canvas.getTextTile().first().should('contain', 'Hello World');
+                // //Verify the graph has 4 points in it
+                // canvas.getGraphTile().first();
+                // canvas.getGraphPoints().each(($point, index, $list)=>{}).then(($list)=>{
+                //     expect($list).to.have.length(4);
+                // });
                 //open the my work tab, click a different canvas, verify canvas is shown, open the my work tab, click the introduction canvas, verify intro canvas is showing
-                leftNav.openLeftNavTab('Initial Challenge');
-                leftNav.openToWorkspace();
-                canvas.getCanvasTitle().should('contain',canvas1);
-                rightNav.openMyWorkTab();
-                rightNav.openMyWorkAreaCanvasItem(canvas1);
-                canvas.getCanvasTitle().should('contain', canvas1);
-                rightNav.closeMyWorkTab();
-                rightNav.openMyWorkTab();
-                rightNav.openMyWorkAreaCanvasItem(canvas2);
-                canvas.getCanvasTitle().should('contain', canvas2);
+                cy.get('#leftNavTab1').click();
+                cy.get('.left-nav-panel > .section > .canvas > .document-content > .buttons > button').click();
+                cy.get('.single-workspace > .document > .titlebar > .title').should('contain','Initial');
+                cy.get('#rightNavTabMy\\ Work').click({force:true});
+                cy.get('.list > .list-item[title*="Initial"]').click();
+                cy.get('.single-workspace > .document > .titlebar > .title').should('contain', 'Initial');
+                cy.get('#rightNavTabMy\\ Work').click({force:true});
+                cy.get('.list > .list-item[title*="Introduction"]').click();
+                cy.get('.single-workspace > .document > .titlebar > .title').should('contain', 'Introduction');
 
-                //verify text element with Hello World in showing left from earlier test
-                canvas.getTextTile().first().should('contain', 'Hello World');
+                //verify text element with Hello World in showing
+                cy.get('.canvas-area > .canvas > .document-content > .tile-row> .tool-tile > .text-tool').first().should('contain', 'Hello World');
                 //Verify the graph has 4 points in it
-                canvas.getGraphTile().first();
-                canvas.getGraphPoints().each(($point, index, $list)=>{}).then(($list)=>{
+                cy.get('.canvas-area > .canvas > .document-content > .tile-row> .tool-tile > .geometry-tool > .JXGtext').each(($point, index, $list)=>{}).then(($list)=>{
                     expect($list).to.have.length(4);
                 });
             });
@@ -312,7 +330,7 @@ context('Test Canvas', function(){
 
             });
 
-            //TODO add a test for dragging canvas to the left sde workspace
+            //TODO add a test for dragging canvas to the left side workspace
 
             //TODO: add a test for when both views are the same section (Open an intro, put it into workspace, change to 2 up view, drag intro to 2nd space, open intro again, switching back to 1 up view disappears
             //from https://www.pivotaltracker.com/story/show/160826065
