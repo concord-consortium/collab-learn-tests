@@ -6,9 +6,7 @@ let student = '1',
     problemSet = '1.1';
 
 describe('Check header area for correctness', function(){
-    // it('will verify if teacher name is correct',function(){
-    //
-    // });
+
     const workspace = new Header();
 
     it('will verify if class name is correct', function(){
