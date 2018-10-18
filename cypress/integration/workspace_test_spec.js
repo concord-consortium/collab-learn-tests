@@ -1,6 +1,15 @@
 import Workspace from './elements/Workspace.js';
+import LeftNav from './elements/LeftNav';
+import RightNav from './elements/RightNav';
+import BottomNav from './elements/BottomNav';
 
 context('Test the overall workspace', function(){
+    let leftnav = new LeftNav,
+        rightnav = new RightNav,
+        bottomnav = new BottomNav,
+        workspace = new Workspace;
+
+
     // describe('Test loading problem pages', function(){
     //     it('should load specified problems and tabs successfully', function(){
     //         const problems = [
