@@ -1,15 +1,17 @@
 import Workspace from './elements/Workspace.js';
 import LeftNav from './elements/LeftNav';
-import RightNav from './elements/RightNav';
 import BottomNav from './elements/BottomNav';
+import RightNav from './elements/RightNav';
+import Canvas from './elements/Canvas';
+
+
+let leftNav = new LeftNav,
+    bottomNav = new BottomNav,
+    rightNav = new RightNav,
+    canvas = new Canvas;
+
 
 context('Test the overall workspace', function(){
-    let leftnav = new LeftNav,
-        rightnav = new RightNav,
-        bottomnav = new BottomNav,
-        workspace = new Workspace;
-
-
     // describe('Test loading problem pages', function(){
     //     it('should load specified problems and tabs successfully', function(){
     //         const problems = [
@@ -76,84 +78,87 @@ context('Test the overall workspace', function(){
 
     describe('Desktop functionalities', function(){
         it('will verify that clicking on tab closes the nav area', function(){
-            cy.get('.left-nav > .tabs > .tab:first').click({force:true}); //left nav expand area should be visible
-            cy.get('.left-nav.expanded').should('be.visible');
-            cy.get('.left-nav > .tabs > .tab:first').click({force:true}); //left nav expand area should not be visible
-            cy.get('.left-nav.expanded').should('not.be.visible');
+            leftNav.openLeftNavTab('Introduction'); //left nav expand area should be visible
+            leftNav.getLeftNavExpandedSpace().should('be.visible');
+            leftNav.closeLeftNavTab('Introduction'); //left nav expand area should not be visible
+            leftNav.getLeftNavExpandedSpace().should('not.be.visible');
 
-            cy.get('#rightNavTabMy\\ Work').click(); //my work expand area should be visible
-            cy.get('.right-nav>.tabs.expanded').should('be.visible');
-            cy.get('#rightNavTabMy\\ Work').click(); //my work expand area should not be visible
-            cy.get('.right-nav>.tabs.expanded').should('not.be.visible');
+            rightNav.openMyWorkTab(); //my work expand area should be visible
+            rightNav.getRightNavExpandedSpace().should('be.visible');
+            rightNav.closeMyWorkTab(); //my work expand area should not be visible
+            rightNav.getRightNavExpandedSpace().should('not.be.visible');
 
-            cy.get('#learningLogTab').click(); //learning log expand area should be visible
-            cy.get('.bottom-nav.expanded').should('be.visible');
-            cy.get('#learningLogTab').click(); //learning log expand area should not be visible
-            cy.get('.bottom-nav.expanded').should('not.be.visible');
+            bottomNav.openLearningLogTab(); //learning log expand area should be visible
+            bottomNav.getBottomNavExpandedSpace().should('be.visible');
+            bottomNav.closeLearningLogTab(); //learning log expand area should not be visible
+            bottomNav.getBottomNavExpandedSpace().should('not.be.visible');
         });
 
         it('will verify that left nav area is closes when other tabs are opened', function(){ //should this be tab closes when no longer in that area? my work and left nav
             cy.visit('https://collaborative-learning.concord.org/branch/master/?appMode=qa&fakeClass=5&fakeUser=student:1&fakeOffering=1&qaGroup=1&problem=1.1');
-            cy.get('.left-nav > .tabs > .tab:first').click(); //left nav expand area should be visible
-            cy.get('.left-nav.expanded').should('be.visible');
-            cy.get('.right-nav>.tabs.expanded').should('not.be.visible');
-            cy.get('.bottom-nav.expanded').should('not.be.visible');
-            cy.get('#rightNavTabMy\\ Work').click(); //my work expand area should be visible
-            cy.get('.left-nav.expanded').should('not.be.visible');
-            cy.get('.right-nav>.tabs.expanded').should('be.visible');
-            cy.get('.bottom-nav.expanded').should('not.be.visible');
-            cy.get('#learningLogTab').click(); //learning log expand area should be visible
-            cy.get('.left-nav.expanded').should('not.be.visible');
-            cy.get('.right-nav>.tabs.expanded').should('be.visible');
-            cy.get('.bottom-nav.expanded').should('be.visible');
+            leftNav.openLeftNavTab('Introduction'); //left nav expand area should be visible
+            leftNav.getLeftNavExpandedSpace().should('be.visible');
+            rightNav.getRightNavExpandedSpace().should('not.be.visible');
+            bottomNav.getBottomNavExpandedSpace().should('not.be.visible');
+            rightNav.openMyWorkTab(); //my work expand area should be visible
+            leftNav.getLeftNavExpandedSpace().should('not.be.visible');
+            rightNav.getRightNavExpandedSpace().should('be.visible');
+            bottomNav.getBottomNavExpandedSpace().should('not.be.visible');
+            bottomNav.openLearningLogTab(); //learning log expand area should be visible
+            leftNav.getLeftNavExpandedSpace().should('not.be.visible');
+            rightNav.getRightNavExpandedSpace().should('be.visible');
+            bottomNav.getBottomNavExpandedSpace().should('be.visible');
             //close all tabs to clear workspace for next test
-            cy.get('#learningLogTab').click(); //learning log expand area should be visible
-            cy.get('#rightNavTabMy\\ Work').click(); //my work expand area should be visible
+            bottomNav.closeLearningLogTab(); //learning log expand area should be visible
+            rightNav.closeMyWorkTab(); //my work expand area should be visible
         });
 
         it('will verify that right nav tabs are still visible and clickable when Learning Log is expanded', function(){
-            cy.get('#learningLogTab').click(); //learning log expand area should be visible
-            cy.get('.bottom-nav.expanded').should('be.visible');
-            cy.get('.right-nav > .tabs > .tab').each(($tab,index, $list) => {
+            bottomNav.openLearningLogTab(); //learning log expand area should be visible
+            bottomNav.getBottomNavExpandedSpace().should('be.visible');
+            rightNav.getRightNavTabs().each(($tab,index, $list) => {
                 cy.wrap($tab).click();//click on tab (check to see if this is the first time the tab is clicked, because the second click to the tab will close the expanded area
-                cy.get('.right-nav>.tabs.expanded').should('be.visible');
+                rightNav.getRightNavExpandedSpace().should('be.visible');
             })
         });
 
         it('will verify canvases do not persist between problems', function(){
             let problem1='1.1',
                 problem2='2.1';
+            let tab1 ='Introduction';
 
             cy.visit('https://collaborative-learning.concord.org/branch/master/?appMode=qa&fakeClass=4&fakeUser=student:3&fakeOffering=1&qaGroup=1&problem='+problem1);
-            let tab1 ='#leftNavTab0';
-            cy.get(tab1).invoke('text').then((text)=>{
-                cy.get(tab1).click({force:true});
-                cy.get('.left-nav-panel > .section > .canvas > .document-content > .buttons > button').click({force:true});
-                cy.get('.document > .titlebar > .title').should('contain',text);
-                cy.get('.single-workspace > .document > .toolbar > .tool.text').click({force: true});
-                cy.get('.canvas-area > .canvas > .document-content > .tile-row > .tool-tile > .text-tool').last().type('This is the '+text+ ' in Problem '+problem1);
-                cy.get('.canvas-area > .canvas > .document-content > .tile-row > .tool-tile > .text-tool').last().should('contain', 'Problem '+problem1);
-            });
-            cy.wait(3000);
-            cy.visit('https://collaborative-learning.concord.org/branch/master/?appMode=qa&fakeClass=4&fakeUser=student:3&fakeOffering=1&qaGroup=1&problem='+problem2);
-            // cy.wait(1000);
-            cy.get(tab1).invoke('text').then((text)=>{
-                cy.get(tab1).click({force:true});
-                cy.get('.left-nav-panel > .section > .canvas > .document-content > .buttons > button').click({force:true});
-                cy.get('.document > .titlebar > .title').should('contain',text);
-                cy.get('.canvas-area > .canvas > .document-content > .tile-row > .tool-tile > .text-tool').should('not.exist');
-            });
             cy.wait(1000);
+
+            leftNav.openLeftNavTab(tab1);
+            leftNav.openToWorkspace();
+            canvas.getCanvasTitle()
+                .then(($titleLoc)=>{
+                let title = $titleLoc.text().replace(/[^\x00-\x7F]/g, "");
+                expect(title).to.contain(tab1);
+            });//.text().replace(/[^\x00-\x7F]/g, "").should('contain',tab1);
+            canvas.addTextTile();
+            canvas.enterText('This is the '+tab1+ ' in Problem '+problem1);
+            canvas.getTextTile().last().should('contain', 'Problem '+problem1);
+            cy.wait(2000);
+
+            cy.visit('https://collaborative-learning.concord.org/branch/master/?appMode=qa&fakeClass=4&fakeUser=student:3&fakeOffering=2&qaGroup=1&problem='+problem2);
+            cy.wait(1000);
+            leftNav.openLeftNavTab(tab1);
+            leftNav.openToWorkspace();
+            canvas.getCanvasTitle().should('contain',tab1);
+            canvas.getTextTile().should('not.exist');
+            cy.wait(2000);
+
+            //Shows student as disconnected and will not load the intrduction canvas
             cy.visit('https://collaborative-learning.concord.org/branch/master/?appMode=qa&fakeClass=4&fakeUser=student:3&fakeOffering=1&qaGroup=1&problem='+problem1);
-            // cy.wait(1000);
-            cy.get(tab1).invoke('text').then((text)=>{
-                cy.get(tab1).click({force:true});
-                cy.get('.left-nav-panel > .section > .canvas > .document-content > .buttons > button').click({force:true});
-                cy.get('.document > .titlebar > .title').should('contain',text);
-                cy.get('.canvas-area > .canvas > .document-content > .tile-row > .tool-tile > .text-tool').last().should('contain', 'Problem '+problem1);
-                cy.get('.canvas-area > .canvas > .document-content > .tile-row > .tool-tile > .text-tool').last().click();
-                cy.get('.single-workspace > .document > .toolbar > .tool.delete').click();//clean up
-            });
+            cy.wait(1000);
+            leftNav.openLeftNavTab(tab1);
+            leftNav.openToWorkspace();
+            cy.wait(1000);
+            canvas.getCanvasTitle().should('contain',tab1);
+            canvas.getTextTile().last().should('contain', 'Problem '+problem1);
+            canvas.deleteTile('text')//clean up
         })
 
     });
