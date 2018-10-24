@@ -1,23 +1,14 @@
 import LeftNav from './elements/LeftNav'
 import Canvas from './elements/Canvas'
 import RightNav from './elements/RightNav'
+import BottomNav from './elements/BottomNav';
+import LearningLog from './elements/LearningLog';
 
 context('Test Canvas', function(){
-    let leftNav = new LeftNav();
-    let canvas = new Canvas();
-    let rightNav = new RightNav();
-
-    function createLearningLog(title){
-        // var title='pool';
-        cy.get('#learningLogTab').click({force:true});//open Learning log
-        cy.get('.bottom-nav.expanded').should('be.visible'); //verify learning log is expanded and create button will be accessible
-        cy.get('.learning-log > .logs > button').should('be.visible').and('contain', 'Create').click();
-        // cy.get('.learning-log > .logs > button').should('contain','Create').click();
-        cy.get('.dialog > .dialog-container > .dialog-title').should('contain', 'Create Learning Log');
-        cy.get('.dialog > .dialog-container > .dialog-contents > .dialog-input > input').type(title);
-        cy.get('.dialog > .dialog-container > .dialog-contents > .dialog-buttons > #okButton').click();
-        cy.get('.learning-log > .logs > .list > .list-item > .info > .title').should('contain',title);
-    }
+    let leftNav = new LeftNav;
+    let canvas = new Canvas;
+    let rightNav = new RightNav;
+    let learningLog = new LearningLog;
 
     context('test canvas tools', function(){
        describe('test header elements', function(){
@@ -296,7 +287,7 @@ context('Test Canvas', function(){
             });
 
             it('verify learning log canvas side by side in right side 2 up view', function() {
-                createLearningLog('pool'); //setup
+                learningLog.createLearningLog('pool'); //setup
                 //open 2up view
                 cy.get('.statusbar > .actions > .icon-up2').should('be.visible').click();
                 cy.get('.right-workspace > .comparison-placeholder').should('be.visible');
@@ -319,7 +310,7 @@ context('Test Canvas', function(){
                 });
                 //create second learning log to put up in 2 up view
                 cy.get('#learningLogTab').click({force:true});//close learning log area because function opens it again
-                createLearningLog('slide');
+                learningLog.createLearningLog('slide');
                 //add a canvas to the right side workspace from Learning log
                 cy.get('.learning-log > .logs > .list > .list-item > .info > [title="slide"]').then(($log)=>{
                     let logTitle = $log.text();
