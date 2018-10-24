@@ -198,6 +198,10 @@ class Canvas{
         this.getTwoToOneUpViewToggle().click({force:true});
         this.getSingleCanvas().should('be.visible');
      }
+
+     getRightSideWorkspaceTitle(){
+        return cy.get('.right-workspace > .document > .titlebar > .title')
+     }
 }
 
 export default Canvas;

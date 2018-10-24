@@ -52,12 +52,11 @@ describe('Test right nav tabs', function(){
                    // group = title[1];
               //  expect(($item).text()).to.contain(group);
                 cy.wrap($item).click();
-                canvas.getCanvasTitle()
+                canvas.getRightSideWorkspaceTitle()
                     .then(($canvasTitle)=>{
                         let canvasTitle=$canvasTitle.text();
                         expect($canvasTitle.text()).to.contain(title[0]);
                     });
-                rightNav.openClassWorkTab();
                 cy.wait(1000);
             });
             rightNav.closeClassWorkTab(); //clean up
