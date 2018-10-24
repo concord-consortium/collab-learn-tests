@@ -3,12 +3,14 @@ import LeftNav from './elements/LeftNav';
 import BottomNav from './elements/BottomNav';
 import RightNav from './elements/RightNav';
 import Canvas from './elements/Canvas';
+import LearningLog from './elements/LearningLog';
 
 
 let leftNav = new LeftNav,
     bottomNav = new BottomNav,
     rightNav = new RightNav,
-    canvas = new Canvas;
+    canvas = new Canvas,
+    learningLog = new LearningLog;
 
 
 context('Test the overall workspace', function(){
@@ -25,9 +27,9 @@ context('Test the overall workspace', function(){
             rightNav.closeMyWorkTab(); //my work expand area should not be visible
             rightNav.getRightNavExpandedSpace().should('not.be.visible');
 
-            bottomNav.openLearningLogTab(); //learning log expand area should be visible
+            learningLog.openLearningLogTab(); //learning log expand area should be visible
             bottomNav.getBottomNavExpandedSpace().should('be.visible');
-            bottomNav.closeLearningLogTab(); //learning log expand area should not be visible
+            learningLog.closeLearningLogTab(); //learning log expand area should not be visible
             bottomNav.getBottomNavExpandedSpace().should('not.be.visible');
         });
 
@@ -41,17 +43,17 @@ context('Test the overall workspace', function(){
             leftNav.getLeftNavExpandedSpace().should('not.be.visible');
             rightNav.getRightNavExpandedSpace().should('be.visible');
             bottomNav.getBottomNavExpandedSpace().should('not.be.visible');
-            bottomNav.openLearningLogTab(); //learning log expand area should be visible
+            learningLog.openLearningLogTab(); //learning log expand area should be visible
             leftNav.getLeftNavExpandedSpace().should('not.be.visible');
             rightNav.getRightNavExpandedSpace().should('be.visible');
             bottomNav.getBottomNavExpandedSpace().should('be.visible');
             //close all tabs to clear workspace for next test
-            bottomNav.closeLearningLogTab(); //learning log expand area should be visible
+            learningLog.closeLearningLogTab(); //learning log expand area should be visible
             rightNav.closeMyWorkTab(); //my work expand area should be visible
         });
 
         it('will verify that right nav tabs are still visible and clickable when Learning Log is expanded', function(){
-            bottomNav.openLearningLogTab(); //learning log expand area should be visible
+            learningLog.openLearningLogTab(); //learning log expand area should be visible
             bottomNav.getBottomNavExpandedSpace().should('be.visible');
             rightNav.getRightNavTabs().each(($tab,index, $list) => {
                 cy.wrap($tab).click();//click on tab (check to see if this is the first time the tab is clicked, because the second click to the tab will close the expanded area
