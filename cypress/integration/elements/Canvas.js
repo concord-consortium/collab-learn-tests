@@ -1,7 +1,8 @@
 class Canvas{
 
     getCanvasTitle(){
-        return cy.get('.single-workspace > .document > .titlebar > .title');
+        return cy.get('.group-view > .single-workspace > .document > .titlebar > .title')
+
     }
 
     getPublishIcon(){
@@ -70,7 +71,7 @@ class Canvas{
     }
 
     getShareButton(){
-        return cy.get('.document > .titlebar > .actions > .icon-share');
+        return cy.get('.document > .titlebar > .actions > .visibility > .icon-share');
     }
 
     shareCanvas(){
@@ -78,7 +79,7 @@ class Canvas{
     }
 
     getUnshareButton(){
-        return cy.get('.document > .titlebar > .actions > .icon-unshare');
+        return cy.get('.document > .titlebar > .actions > .visibility >.icon-unshare');
     }
 
     unshareCanvas(){
@@ -86,11 +87,11 @@ class Canvas{
     }
 
     getToolPalette(){
-        return cy.get('.single-workspace > .document > .toolbar');
+        return cy.get('.single-workspace > .toolbar');
     }
 
     addTextTile(){
-        return cy.get('.single-workspace > .document > .toolbar > .tool.text').click({force:true});
+        return cy.get('.single-workspace > .toolbar > .tool.text').click({force:true});
     }
 
     getTextTile(){
@@ -114,7 +115,7 @@ class Canvas{
     }
 
     addGraphTile(){
-        return cy.get('.single-workspace > .document > .toolbar > .tool.geometry').click({force: true});
+        return cy.get('.single-workspace > .toolbar > .tool.geometry').click({force: true});
     }
 
     getGraphTile(){
@@ -131,7 +132,7 @@ class Canvas{
     }
 
     addImageTile(){
-        return cy.get('.single-workspace > .document > .toolbar > .tool.image').click({force: true});
+        return cy.get('.single-workspace > .toolbar > .tool.image').click({force: true});
     }
 
     getImageTile(){
@@ -139,17 +140,20 @@ class Canvas{
     }
 
     getDeleteTool(){
-        return cy.get('.single-workspace > .document > .toolbar > .tool.delete').click({force: true});
+        return cy.get('.single-workspace > .toolbar > .tool.delete').click({force: true});
     }
 
     deleteTile(tile){
         switch(tile) {
             case 'text':
                 this.getTextTile().last().click();
+                break;
             case 'graph':
-                this.getGraphTile().last.click();
+                this.getGraphTile().last().click();
+                break;
             case 'image':
                 this.getImageTile().last().click();
+                break;
         }
         this.getDeleteTool();
     }
