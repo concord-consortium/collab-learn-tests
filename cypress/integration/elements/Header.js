@@ -6,7 +6,7 @@ class Header{
         return cy.get('.header > .group > .name');
     }
     getGroupMembers(){
-        return cy.get('.header > .group > .members > .member')
+        return cy.get('.header > .group > .members > .row > .member')
     }
     getUserName(){
         return cy.get('.header > .user > .name')

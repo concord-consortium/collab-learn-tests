@@ -389,6 +389,11 @@ context('Test Canvas', function(){
             cy.get('.canvas-area > .canvas > .document-content > .tile-row> .tool-tile.selected').should('have.class','selected');
             cy.get('.single-workspace >.document > .toolbar > .tool.delete').click({force:true});
         });
+
+        it('will try to delete elements from other canvases in 4 up view', function(){
+            //TODO
+            expect(4).to.eq(3);
+        })
     });
 
 });

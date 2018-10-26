@@ -51,7 +51,8 @@ class LeftNav{
         return cy.get('.left-nav-panel > .section > .canvas > .document-content > .buttons > button');
     }
 
-    openToWorkspace() {
+    openToWorkspace(title) {
+        this.openLeftNavTab(title);
         this.getOpenToWorkspaceButton().click({force:true});
     }
 }

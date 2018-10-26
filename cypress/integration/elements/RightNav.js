@@ -1,6 +1,12 @@
 class RightNav{
+    getRightNavTabs(){
+        return cy.get('.right-nav > .tabs > .tab');
+    }
     getMyWorkTab(){
         return cy.get('#rightNavTabMy\\ Work.tab');
+    }
+    getRightNavExpandedSpace(){
+        return cy.get('.right-nav > .expanded-area.expanded');
     }
 
     getAllMyWorkAreaCanvasItems(){
@@ -8,7 +14,7 @@ class RightNav{
     }
 
     openMyWorkAreaCanvasItem(title){
-        return cy.get('.my-work > .list > .list-item[title*="'+title+'"]').click();
+        cy.get('.my-work > .list > .list-item[title*="'+title+'"]').click();
     }
 
     openMyWorkTab(){
@@ -18,7 +24,7 @@ class RightNav{
 
     closeMyWorkTab(){
         this.getMyWorkTab().click({force:true});
-        this.getAllMyWorkAreaCanvasItems().should('not.be.visible');
+        this.getRightNavExpandedSpace().should('not.be.visible');
     }
 
     getClassWorkTab(){
@@ -27,6 +33,14 @@ class RightNav{
 
     getClassWorkAreaCanvasItem(){
         return cy.get('.right-nav > .expanded-area.expanded > .contents > .class-work > .list > .list-item');
+    }
+
+    getAllClassWorkAreaCanvasItems(){
+        return cy.get('.right-nav > .expanded-area.expanded > .contents > .class-work > .list > .list-item');
+    }
+
+    openClassWorkAreaCanvasItem(title){
+        cy.get('.class-work > .list > .list-item > .info > div:contains("'+title+'")').parent().parent().click();
     }
 
     openClassWorkTab(){
@@ -38,6 +52,7 @@ class RightNav{
         this.getClassWorkTab().click({force:true});
         this.getClassWorkAreaCanvasItem().should('not.be.visible');
     }
+
 
 }
 export default RightNav;

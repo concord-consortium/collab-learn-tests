@@ -90,8 +90,12 @@ class Canvas{
         return cy.get('.single-workspace > .toolbar');
     }
 
+    getTextTool(){
+        return cy.get('.single-workspace > .toolbar > .tool.text');
+    }
+
     addTextTile(){
-        return cy.get('.single-workspace > .toolbar > .tool.text').click({force:true});
+        this.getTextTool().click({force:true});
     }
 
     getTextTile(){
@@ -175,14 +179,14 @@ class Canvas{
     }
 
     getTwoUpViewToggle(){
-        return cy.get('.statusbar > .actions > .icon-up2');
+        return cy.get('.statusbar > .actions > .action > .icon-up2');
     }
     getTwoToOneUpViewToggle(){// from 2up view
-        return cy.get('.left-workspace > .document > .statusbar > .actions > .icon-up');
+        return cy.get('.left-workspace > .document > .statusbar > .actions > .action > .icon-up');
     }
 
     getRightSideWorkspace(){
-        return cy.get('.right-workspace > .comparison-placeholder')
+        return cy.get('.right-workspace')
     }
     getLeftSideWorkspace(){
         return cy.get('.left-workspace > .document > .canvas-area > .canvas');
@@ -201,6 +205,10 @@ class Canvas{
 
      getRightSideWorkspaceTitle(){
         return cy.get('.right-workspace > .document > .titlebar > .title')
+     }
+
+     getLeftSideWorkspaceTitle(){
+        return cy.get('left-workspace > .document > .titlebar > .title')
      }
 }
 

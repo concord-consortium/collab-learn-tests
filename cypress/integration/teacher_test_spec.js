@@ -19,33 +19,11 @@ let header = new Header,
     workspace = new Workspace,
     teacherDashboard = new TeacherDashboard;
 
-
-function setupGroup(group){
-    let i=0;
-
-    for (i=0;i<group.length;i++) {
-        cy.wait(2000);
-        cy.visit('https://collaborative-learning.concord.org/branch/master/?appMode=qa&qaGroup='+qaGroup+'&fakeClass='+qaClass+'&fakeUser=student:'+group[i]+'&fakeOffering='+qaOffering+'&problem='+problem);
-        leftNav.openLeftNavTab('Now What');
-        leftNav.openToWorkspace();
-        canvas.addTextTile();
-        canvas.enterText('This is to test the 4-up view of S'+group[i]);
-        canvas.getTextTile().last().should('contain', '4-up').and('contain','S'+group[i]);
-        canvas.shareCanvas();//all students will share their canvas
-        cy.wait(1000);
-    }
-    //verify Group num and there are 4 students in the group
-    header.getGroupName().should('contain','Group '+qaGroup);
-    header.getGroupMembers().each(($member,index, $list)=>{
-        expect(['S'+group[0],'S'+group[1],'S'+group[2],'S'+group[3]]).to.include($member.text());
-    });
-}
-
 context('Teacher workspace',function(){ //does not have My Work tab and has Teacher in user name
     describe('Check header area for correctness', function(){
 
         it('set up group and will go to a teacher view of the site', function() {
-            setupGroup(studentArr);
+            cy.setupGroup(studentArr);
             cy.visit('https://collaborative-learning.concord.org/branch/master/?appMode=qa&fakeClass='+qaClass+'&fakeUser=teacher:'+teacher+'&fakeOffering='+qaOffering+'&problem='+problem+'&qaGroup='+qaGroup);
         });
 
