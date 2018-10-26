@@ -19,7 +19,7 @@ class RightNav{
 
     openMyWorkTab(){
         this.getMyWorkTab().click({force:true});
-        this.getAllMyWorkAreaCanvasItems().should('be.visible');
+        this.getRightNavExpandedSpace().should('be.visible');
     }
 
     closeMyWorkTab(){
@@ -45,12 +45,12 @@ class RightNav{
 
     openClassWorkTab(){
         this.getClassWorkTab().click({force:true});
-        this.getClassWorkAreaCanvasItem().should('be.visible');
+        this.getRightNavExpandedSpace().should('be.visible');
     }
 
     closeClassWorkTab(){
         this.getClassWorkTab().click({force:true});
-        this.getClassWorkAreaCanvasItem().should('not.be.visible');
+        this.getRightNavExpandedSpace().should('not.be.visible');
     }
 
 
