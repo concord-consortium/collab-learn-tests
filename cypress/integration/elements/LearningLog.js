@@ -126,6 +126,14 @@ class LearningLog {
         return cy.get('.learning-log > .workspaces > .left-workspace > .document > .canvas-area > .canvas');
     }
 
+    getLeftSideToolPalette(){
+        return cy.get('.learning-log > .workspaces > .left-workspace > .toolbar');
+    }
+
+    getRightSideToolPalette(){
+        return cy.get('.learning-log > .workspaces > .right-workspace > .toolbar');
+    }
+
     openTwoUpView(){
         this.getTwoUpViewToggle().click({force:true});
         this.getRightSideWorkspace().should('be.visible');

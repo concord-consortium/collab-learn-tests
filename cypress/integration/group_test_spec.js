@@ -81,12 +81,6 @@ context('Test group functionalities', function(){
             });
 
         });
-        describe('test the 2-up view', function(){
-            it('will verify 2-up view still comes up even in 4-up view', function(){
-                cy.log('need to write this test');
-                expect(4).to.equal(3);
-            });
-        });
 
         describe('test sharing and unsharing canvases', function(){
             it('will share canvas and verify canvas is visible in groupmates 4-up view', function(){
