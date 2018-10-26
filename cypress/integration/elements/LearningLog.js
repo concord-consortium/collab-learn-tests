@@ -19,11 +19,11 @@ class LearningLog {
         return cy.get('.learning-log > .workspaces > .single-workspace > .document > .titlebar > .title');
     }
 
-    openLearningLogCanvasItem(title){
+    openLearningLogCanvasItem(title){ //finds the title then clicks on the canvas
          cy.get('.learning-log > .logs > .list > .list-item > .info > .title[title*="'+title+'"]').parent().parent().click();
     }
 
-    selectSpecificLLCanvasTitle(title){
+    selectLLCanvasTitle(title){
         cy.get('.learning-log > .logs > .list > .list-item > .info > .title[title*="'+title+'"]').click();
     }
 
@@ -92,11 +92,11 @@ class LearningLog {
         this.getLLGraphTile().last().click(); //Adds a point on the graph
         this.getLLGraphPointText().last().should('contain', 'A' );
         this.addLLPointToGraph(40,35);
-        this.getLLGraphPointText().last().should('contain', 'B' );
+        // this.getLLGraphPointText().last().should('contain', 'B' );
         this.addLLPointToGraph(240,70);
-        this.getLLGraphPointText().last().should('contain', 'C' );
+        // this.getLLGraphPointText().last().should('contain', 'C' );
         this.addLLPointToGraph(40,170);
-        this.getLLGraphPointText().last().should('contain', 'D' );
+        // this.getLLGraphPointText().last().should('contain', 'D' );
     }
 
     addLLImageTile(){
@@ -106,6 +106,44 @@ class LearningLog {
     addLLPointToGraph(x,y){
         this.getLLGraphTile().last();
         cy.get('.learning-log-canvas-area > .canvas > .document-content > .tile-row > .tool-tile > .geometry-size-me > .geometry-tool').last().click(x,y, {force:true});
+    }
+
+    getSingleCanvas(){
+        return cy.get('.learning-log-canvas-area');
+    }
+
+    getTwoUpViewToggle(){
+        return cy.get('.learning-log > .workspaces > .single-workspace > .document > .statusbar > .actions > .action > .icon-up2');
+    }
+    getTwoToOneUpViewToggle(){// from 2up view
+        return cy.get('.learning-log > .workspaces > .left-workspace > .document > .statusbar > .actions > .action > .icon-up');
+    }
+
+    getRightSideWorkspace(){
+        return cy.get('.learning-log > .workspaces > .right-workspace')
+    }
+    getLeftSideWorkspace(){
+        return cy.get('.learning-log > .workspaces > .left-workspace > .document > .canvas-area > .canvas');
+    }
+
+    openTwoUpView(){
+        this.getTwoUpViewToggle().click({force:true});
+        this.getRightSideWorkspace().should('be.visible');
+        this.getLeftSideWorkspace().should('be.visible');
+
+    }
+
+    openOneUpViewFromTwoUp(){
+        this.getTwoToOneUpViewToggle().click({force:true});
+        this.getSingleCanvas().should('be.visible');
+    }
+
+    getRightSideWorkspaceTitle(){
+        return cy.get('.learning-log > .workspaces > .right-workspace > .document > .titlebar > .title')
+    }
+
+    getLeftSideWorkspaceTitle(){
+        return cy.get('.learning-log > .workspaces > .left-workspace > .document > .titlebar > .title')
     }
 
 }

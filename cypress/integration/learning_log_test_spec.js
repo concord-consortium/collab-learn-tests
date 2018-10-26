@@ -63,7 +63,7 @@ context('Test bottom tabs', function(){
        it('will rename a created learning log and verify restore of name and canvas', function(){
            let renameTitle = 'rename pool',
                 title = 'pool';
-           learningLog.selectSpecificLLCanvasTitle(title);
+           learningLog.selectLLCanvasTitle(title);
            learningLog.renameLearningLog(renameTitle);
            learningLog.getLLCanvasTitle().should('contain', renameTitle);
            learningLog.getLearningLogCanvasItemTitle().should('contain',renameTitle);
@@ -94,7 +94,7 @@ context('Test bottom tabs', function(){
                let title = $log.text();
                cy.wrap($log).parent().parent().click();
                learningLog.getLLCanvasTitle().should('contain', title);
-           })
+           });
            learningLog.closeLearningLogTab(); //close learning log
        })
 
@@ -108,42 +108,30 @@ context('Test bottom tabs', function(){
             //click on create button
             //send a LL_Intro
             //verify canvas is created with title LL_Introduction
-            cy.get('#learningLogTab').click({force:true});//open learning log
-            cy.get('.bottom-nav.expanded').should('be.visible'); //verify learning log is expanded and create button will be accessible
-            cy.get('.learning-log > .logs > button').should('be.visible').and('contain', 'Create').click();
-            cy.get('.dialog > .dialog-container > .dialog-title').should('contain', 'Create Learning Log');
-            cy.get('.dialog > .dialog-container > .dialog-contents > .dialog-input > input').type(title);
-            cy.get('.dialog > .dialog-container > .dialog-contents > .dialog-buttons > #okButton').click();
-            cy.get('.bottom-nav > .expanded-area > .contents > .learning-log > .workspaces > .single-workspace > .document > .titlebar > .title').should('contain', title);
-            cy.get('.learning-log > .logs > .list > .list-item > .info > .title').should('contain',title);
-            //click on 2up button verify left and righthand canvas exist
-            cy.get('.workspaces > .single-workspace > .document > .statusbar > .actions > .icon-up2').should('be.visible').click();
-            cy.get('.learning-log > .workspaces > .right-workspace').should('be.visible');
-            cy.get('.learning-log > .workspaces > .left-workspace > .document').should('be.visible');
+            learningLog.createLearningLog(title);
+            learningLog.getLearningLogCanvasItemTitle().should('contain',title);
+            learningLog.openTwoUpView();
         });
         it('open My Work canvas in learning log 2up view', function(){
-            //open My Work tab
-            cy.get('#rightNavTabMy\\ Work').should('be.visible').click({force:true});
-            //Select first canvas
-            cy.get('.right-nav > .expanded-area.expanded > .contents > .my-work > .list > .list-item > .info').contains(myWorkTitle);
-            cy.get('.right-nav > .expanded-area.expanded > .contents > .my-work > .list > .list-item').first().click();
-            //verify 2 up view is showing
-            cy.get('.workspaces > .right-workspace > .document').should('be.visible');
+            rightNav.openMyWorkTab();
+            rightNav.openMyWorkAreaCanvasItem(myWorkTitle);
+            canvas.getRightSideWorkspace().should('be.visible'); //verify 2 up view is showing
             //Verify LL_Introduction is on the left and Introduction is on the right
-            cy.get('.bottom-nav > .expanded-area > .contents > .learning-log > .workspaces > .left-workspace > .document > .titlebar > .title').should('contain', title);
-            cy.get('.bottom-nav > .expanded-area > .contents > .learning-log > .workspaces > .right-workspace > .document > .titlebar > .title').should('contain', myWorkTitle);
-            cy.get('#learningLogTab').click(); //close learning log
+            learningLog.getLeftSideWorkspaceTitle().should('contain', title);
+            learningLog.getRightSideWorkspaceTitle().should('contain', myWorkTitle);
+            learningLog.closeLearningLogTab(); //close learning log
         });
         it('open Class Work canvas in learning log 2up view', function(){
             let tab = 'What if';
             leftNav.openToWorkspace(tab);
             canvas.getCanvasTitle().should('contain',tab);
             canvas.publishCanvas();
-            cy.get('#learningLogTab').click({force:true});//open learning log
-            cy.get('#rightNavTabClass\\ Work').should('be.visible').click({force:true});
+            learningLog.openLearningLogTab();//open learning log
+            rightNav.openClassWorkTab();
             //Select first canvas
-            cy.get('.right-nav > .expanded-area.expanded > .contents > .class-work > .list > .list-item > .info').contains(classWorkTitle);
-            cy.get('.right-nav > .expanded-area.expanded > .contents > .class-work > .list > .list-item').first().click();
+            // cy.get('.right-nav > .expanded-area.expanded > .contents > .class-work > .list > .list-item > .info').contains(classWorkTitle);
+            // cy.get('.right-nav > .expanded-area.expanded > .contents > .class-work > .list > .list-item').first().click();
+            rightNav.openClassWorkAreaCanvasItem(classWorkTitle);
             //verify 2 up view is showing
             cy.get('.workspaces > .right-workspace > .document').should('be.visible');
             //Verify LL_Introduction is on the left and Introduction is on the right
