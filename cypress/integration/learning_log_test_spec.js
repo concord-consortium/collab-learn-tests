@@ -128,15 +128,11 @@ context('Test bottom tabs', function(){
             canvas.publishCanvas();
             learningLog.openLearningLogTab();//open learning log
             rightNav.openClassWorkTab();
-            //Select first canvas
-            // cy.get('.right-nav > .expanded-area.expanded > .contents > .class-work > .list > .list-item > .info').contains(classWorkTitle);
-            // cy.get('.right-nav > .expanded-area.expanded > .contents > .class-work > .list > .list-item').first().click();
             rightNav.openClassWorkAreaCanvasItem(classWorkTitle);
-            //verify 2 up view is showing
-            cy.get('.workspaces > .right-workspace > .document').should('be.visible');
+            cy.get('.workspaces > .right-workspace > .document').should('be.visible'); //verify 2 up view is showing
             //Verify LL_Introduction is on the left and Introduction is on the right
-            cy.get('.bottom-nav > .expanded-area > .contents > .learning-log > .workspaces > .left-workspace > .document > .titlebar > .title').should('contain', title);
-            cy.get('.bottom-nav > .expanded-area > .contents > .learning-log > .workspaces > .right-workspace > .document > .titlebar > .title').should('contain', classWorkTitle);
+            learningLog.getLeftSideWorkspaceTitle().should('contain', title);
+            learningLog.getRightSideWorkspaceTitle().should('contain', classWorkTitle);
         });
 
         //TODO: add test when drag and drop
