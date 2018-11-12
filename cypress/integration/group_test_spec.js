@@ -79,7 +79,6 @@ context('Test group functionalities', function(){
                 cy.log('need to write this test');
                 expect(4).to.equal(3);
             });
-
         });
 
         describe('test sharing and unsharing canvases', function(){
@@ -96,6 +95,10 @@ context('Test group functionalities', function(){
                 expect(4).to.equal(3);
             });
             it('restore a 4-up canvas where a groupmate has unshared a canvas while it was not open', function(){
+                cy.log('need to write this test');
+                expect(4).to.equal(3);
+            });
+            it('will open a new 4-up canvas with shared canvas from other students updated', function(){
                 cy.log('need to write this test');
                 expect(4).to.equal(3);
             });

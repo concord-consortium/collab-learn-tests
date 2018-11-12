@@ -191,7 +191,7 @@ context('Test Canvas', function(){
             });
         });
 
-        describe('verify that if user leaves a canvas in four-four up view, restore is also in four up view', function(){
+        describe('verify that if user leaves a canvas in four-up view, restore is also in four up view', function(){
             //TODO need to verify expected behavior when switching from canvas to canvas whether 4-up view should stay up.
             it('verify canvas stays in 4up view when changing canvases', ()=>{
                 //Open a canvas

@@ -53,6 +53,31 @@ class RightNav{
         this.getRightNavExpandedSpace().should('not.be.visible');
     }
 
+    getClassLogTab(){
+        return cy.get('#rightNavTabClass\\ Logs.tab');
+    }
+
+    getClassLogAreaCanvasItem(){
+        return cy.get('.right-nav > .expanded-area.expanded > .contents > .class-work > .list > .list-item');
+    }
+
+    getAllClassLogAreaCanvasItems(){
+        return cy.get('.right-nav > .expanded-area.expanded > .contents > .class-work > .list > .list-item');
+    }
+
+    openClassLogAreaCanvasItem(title){
+        cy.get('.class-work > .list > .list-item > .info > div:contains("'+title+'")').parent().parent().click();
+    }
+
+    openClassLogTab(){
+        this.getClassLogTab().click({force:true});
+        this.getRightNavExpandedSpace().should('be.visible');
+    }
+
+    closeClassLogTab(){
+        this.getClassLogTab().click({force:true});
+        this.getRightNavExpandedSpace().should('not.be.visible');
+    }
 
 }
 export default RightNav;

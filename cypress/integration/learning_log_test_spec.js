@@ -143,8 +143,39 @@ context('Test bottom tabs', function(){
             //verify text field with same content is in LL_Introduction
             //Verify graph tool has the same content in LL_Introduction
             //Verify image from Introduction is in LL_Introduction
+
+            //cleanup
+            learningLog.openOneUpViewFromTwoUp();
+            learningLog.closeLearningLogTab();
         });
 
     });
+
+    describe('Test publishing a learning log', function(){
+        it('will verify learning log is published', function(){
+            //create a learning log document.
+            var title='skip';
+            learningLog.createLearningLog(title);
+            //Add text, and graph
+            learningLog.addLLTextTile('Lucy is bugging me');
+            //publish
+            learningLog.publishLearningLog();
+            //open class log tab and verify canvas is there with correct title
+            rightNav.openClassLogTab();
+            rightNav.getClassLogAreaCanvasItem().contains(title).should('be.visible');
+            //click on canvas thumbnail, verify it opens in righthand side 2 up view in the learning log canvas
+            rightNav.openClassLogAreaCanvasItem(title);
+            learningLog.getRightSideWorkspaceTitle();
+            //close learning log
+            learningLog.closeLearningLogTab();
+            //open a single canvas
+            leftNav.openToWorkspace('What if');
+            //open class log tab and verify canvas is there with correct title
+            rightNav.openClassLogTab();
+            //click on canvas thumbnail, verify it opens in righthand side 2 up view in the main canvas
+            rightNav.openClassLogAreaCanvasItem(title);
+            learningLog.getRightSideWorkspaceTitle();
+        })
+    })
 
 });

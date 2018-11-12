@@ -12,7 +12,7 @@ class LearningLog {
     }
 
     getBottomNavExpandedSpace(){
-        return cy.get('.bottom-nav.expanded');
+        return cy.get('.bottom-nav.expanded > .expanded-area');
     }
 
     getLLCanvasTitle(){
@@ -36,7 +36,7 @@ class LearningLog {
     }
 
     getLLTextTile(){
-        return cy.get('.learning-log-canvas-area > .canvas > .document-content > .tile-row > .tool-tile > .text-tool')
+        return cy.get('.learning-log > .workspaces > .single-workspace > .document > .canvas-area > .canvas > .document-content > .tile-row > .tool-tile > .text-tool')
     }
 
     getLLGraphTool(){
@@ -44,11 +44,11 @@ class LearningLog {
     }
 
     getLLGraphTile(){
-        return cy.get('.learning-log-canvas-area > .canvas > .document-content > .tile-row > .tool-tile > .geometry-size-me> .geometry-tool');
+        return cy.get('.learning-log > .workspaces > .single-workspace > .document > .canvas-area > .canvas > .document-content > .tile-row > .tool-tile > .geometry-size-me> .geometry-tool');
     }
 
     getLLGraphPointText(){
-        return cy.get('.learning-log-canvas-area > .canvas > .document-content > .tile-row> .tool-tile > .geometry-size-me > .geometry-tool > .JXGtext');
+        return cy.get('.learning-log > .workspaces > .single-workspace > .document > .canvas-area > .canvas > .document-content > .tile-row> .tool-tile > .geometry-size-me > .geometry-tool > .JXGtext');
     }
 
     getLLImageTool(){
@@ -105,18 +105,18 @@ class LearningLog {
 
     addLLPointToGraph(x,y){
         this.getLLGraphTile().last();
-        cy.get('.learning-log-canvas-area > .canvas > .document-content > .tile-row > .tool-tile > .geometry-size-me > .geometry-tool').last().click(x,y, {force:true});
+        cy.get('.learning-log > .workspaces > .single-workspace > .document > .canvas-area > .canvas > .document-content > .tile-row > .tool-tile > .geometry-size-me > .geometry-tool').last().click(x,y, {force:true});
     }
 
     getSingleCanvas(){
-        return cy.get('.learning-log-canvas-area');
+        return cy.get('.learning-log > .workspaces > .single-workspace > .document > .canvas-area');
     }
 
     getTwoUpViewToggle(){
         return cy.get('.learning-log > .workspaces > .single-workspace > .document > .statusbar > .actions > .action > .icon-up2');
     }
     getTwoToOneUpViewToggle(){// from 2up view
-        return cy.get('.learning-log > .workspaces > .left-workspace > .document > .statusbar > .actions > .action > .icon-up');
+        return cy.get('.learning-log > .workspaces > .left-workspace > .document > .statusbar > .actions > .action > .icon-up2');
     }
 
     getRightSideWorkspace(){
@@ -154,6 +154,27 @@ class LearningLog {
         return cy.get('.learning-log > .workspaces > .left-workspace > .document > .titlebar > .title')
     }
 
+    getLLPublishIcon(){
+        return cy.get('.learning-log > .actions > .actions > .icon-publish')
+    }
+
+    getDialogTitle(){
+        return cy.get('.dialog > .dialog-container > .dialog-title');
+    }
+
+    getDialogOKButton(){
+        return cy.get('.dialog > .dialog-container > .dialog-contents > .dialog-buttons > #okButton');
+    }
+
+    publishLearningLog(){
+        this.getLLPublishIcon().click()
+            .then(()=>{
+                this.getDialogTitle().should('exist').contains('Published');
+                this.getDialogOKButton().click();
+                this.getDialogTitle().should('not.exist');
+                this.getLLPublishIcon().should('exist');
+            });
+    }
 }
 
 export default LearningLog;
