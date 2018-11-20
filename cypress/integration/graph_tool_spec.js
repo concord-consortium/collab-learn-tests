@@ -12,7 +12,7 @@ context('Test Graph Tool', function(){
     let learningLog = new LearningLog;
     let graphToolTile = new GraphToolTile;
     describe('user can add points on a graph', function(){
-        
+
        it('will add points to a graph', function(){
            leftNav.openLeftNavTab('Extra Workspace');
            leftNav.openToWorkspace();

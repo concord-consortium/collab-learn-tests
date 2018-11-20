@@ -22,11 +22,12 @@ import './commands'
 before(function(){
     const branch = Cypress.env("default");
     const mode = "qa";
-    const problem='2.1';
+    const problem='3.2';
     cy.visit('https://collaborative-learning.concord.org/branch/master/?appMode=qa&qaClear=all&fakeClass=1&fakeUser=student:1&fakeOffering=1&problem=1.1&qaGroup=1');
     cy.wait(3000);
     cy.get('span').should('contain','QA Cleared: OK');
     cy.visit(branch + '?appMode='+mode+'&fakeClass=5&fakeUser=student:1&fakeOffering=1&qaGroup=1&problem='+problem);
+    cy.wait(2000);
 });
 
 Cypress.on('uncaught:exception', (err, runnable) => {
@@ -34,10 +35,5 @@ Cypress.on('uncaught:exception', (err, runnable) => {
     // failing the test
     return false
 });
-//
-// const customCommands = require('./commands.js');
-//
-// module.exports = {
-//     commands: customCommands
-// }
+
 

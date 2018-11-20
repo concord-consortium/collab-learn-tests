@@ -21,7 +21,7 @@ class Workspace{
                     this.leftnav.openToWorkspace();
                     this.canvas.publishCanvas();
                 }
-                // cy.get('#leftNavTab'+i).click({force:true}); //Close the last tab
+                // cy.get('#leftNavTab'+i).click({force:true}); //Close the last tab--leaving clean up to individual tests for now
             });
     }
 }

@@ -21,7 +21,7 @@ class LeftNav{
             case 'Now What':
                 cy.get('#leftNavTab3').click({force:true});
                 break;
-            case 'Extra':
+            case 'Extra Workspace':
                 cy.get('#leftNavTab4').click({force:true});
                 break;
         }
@@ -41,7 +41,7 @@ class LeftNav{
             case 'Now What':
                 cy.get('#leftNavTab3').click({force:true});
                 break;
-            case 'Extra':
+            case 'Extra Workspace':
                 cy.get('#leftNavTab4').click({force:true});
                 break;
         }

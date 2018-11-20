@@ -1,5 +1,9 @@
 class Canvas{
 
+    canvas(){
+        return cy.get('.single-workspace:first');
+    }
+
     getCanvasTitle(){
         return cy.get('.group-view > .single-workspace > .document > .titlebar > .title')
 

@@ -1,4 +1,7 @@
 context('Test image functionalities', function(){
+    describe('upload image', function(){
+        expect(3).to.eq(4)
+    });
     describe('transfer of image from left-nav to canvas', function() {
         // it('verify cannot drag image when no canvas is present', function(){
         //     cy.get('#leftNavTab0').click();

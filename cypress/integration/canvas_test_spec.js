@@ -16,7 +16,7 @@ context('Test Canvas', function(){
     // 3. drag image from leftNav to canvas
 
     context('test canvas tools', function(){
-       describe('test header elements', function(){
+       describe.only('test header elements', function(){
            it('verifies header title appears correctly', function(){
                 leftNav.openLeftNavTab('Introduction');
                 leftNav.openToWorkspace();
@@ -36,6 +36,7 @@ context('Test Canvas', function(){
                canvas.getSouthEastCanvas().should('be.visible');
                canvas.getSouthEastCanvas().should('be.visible');
                canvas.getSingleCanvas().should('not.be.visible');
+               
                //can get back to 1 up view from 4 up
                canvas.openOneUpViewFromFourUp();
                canvas.getSingleCanvas().should('be.visible');
@@ -58,6 +59,15 @@ context('Test Canvas', function(){
                canvas.getPublishIcon().should('exist');
            });
        }) ;
+
+       describe('test 4-up view', function(){
+           it('will drag the center point and verify that canvases resize', function(){
+               cy.get('.four-up .center')
+                   .trigger('mousedown')
+                   .trigger('mousemove', {pageX:600, pageY:250})
+                   .trigger('mouseup');
+           });
+       });
 
     context('test the tool palette', function(){
     //This should test the tools in the tool shelf
@@ -345,6 +355,43 @@ context('Test Canvas', function(){
             });
         });
         });
+    });
+
+    context('Dragging elements from different locations to canvas', function(){
+       describe('Drag element from left nav', function(){
+           it('will drag an image from left nav to canvas',()=>{
+               leftNav.openToWorkspace('Extra Workspace');
+               cy.wait(1000);
+               leftNav.openLeftNavTab('Introduction');
+               leftNav.getLeftNavExpandedSpace().find('.image-tool').first()
+                   .trigger('mousedown')
+                   .trigger('dragstart');
+               // canvas.canvas()
+               cy.get('.app')
+                   .trigger('mousemove', {pageX:725, pageY:450, force:true})
+                   .trigger('mouseup', {force:true});
+
+               cy.get('.document-content').first().should('exist')
+                   .trigger('drag', {pageX:450, pageY:350, force:true})
+                   .trigger('drop', {force:true});
+
+               leftNav.closeLeftNavTab('Introduction')
+           })
+       });
+        describe('Drag element from one canvas to another in 4-up view', function(){
+            it('will drag an image from canvas to canvas',()=>{
+                //setup group
+                //open Extra Workspace
+                //add tiles to last student
+                //add graph points
+                //share document
+                //Go to first student
+                //Open Extra Workspace
+                //open 4-up view
+                //verify last student document exists
+                //drag a tile from last student document to own document.
+            })
+        })
     });
 
     context('delete elements from canvas', function(){
