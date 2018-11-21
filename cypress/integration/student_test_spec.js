@@ -22,3 +22,26 @@ describe('Check header area for correctness', function(){
         workspace.getUserName().should('contain','Student '+student);
     });
 });
+describe('Students, class, group, problem combinations', function(){
+    it('will test new student assigned to new class new group new problem', function(){
+
+    });
+    it('will test previous student assigned to a new class, new group, new problem', function(){
+
+    });
+    it('will test previous student assigned to previous class, previous group, new problem', function(){
+
+    });
+    it('will test previous student assigned to previous class, previous group, previous problem', function(){
+
+    });
+    it('will test previous student assigned to previous class, new group, new problem', function(){
+
+    });
+    it('will test previous student assigned to previous class, new group, old problem', function(){
+
+    });
+    it('will test previously logged in student assigned to new class, new group, previous problem', function(){
+
+    });
+})
