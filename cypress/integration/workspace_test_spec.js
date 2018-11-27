@@ -5,7 +5,8 @@ import RightNav from './elements/RightNav';
 import Canvas from './elements/Canvas';
 import LearningLog from './elements/LearningLog';
 
-
+const baseUrl = `${Cypress.config("baseUrl")}`;
+const queryParam = `${Cypress.config("queryParams")}`
 let leftNav = new LeftNav,
     bottomNav = new BottomNav,
     rightNav = new RightNav,
@@ -34,19 +35,22 @@ context('Test the overall workspace', function(){
         });
 
         it('will verify that left nav area is closes when other tabs are opened', function(){ //should this be tab closes when no longer in that area? my work and left nav
-            cy.visit('https://collaborative-learning.concord.org/branch/master/?appMode=qa&fakeClass=5&fakeUser=student:1&fakeOffering=1&qaGroup=1&problem=1.1');
+            // cy.visit('https://collaborative-learning.concord.org/branch/master/?appMode=qa&fakeClass=5&fakeUser=student:1&fakeOffering=1&qaGroup=1&problem=1.1');
+            cy.visit(baseUrl+queryParam);
             leftNav.openLeftNavTab('Introduction'); //left nav expand area should be visible
             leftNav.getLeftNavExpandedSpace().should('be.visible');
             rightNav.getRightNavExpandedSpace().should('not.be.visible');
             bottomNav.getBottomNavExpandedSpace().should('not.be.visible');
+
             rightNav.openMyWorkTab(); //my work expand area should be visible
             leftNav.getLeftNavExpandedSpace().should('not.be.visible');
             rightNav.getRightNavExpandedSpace().should('be.visible');
             bottomNav.getBottomNavExpandedSpace().should('not.be.visible');
+
             learningLog.openLearningLogTab(); //learning log expand area should be visible
-            leftNav.getLeftNavExpandedSpace().should('not.be.visible');
             rightNav.getRightNavExpandedSpace().should('be.visible');
             bottomNav.getBottomNavExpandedSpace().should('be.visible');
+            leftNav.getLeftNavExpandedSpace().should('not.be.visible');
             //close all tabs to clear workspace for next test
             learningLog.closeLearningLogTab(); //learning log expand area should be visible
             rightNav.closeMyWorkTab(); //my work expand area should be visible
@@ -66,7 +70,8 @@ context('Test the overall workspace', function(){
                 problem2='2.1';
             let tab1 ='Introduction';
 
-            cy.visit('https://collaborative-learning.concord.org/branch/master/?appMode=qa&fakeClass=4&fakeUser=student:3&fakeOffering=1&qaGroup=1&problem='+problem1);
+            // cy.visit('https://collaborative-learning.concord.org/branch/master/?appMode=qa&fakeClass=4&fakeUser=student:3&fakeOffering=1&qaGroup=1&problem='+problem1);
+            cy.visit(baseUrl+'?appMode=qa&fakeClass=5&fakeUser=student:1&fakeOffering=1&qaGroup=1&problem='+problem1);
             cy.wait(1000);
 
             leftNav.openLeftNavTab(tab1);
@@ -81,7 +86,8 @@ context('Test the overall workspace', function(){
             canvas.getTextTile().last().should('contain', 'Problem '+problem1);
             cy.wait(2000);
 
-            cy.visit('https://collaborative-learning.concord.org/branch/master/?appMode=qa&fakeClass=4&fakeUser=student:3&fakeOffering=2&qaGroup=1&problem='+problem2);
+            // cy.visit('https://collaborative-learning.concord.org/branch/master/?appMode=qa&fakeClass=4&fakeUser=student:3&fakeOffering=2&qaGroup=1&problem='+problem2);
+            cy.visit(baseUrl+'?appMode=qa&fakeClass=5&fakeUser=student:1&fakeOffering=1&qaGroup=1&problem='+problem2);
             cy.wait(1000);
             leftNav.openLeftNavTab(tab1);
             leftNav.openToWorkspace();
@@ -90,7 +96,8 @@ context('Test the overall workspace', function(){
             cy.wait(2000);
 
             //Shows student as disconnected and will not load the introduction canvas
-            cy.visit('https://collaborative-learning.concord.org/branch/master/?appMode=qa&fakeClass=4&fakeUser=student:3&fakeOffering=1&qaGroup=1&problem='+problem1);
+            // cy.visit('https://collaborative-learning.concord.org/branch/master/?appMode=qa&fakeClass=4&fakeUser=student:3&fakeOffering=1&qaGroup=1&problem='+problem1);
+            cy.visit(baseUrl+'?appMode=qa&fakeClass=5&fakeUser=student:1&fakeOffering=1&qaGroup=1&problem='+problem1);
             cy.wait(1000);
             leftNav.openLeftNavTab(tab1);
             leftNav.openToWorkspace();
