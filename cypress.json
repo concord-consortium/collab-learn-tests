@@ -1,8 +1,1 @@
-{
-  "baseUrl": "https://collaborative-learning.concord.org/",
-  "env": {
-    "default": "/branch/master/",
-    "dev":"/branch/add-document-model-list/",
-    "production":""
-  }
-}
+{}

@@ -4,11 +4,23 @@
   "description": "Cypress test suite for collaborative learning project",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test_migration": "node ./cypress/integration/firebase_test_spec.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "test:production":"cypress open --env testEnv=production",
+    "test:master":"cypress open --env testEnv=master ",
+    "test:branch":"cypress open --env testEnv=branch",
+    "test:local":"cypress open --env testEnv=local"
+
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "cypress": "^3.1.0"
+    "cypress": "^3.1.2"
+  },
+  "dependencies": {
+    "firebase": "^5.5.8",
+    "firebase-admin": "^6.1.0",
+    "lodash": "^4.17.11",
+    "prompt-confirm": "^2.0.4"
   }
 }
