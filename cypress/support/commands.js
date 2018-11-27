@@ -29,6 +29,7 @@ import LeftNav from '../integration/elements/LeftNav';
 import Canvas from '../integration/elements/Canvas';
 
 Cypress.Commands.add("setupGroup", (group) => {
+    const baseUrl = `${Cypress.config("baseUrl")}`;
 
     let qaClass = 10,
         qaOffering = 10,
@@ -45,7 +46,7 @@ Cypress.Commands.add("setupGroup", (group) => {
 
     for (i=0;i<group.length;i++) {
         cy.wait(5000);
-        cy.visit('https://collaborative-learning.concord.org/branch/master/?appMode=qa&qaGroup='+qaGroup+'&fakeClass='+qaClass+'&fakeUser=student:'+group[i]+'&fakeOffering='+qaOffering+'&problem='+problem);
+        cy.visit(baseUrl+'?appMode=qa&qaGroup='+qaGroup+'&fakeClass='+qaClass+'&fakeUser=student:'+group[i]+'&fakeOffering='+qaOffering+'&problem='+problem);
         leftNav.openLeftNavTab('Now What')
             leftNav.openToWorkspace();
         canvas.addTextTile();
@@ -60,4 +61,32 @@ Cypress.Commands.add("setupGroup", (group) => {
         expect(['S'+group[0],'S'+group[1],'S'+group[2],'S'+group[3]]).to.include($member.text());
     });
 });
+Cypress.Commands.add("uploadFile",(selector, filename, type="")=>{
+    // cy.fixture(filename).as("image");
+
+    return cy.get(selector).then(subject => {
+        return cy.fixture(filename,'base64')
+            .then(Cypress.Blob.base64StringToBlob)
+        // From Cypress document: https://docs.cypress.io/api/utilities/blob.html#Examples
+        // return Cypress.Blob.base64StringToBlob(cy.fixture(filename), "image/png")
+            .then((blob) => {
+            const el = subject[0]
+            const nameSegments = filename.split('/')
+            const name = nameSegments[nameSegments.length - 1]
+            const testFile = new File([blob], name, { type });
+            const dataTransfer = new DataTransfer();
+            dataTransfer.items.add(testFile);
+            el.files = dataTransfer.files;
+            return subject;
+        })
+    })
+})
+Cypress.Commands.add("clearQAData", (data)=>{ //clears data from Firebase (currently data='all' is the only one supported)
+    const baseUrl = `${Cypress.config("baseUrl")}`;
+    if (data=='all') {
+        cy.visit(baseUrl + '?appMode=qa&qaClear=' + data + '&fakeClass=1&fakeUser=student:1');
+        cy.wait(3000);
+        cy.get('span').should('contain','QA Cleared: OK');
+    }
+})
 
