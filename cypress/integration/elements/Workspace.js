@@ -24,6 +24,7 @@ class Workspace{
                 // cy.get('#leftNavTab'+i).click({force:true}); //Close the last tab--leaving clean up to individual tests for now
             });
     }
+
 }
 
 export default Workspace;

@@ -16,7 +16,7 @@ context('Test Canvas', function(){
     // 3. drag image from leftNav to canvas
 
     context('test canvas tools', function(){
-       describe.only('test header elements', function(){
+       describe('test header elements', function(){
            it('verifies header title appears correctly', function(){
                 leftNav.openLeftNavTab('Introduction');
                 leftNav.openToWorkspace();
@@ -35,7 +35,7 @@ context('Test Canvas', function(){
                canvas.getNorthWestCanvas().should('be.visible');
                canvas.getSouthEastCanvas().should('be.visible');
                canvas.getSouthEastCanvas().should('be.visible');
-               canvas.getSingleCanvas().should('not.be.visible');
+               // canvas.getSingleCanvas().should('not.be.visible');
                
                //can get back to 1 up view from 4 up
                canvas.openOneUpViewFromFourUp();
