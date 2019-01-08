@@ -3,10 +3,10 @@ class TeacherDashboard {
         return cy.get('.teacher-dashboard');
     }
     getGroupChooserTab(){
-        return cy.get('.teacher-dashboard > .tabbed-area > .tab-contents[aria-labelledby="teacher-dashboard-groups"]');
+        return cy.get('#teacher-dashboard-groups');
     }
     getGroupList(){
-        return cy.get('.teacher-dashboard > .tabbed-area > .tab-contents > .contents > .teacher-group-tab > .group-list ')
+        return cy.get('.teacher-group-tab > .group-list ')
     }
     getGroupName(){
         return cy.get('.teacher-dashboard > .tabbed-area > .tab-contents > .contents > .teacher-group-tab > .group-list > .group > .group-title');

@@ -8,54 +8,54 @@ class LearningLog {
     }
 
     getAllLearningLogCanvasItems(){
-        return cy.get('[data-test="learning-log-list-items"]');
+        return cy.get('[data-test=learning-log-list-items]');
         // return cy.get('.bottom-nav > .expanded-area > .contents > .learning-log > .logs > .list > .list-item');
     }
 
     getLearningLogCanvasItemTitle(){
-        return cy.get('[data-test="learning-log-list-item-title"');
+        return cy.get('[data-test=learning-log-list-item-title');
         // return cy.get('.learning-log > .logs > .list > .list-item > .info > .title');
     }
 
     getLLCanvasTitle(){
-        // return cy.get('[data-test="learning-log-single-workspace"] > .document > .titlebar > .title');
-        return cy.get('[data-test="learning-log-title"]');
+        // return cy.get('[data-test=learning-log-single-workspace] > .document > .titlebar > .title');
+        return cy.get('[data-test=learning-log-title]');
     }
 
     openLearningLogCanvasItem(title){ //finds the title then clicks on the canvas
-         cy.get('[data-test="learning-log-list-items"] > .info > .title[title*="'+title+'"]').parent().parent().click();
+         cy.get('[data-test=learning-log-list-items] > .info > .title[title*="'+title+'"]').parent().parent().click();
     }
 
     selectLLCanvasTitle(title){
-        cy.get('[data-test="learning-log-list-items"] > .info > .title[title*="'+title+'"]').click();
+        cy.get('[data-test=learning-log-list-items] > .info > .title[title*="'+title+'"]').click();
     }
 
     createButton(){
-        return cy.get('[data-test="learning-log-create-button"]');
+        return cy.get('[data-test=learning-log-create-button]');
     }
 
     getLLTextTool(){
-        return cy.get('[data-test="learning-log-single-workspace"] > .toolbar > .tool.text');
+        return cy.get('[data-test=learning-log-single-workspace] > .toolbar > .tool.text');
     }
 
     getLLTextTile(){
-        return cy.get('[data-test="learning-log-single-workspace"] > .document > .canvas-area > .canvas > .document-content > .tile-row > .tool-tile > .text-tool')
+        return cy.get('[data-test=learning-log-single-workspace] > .document > .canvas-area > .canvas > .document-content > .tile-row > .tool-tile > .text-tool')
     }
 
     getLLGraphTool(){
-        return cy.get('[data-test="learning-log-single-workspace"] > .toolbar > .tool.geometry');
+        return cy.get('[data-test=learning-log-single-workspace] > .toolbar > .tool.geometry');
     }
 
     getLLGraphTile(){
-        return cy.get('[data-test="learning-log-single-workspace"] > .document > .canvas-area > .canvas > .document-content > .tile-row > .tool-tile > .geometry-size-me> .geometry-tool');
+        return cy.get('[data-test=learning-log-single-workspace] > .document > .canvas-area > .canvas > .document-content > .tile-row > .tool-tile > .geometry-size-me> .geometry-tool');
     }
 
     getLLGraphPointText(){
-        return cy.get('[data-test="learning-log-single-workspace"] > .document > .canvas-area > .canvas > .document-content > .tile-row> .tool-tile > .geometry-size-me > .geometry-tool > .JXGtext');
+        return cy.get('[data-test=learning-log-single-workspace] > .document > .canvas-area > .canvas > .document-content > .tile-row> .tool-tile > .geometry-size-me > .geometry-tool > .JXGtext');
     }
 
     getLLImageTool(){
-        return cy.get('[data-test="learning-log-single-workspace"] > .toolbar > .tool.image')
+        return cy.get('[data-test=learning-log-single-workspace] > .toolbar > .tool.image')
     }
 
     openLearningLogTab(){
@@ -71,16 +71,16 @@ class LearningLog {
     createLearningLog(title){
         this.openLearningLogTab();//open Learning log
         this.createButton().click();
-        cy.get('[data-test="dialog-title"]').should('contain', 'Create Learning Log');
-        cy.get('[data-test="dialog-text-input"]').type(title);
+        cy.get('[data-test=dialog-title]').should('contain', 'Create Learning Log');
+        cy.get('[data-test=dialog-text-input]').type(title);
         this.getDialogOKButton().click();
         // cy.get('.dialog > .dialog-container > .dialog-contents > .dialog-buttons > #okButton').click();
         this.getLearningLogCanvasItemTitle().should('contain',title);
     }
 
     renameLearningLog(title) {
-        cy.get('[data-test="dialog-title"]').should('contain', 'Renaming Learning Log');
-        cy.get('[data-test="dialog-text-input"]').clear().type(title);
+        cy.get('[data-test=dialog-title]').should('contain', 'Renaming Learning Log');
+        cy.get('[data-test=dialog-text-input]').clear().type(title);
         this.getDialogOKButton().click();
         // cy.get('.dialog > .dialog-container > .dialog-contents > .dialog-buttons > #okButton').click();
     }
@@ -110,33 +110,33 @@ class LearningLog {
 
     addLLPointToGraph(x,y){
         this.getLLGraphTile().last();
-        cy.get('[data-test="learning-log-single-workspace"] > .document > .canvas-area > .canvas > .document-content > .tile-row > .tool-tile > .geometry-size-me > .geometry-tool').last().click(x,y, {force:true});
+        cy.get('[data-test=learning-log-single-workspace] > .document > .canvas-area > .canvas > .document-content > .tile-row > .tool-tile > .geometry-size-me > .geometry-tool').last().click(x,y, {force:true});
     }
 
     getSingleCanvas(){
-        return cy.get('[data-test="learning-log-single-workspace"] > .document > .canvas-area');
+        return cy.get('[data-test=learning-log-single-workspace] > .document > .canvas-area');
     }
 
     getTwoUpViewToggle(){
-        return cy.get('[data-test="learning-log-single-workspace"] > .document > .statusbar > .actions > .action > .icon-up2');
+        return cy.get('[data-test=learning-log-single-workspace] > .document > .statusbar > .actions > .action > .icon-up2');
     }
     getTwoToOneUpViewToggle(){// from 2up view
-        return cy.get('[data-test="learning-log-left-workspace"] > .document > .statusbar > .actions > .action > .icon-up2');
+        return cy.get('[data-test=learning-log-left-workspace] > .document > .statusbar > .actions > .action > .icon-up2');
     }
 
     getRightSideWorkspace(){
-        return cy.get('[data-test="learning-log-right-workspace"]')
+        return cy.get('[data-test=learning-log-right-workspace]')
     }
     getLeftSideWorkspace(){
-        return cy.get('[data-test="learning-log-left-workspace"] > .document > .canvas-area > .canvas');
+        return cy.get('[data-test=learning-log-left-workspace] > .document > .canvas-area > .canvas');
     }
 
     getLeftSideToolPalette(){
-        return cy.get('[data-test="learning-log-left-workspace"] > .toolbar');
+        return cy.get('[data-test=learning-log-left-workspace] > .toolbar');
     }
 
     getRightSideToolPalette(){
-        return cy.get('[data-test="learning-log-right-workspace"] > .toolbar');
+        return cy.get('[data-test=learning-log-right-workspace] > .toolbar');
     }
 
     openTwoUpView(){
@@ -152,23 +152,23 @@ class LearningLog {
     }
 
     getRightSideWorkspaceTitle(){
-        return cy.get('[data-test="learning-log-right-workspace"] > .document > .titlebar > .title')
+        return cy.get('[data-test=learning-log-right-workspace] > .document > .titlebar > .title')
     }
 
     getLeftSideWorkspaceTitle(){
-        return cy.get('[data-test="learning-log-left-workspace"] > .document > .titlebar > .title')
+        return cy.get('[data-test=learning-log-left-workspace] > .document > .titlebar > .title')
     }
 
     getLLPublishIcon(){
-        return cy.get('[data-test="learning-log-publish-icon"]')
+        return cy.get('[data-test=learning-log-publish-icon]')
     }
 
     getDialogTitle(){
-        return cy.get('[data-test="dialog-title"]');
+        return cy.get('[data-test=dialog-title]');
     }
 
     getDialogOKButton(){
-        return cy.get('[data-test="dialog-buttons"] > #okButton');
+        return cy.get('[data-test=dialog-buttons] > #okButton');
     }
 
     publishLearningLog(){

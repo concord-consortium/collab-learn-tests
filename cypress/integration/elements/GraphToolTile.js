@@ -9,11 +9,29 @@ class GraphToolTile{
     }
 
     getGraphPointText(){
-        return cy.get('.canvas > .document-content > .tile-row> .tool-tile > .geometry-size-me > .geometry-tool');
+        return cy.get('.geometry-tool.editable > .JXGinfobox');
+    }
+
+    getGraphPoint(){
+        return cy.get('.geometry-tool.editable > svg > g > ellipse');
+    }
+
+    getGraphPointID(){
+         cy.get('.geometry-tool.editable > svg > g > ellipse').last()
+            .then(($el)=>{
+                return $el.attr('id');
+            });
+    }
+    getGraphPolygon(){
+        return cy.get('.geometry-tool.editable > svg > g > polygon');
     }
 
     addPointToGraph(x,y){
         this.getGraphTile().last().click(x,y, {force:true});
+    }
+
+    getRotateTool(){
+        return cy.get('.rotate-polygon-icon.enabled');
     }
 
 

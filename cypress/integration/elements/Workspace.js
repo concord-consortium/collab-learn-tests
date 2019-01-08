@@ -25,6 +25,29 @@ class Workspace{
             });
     }
 
+    leaveGroup(){
+        this.header.getGroupName().click();
+        this.getDialogTitle().should('contain', 'Leave Group');
+        this.getDialogOKButton().click();
+    }
+
+    cancelLeaveGroup(){
+        this.header.getGroupName().click();
+        this.getDialogTitle().should('contain', 'Leave Group');
+        this.getDialogCancelButton().click();
+    }
+
+    getDialogTitle(){
+        return cy.get('[data-test=dialog-title]');
+    }
+
+    getDialogOKButton(){
+        return cy.get('[data-test=dialog-buttons] > #okButton');
+    }
+
+    getDialogCancelButton(){
+        return cy.get('[data-test=dialog-buttons] > #cancelButton');
+    }
 }
 
 export default Workspace;

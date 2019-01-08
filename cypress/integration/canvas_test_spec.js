@@ -14,6 +14,7 @@ context('Test Canvas', function(){
     // 1. reorder tiles
     // 2. drag image to graph and verify image appears behind graph
     // 3. drag image from leftNav to canvas
+    // 4. drag image to draw tool and verify image appears behind draw tool elements
 
     context('test canvas tools', function(){
        describe('test header elements', function(){
@@ -62,10 +63,12 @@ context('Test Canvas', function(){
 
        describe('test 4-up view', function(){
            it('will drag the center point and verify that canvases resize', function(){
+               canvas.openFourUpView();
                cy.get('.four-up .center')
-                   .trigger('mousedown')
-                   .trigger('mousemove', {pageX:600, pageY:250})
-                   .trigger('mouseup');
+                   .trigger('dragstart')
+                   .trigger('mousemove',100, 250, {force:true})
+                   .trigger('drop');
+               canvas.openOneUpViewFromFourUp(); //clean up
            });
        });
 
@@ -372,7 +375,7 @@ context('Test Canvas', function(){
                    .trigger('mouseup', {force:true});
 
                cy.get('.document-content').first().should('exist')
-                   .trigger('drag', {pageX:450, pageY:350, force:true})
+                   .trigger('drag', 450, 350, {force:true})
                    .trigger('drop', {force:true});
 
                leftNav.closeLeftNavTab('Introduction')
@@ -397,7 +400,7 @@ context('Test Canvas', function(){
     context('delete elements from canvas', function(){
         it('will delete elements from canvas', function(){
             // //Delete elements in the canvas
-
+            leftNav.openToWorkspace('Introduction');
             canvas.deleteTile('text');
             canvas.deleteTile('graph');
             canvas.deleteTile('image');
@@ -411,7 +414,6 @@ context('Test Canvas', function(){
 
         it('will try to delete elements from other canvases in 4 up view', function(){
             //TODO
-            expect(4).to.eq(3);
         })
     });
 

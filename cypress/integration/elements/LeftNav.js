@@ -48,7 +48,7 @@ class LeftNav{
     }
 
     getOpenToWorkspaceButton(){
-        return cy.get('[data-test="open-document-button"]');
+        return cy.get('[data-test=open-document-button]');
     }
 
     openToWorkspace(title) {

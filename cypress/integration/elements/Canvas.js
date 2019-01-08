@@ -6,23 +6,23 @@ class Canvas{
 
     getCanvasTitle(){
         // return cy.get('.group-view > .single-workspace > .document > .titlebar > .title')
-        return cy.get('[data-test="document-title"]')
+        return cy.get('[data-test=document-title]')
     }
 
     getPublishIcon(){
-        return cy.get('[data-test="publish-icon"]');
+        return cy.get('[data-test=publish-icon]');
     }
 
     getDialogTitle(){
-        return cy.get('[data-test="dialog-title"]');
+        return cy.get('[data-test=dialog-title]');
     }
 
     getDialogOKButton(){
-        return cy.get('[data-test="dialog-buttons"] > #okButton');
+        return cy.get('[data-test=dialog-buttons] > #okButton');
     }
 
     getDialogCancelButton(){
-        return cy.get('[data-test="dialog-buttons"] > #cancelButton');
+        return cy.get('[data-test=dialog-buttons] > #cancelButton');
     }
 
     publishCanvas(){
@@ -36,7 +36,7 @@ class Canvas{
     }
 
     getFourUpViewToggle(){
-        return cy.get('[data-test="document-titlebar-actions"] > .action > .icon-up1');
+        return cy.get('[data-test=document-titlebar-actions] > .action > .icon-up1');
     }
 
     openFourUpView(){
@@ -45,7 +45,7 @@ class Canvas{
     }
 
     getFourToOneUpViewToggle(){
-        return cy.get('[data-test="document-titlebar-actions"] > .action > .icon-up4');
+        return cy.get('[data-test=document-titlebar-actions] > .action > .icon-up4');
     }
 
     openOneUpViewFromFourUp(){
@@ -55,11 +55,11 @@ class Canvas{
 
     getSingleCanvas(){
         // return cy.get('.canvas-area > .canvas');
-        return cy.get('[data-test="canvas"]:first');
+        return cy.get('[data-test=canvas]:first');
     }
 
     getSingleCanvasDocumentContent(){
-        return cy.get('[data-test="canvas"]:first > .document-content')
+        return cy.get('[data-test=canvas]:first > .document-content')
     }
 
     getFourUpView(){
@@ -83,8 +83,12 @@ class Canvas{
         return cy.get('.canvas-area > .four-up >.canvas-container.south-west');
     }
 
+    getCenterSeparator(){
+        return cy.get('.canvas-area > .four-up > .center');
+    }
+
     getShareButton(){
-        return cy.get('[data-test="document-titlebar-actions"] >.visibility.private > .icon-share');
+        return cy.get('[data-test=document-titlebar-actions] >.visibility.private > .icon-share');
     }
 
     shareCanvas(){
@@ -92,7 +96,7 @@ class Canvas{
     }
 
     getUnshareButton(){
-        return cy.get('[data-test="document-titlebar-actions"] >.visibility.public >.icon-share');
+        return cy.get('[data-test=document-titlebar-actions] >.visibility.public >.icon-share');
     }
 
     unshareCanvas(){
@@ -226,12 +230,12 @@ class Canvas{
 
      getRightSideWorkspaceTitle(){
         // return cy.get('.right-workspace > .document > .titlebar > .title')
-         return cy.get('.right-workspace > .document > .titlebar > [data-test="document-title"]')
+         return cy.get('.right-workspace > .document > .titlebar > [data-test=document-title]')
      }
 
      getLeftSideWorkspaceTitle(){
         // return cy.get('.left-workspace > .document > .titlebar > .title')
-         return cy.get('.left-workspace > .document > .titlebar > [data-test="document-title"]')
+         return cy.get('.left-workspace > .document > .titlebar > [data-test=document-title]')
      }
 }
 

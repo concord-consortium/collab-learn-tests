@@ -20,13 +20,11 @@ import './commands'
 // require('./commands')
 
 before(function(){
-    const branch = Cypress.env("default");
-    const mode = "qa";
-    const problem='3.2';
-    cy.visit('https://collaborative-learning.concord.org/branch/master/?appMode=qa&qaClear=all&fakeClass=1&fakeUser=student:1&fakeOffering=1&problem=1.1&qaGroup=1');
-    cy.wait(3000);
-    cy.get('span').should('contain','QA Cleared: OK');
-    cy.visit(branch + '?appMode='+mode+'&fakeClass=5&fakeUser=student:1&fakeOffering=1&qaGroup=1&problem='+problem);
+    const baseUrl = `${Cypress.config("baseUrl")}`;
+    const queryParams = `${Cypress.config("queryParams")}`;
+
+    cy.clearQAData('all');
+    cy.visit(baseUrl+queryParams);
     cy.wait(2000);
 });
 

@@ -1,3 +1,8 @@
+import Header from './elements/Header'
+
+const header = new Header;
+const baseUrl = `${Cypress.config("baseUrl")}`;
+
 describe('Test student join a group', function(){
     let student1 = '20',
         student2 = '21',
@@ -11,8 +16,9 @@ describe('Test student join a group', function(){
         group1='20',
         group2='21';
 
+
     function setup(student){
-        cy.visit('https://collaborative-learning.concord.org/branch/master/?appMode=qa&fakeClass='+fakeClass+'&fakeUser=student:'+student+'&fakeOffering='+fakeOffering+'&problem='+problem);
+        cy.visit(baseUrl+'?appMode=qa&fakeClass='+fakeClass+'&fakeUser=student:'+student+'&fakeOffering='+fakeOffering+'&problem='+problem);
     }
 
     it('Student 1 will join and will verify Join Group Dialog comes up with welcome message to correct student', function(){
@@ -25,11 +31,12 @@ describe('Test student join a group', function(){
         //select a group 20 from the dropdown
         cy.get('select').select('Group ' + group1);
         cy.get('[value="Create Group"]').click();
+        cy.wait(1000);
     });
     it('will verify student is an specified group', function(){
-        cy.get('.header > .group > .name').should('contain','Group '+group1);
-        cy.get('.header > .user > .name').should('contain','Student '+student1);
-        cy.get('.header > .group > .members > .member').should('contain','S'+student1);
+        header.getGroupName().should('contain','Group '+group1);
+        header.getUserName().should('contain','Student '+student1);
+        header.getGroupMembers().should('contain','S'+student1);
 
     });
     it('will verify created group is no longer available as a choice in Join Group dialog dropdown', function(){
@@ -43,9 +50,9 @@ describe('Test student join a group', function(){
         cy.get('.groups > .group-list > .group').contains(group1).click();
     });
     it('will verify second student is in existing group', function(){
-        cy.get('.header > .group > .name').should('contain','Group '+group1);
-        cy.get('.header > .user > .name').should('contain','Student '+student2);
-        cy.get('.header > .group > .members > .member').should('contain','S'+student1).and('contain','S'+student2);
+        header.getGroupName().should('contain','Group '+group1);
+        header.getUserName().should('contain','Student '+student2);
+        header.getGroupMembers().should('contain','S'+student1).and('contain','S'+student2);
     });
 
     it('will will verify that both students are listed in the group in the Join Group group list and will create a new group when a student selects a different group and verify workspace header is correct', function(){
@@ -53,22 +60,22 @@ describe('Test student join a group', function(){
         cy.get('.groups > .group-list > .group').first().should('contain','Group '+group1).and('contain','S'+student1).and('contain','S'+student2);
         cy.get('select').select('Group ' + group2);
         cy.get('[value="Create Group"]').click();
-        cy.get('.header > .group > .name').should('contain','Group '+group2);
-        cy.get('.header > .user > .name').should('contain','Student '+student3);
-        cy.get('.header > .group > .members > .member').should('contain','S'+student3);
-        cy.get('.header > .group > .members > .member').should('not.contain','S'+student2).and('not.contain','S'+student1);
+        header.getGroupName().should('contain','Group '+group2);
+        header.getUserName().should('contain','Student '+student3);
+        header.getGroupMembers().should('contain','S'+student3);
+        header.getGroupMembers().should('not.contain','S'+student2).and('not.contain','S'+student1);
     });
     it('will verify no additional students can join group',function(){
         setup(student4);
         cy.get('.groups > .group-list > .group').contains(group1).click();
-        cy.get('.header > .group > .name').should('contain','Group '+group1);
-        cy.get('.header > .user > .name').should('contain','Student '+student4);
-        cy.get('.header > .group > .members > .member').should('contain','S'+student1).and('contain','S'+student2).and('contain','S'+student4);
+        header.getGroupName().should('contain','Group '+group1);
+        header.getUserName().should('contain','Student '+student4);
+        header.getGroupMembers().should('contain','S'+student1).and('contain','S'+student2).and('contain','S'+student4);
         setup(student5);
         cy.get('.groups > .group-list > .group').contains(group1).click();
-        cy.get('.header > .group > .name').should('contain','Group '+group1);
-        cy.get('.header > .user > .name').should('contain','Student '+student5);
-        cy.get('.header > .group > .members > .member').should('contain','S'+student1).and('contain','S'+student2).and('contain','S'+student4).and('contain','S'+student5);
+        header.getGroupName().should('contain','Group '+group1);
+        header.getUserName().should('contain','Student '+student5);
+        header.getGroupMembers().should('contain','S'+student1).and('contain','S'+student2).and('contain','S'+student4).and('contain','S'+student5);
         setup(student6);
         cy.get('.groups > .group-list > .group').contains(group1).click();
         cy.get('.join > .join-content > .error').should('be.visible').and('contain','Sorry, that group is full');
@@ -78,9 +85,9 @@ describe('Test student join a group', function(){
         setup(student5);
         cy.get('.app > .group-view > .header > .group > .name').contains('Group '+group1).click();
         cy.get('#cancelButton').should('contain','No').click();
-        cy.get('.header > .group > .name').should('contain','Group '+group1);
-        cy.get('.header > .user > .name').should('contain','Student '+student5);
-        cy.get('.header > .group > .members > .member').should('contain','S'+student1).and('contain','S'+student2).and('contain','S'+student4).and('contain','S'+student5);
+        header.getGroupName().should('contain','Group '+group1);
+        header.getUserName().should('contain','Student '+student5);
+        header.getGroupMembers().should('contain','S'+student1).and('contain','S'+student2).and('contain','S'+student4).and('contain','S'+student5);
 
     });
     it('will verify a student can switch groups',function(){
@@ -89,16 +96,16 @@ describe('Test student join a group', function(){
         cy.get('.app > .group-view > .header > .group > .name').contains('Group '+group1).click();
         cy.get("#okButton").should('contain','Yes').click();
         cy.get('.groups > .group-list > .group').contains('Group '+group2).click();
-        cy.get('.header > .group > .name').should('contain','Group '+group2);
-        cy.get('.header > .user > .name').should('contain','Student '+student5);
-        cy.get('.header > .group > .members > .member').should('contain','S'+student3).and('contain','S'+student5);
+        header.getGroupName().should('contain','Group '+group2);
+        header.getUserName().should('contain','Student '+student5);
+        header.getGroupMembers().should('contain','S'+student3).and('contain','S'+student5);
     });
     it('will verify new student can join group when one leaves it', function(){
         //have new student join the first group
         setup(student6);
         cy.get('.groups > .group-list > .group').contains(group1).click();
-        cy.get('.header > .group > .name').should('contain','Group '+group1);
-        cy.get('.header > .user > .name').should('contain','Student '+student6);
-        cy.get('.header > .group > .members > .member').should('contain','S'+student1).and('contain','S'+student2).and('contain','S'+student4).and('contain','S'+student6);
+        header.getGroupName().should('contain','Group '+group1);
+        header.getUserName().should('contain','Student '+student6);
+        header.getGroupMembers().should('contain','S'+student1).and('contain','S'+student2).and('contain','S'+student4).and('contain','S'+student6);
     });
 });

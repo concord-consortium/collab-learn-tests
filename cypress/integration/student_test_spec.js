@@ -1,9 +1,11 @@
 import Header from './elements/Header.js'
 
-let student = '1',
+let student = '5',
     classroom = '5',
-    offering = '1',
-    problemSet = '1.1';
+    group = '5',
+    offering = '5',
+    problemSet = '2.1';
+
 
 describe('Check header area for correctness', function(){
 
@@ -13,7 +15,7 @@ describe('Check header area for correctness', function(){
         workspace.getClassName().should('contain',''+'Class '+classroom);
     });
     it('will verify if group name is present', function(){
-        workspace.getGroupName().should('contain','Group'+' ');
+        workspace.getGroupName().should('contain','Group '+ group);
     });
     it('will verify group members is correct', function(){
         workspace.getGroupMembers().should('contain','S'+student);

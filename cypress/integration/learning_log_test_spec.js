@@ -20,6 +20,7 @@ context('Test bottom tabs', function(){
                 bottomNav.getBottomNavExpandedSpace().should('be.visible');
                 rightNav.getRightNavTabs().each(($rightTab,rightIndex,$rightList)=>{ //click on right nav tabs
                     cy.wrap($rightTab).click({force:true});
+                    cy.wait(1000);
                     rightNav.getRightNavExpandedSpace().should('be.visible');
                     cy.wrap($rightTab).click() //close right nav tab
                 });
